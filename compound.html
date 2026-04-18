@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>積立シミュレーター 2026年版 | 新NISA・iDeCoの複利計算</title>
+  <meta name="description" content="毎月の積立額・想定利回り・積立期間を入力するだけで、将来の資産額を自動計算。新NISA・iDeCoの積立投資シミュレーション。複利の力をグラフで可視化。">
+  <meta name="keywords" content="積立シミュレーター,複利計算,新NISA,iDeCo,積立投資,シミュレーション,2026">
+  <meta property="og:title" content="積立シミュレーター 2026年版 | 複利計算ツール">
+  <meta property="og:description" content="毎月の積立額から将来の資産額を自動計算。新NISA・iDeCoの投資シミュレーション。">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .chart-wrapper {
+      width: 100%;
+      margin: 24px 0;
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      background: var(--bg-tertiary);
+      padding: 16px;
+    }
+    .chart-wrapper canvas {
+      display: block;
+      width: 100%;
+    }
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+    }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .stat-card {
+      background: var(--bg-tertiary);
+      border-radius: var(--border-radius-md);
+      padding: 16px;
+      text-align: center;
+    }
+    .stat-card .s-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .stat-card .s-value {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .nisa-info {
+      margin-top: 24px;
+      padding: 20px;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: var(--border-radius-lg);
+    }
+    .nisa-info h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--accent-emerald);
+      margin-bottom: 12px;
+    }
+    .nisa-info p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+    .nisa-info strong { color: var(--accent-emerald); }
+    .preset-group {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+    .preset-btn {
+      padding: 6px 14px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      color: var(--text-secondary);
+      font-family: var(--font-primary);
+      font-size: 12px;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    .preset-btn:hover {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: var(--accent-green);
+      color: var(--accent-green);
+    }
+    @media (max-width: 600px) {
+      .stat-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo" id="compound-logo">
+        <div class="logo-icon">¥</div>
+        <div class="logo-text"><span>MoneyLab</span></div>
+      </a>
+      <nav class="header-nav" style="display:flex;gap:20px;align-items:center;">
+        <a href="index.html" style="color:var(--text-secondary);font-size:13px;text-decoration:none;font-weight:500;">手取り計算</a>
+        <a href="furusato.html" style="color:var(--text-secondary);font-size:13px;text-decoration:none;font-weight:500;">ふるさと納税</a>
+        <a href="compound.html" style="color:var(--accent-green);font-size:13px;text-decoration:none;font-weight:600;">積立シミュレーション</a>
+        <div class="header-badge">2026年度対応</div>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" id="compound-hero">
+    <div class="container">
+      <div class="hero-badge"><span class="dot"></span>リアルタイム計算</div>
+      <h1>積立<span class="gradient-text">複利</span>シミュレーター</h1>
+      <p class="hero-subtitle">
+        毎月の積立額と想定利回りを入力するだけで、将来の資産額を即座に計算。<br>
+        新NISA・iDeCoの積立投資に最適です。
+      </p>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="main-grid">
+
+      <!-- Input Panel -->
+      <div class="glass-card animate-in" id="compound-input-panel">
+        <div class="card-header">
+          <div class="card-icon green">📈</div>
+          <div class="card-title">積立条件を入力</div>
+        </div>
+
+        <!-- 毎月の積立額 -->
+        <div class="form-group" id="c-monthly-group">
+          <label class="form-label">
+            毎月の積立額
+            <span class="value-display"><span id="cMonthlyDisplay">3</span> 万円</span>
+          </label>
+          <div class="input-wrapper">
+            <input type="number" id="cMonthlyInput" value="3" min="0" max="100" step="1" aria-label="毎月の積立額（万円）">
+            <span class="suffix">万円</span>
+          </div>
+          <input type="range" id="cMonthlySlider" min="0" max="30" value="3" step="0.5" aria-label="積立額スライダー">
+          <div class="preset-group">
+            <button class="preset-btn" onclick="document.getElementById('cMonthlyInput').value=1; updateCompound();">1万円</button>
+            <button class="preset-btn" onclick="document.getElementById('cMonthlyInput').value=3; updateCompound();">3万円</button>
+            <button class="preset-btn" onclick="document.getElementById('cMonthlyInput').value=5; updateCompound();">5万円</button>
+            <button class="preset-btn" onclick="document.getElementById('cMonthlyInput').value=10; updateCompound();">10万円</button>
+          </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- 想定利回り -->
+        <div class="form-group" id="c-rate-group">
+          <label class="form-label">
+            想定利回り（年率）
+            <span class="value-display"><span id="cRateDisplay">5.0</span>%</span>
+          </label>
+          <div class="input-wrapper">
+            <input type="number" id="cRateInput" value="5" min="0" max="20" step="0.1" aria-label="想定利回り（%）">
+            <span class="suffix">%</span>
+          </div>
+          <input type="range" id="cRateSlider" min="0" max="15" value="5" step="0.1" aria-label="利回りスライダー">
+          <div class="preset-group">
+            <button class="preset-btn" onclick="document.getElementById('cRateInput').value=3; updateCompound();">3%（低め）</button>
+            <button class="preset-btn" onclick="document.getElementById('cRateInput').value=5; updateCompound();">5%（平均）</button>
+            <button class="preset-btn" onclick="document.getElementById('cRateInput').value=7; updateCompound();">7%（高め）</button>
+          </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- 積立期間 -->
+        <div class="form-group" id="c-years-group">
+          <label class="form-label">
+            積立期間
+            <span class="value-display"><span id="cYearsDisplay">20</span> 年</span>
+          </label>
+          <div class="input-wrapper">
+            <input type="number" id="cYearsInput" value="20" min="1" max="50" step="1" aria-label="積立期間（年）">
+            <span class="suffix">年</span>
+          </div>
+          <input type="range" id="cYearsSlider" min="1" max="40" value="20" step="1" aria-label="期間スライダー">
+          <div class="preset-group">
+            <button class="preset-btn" onclick="document.getElementById('cYearsInput').value=10; updateCompound();">10年</button>
+            <button class="preset-btn" onclick="document.getElementById('cYearsInput').value=20; updateCompound();">20年</button>
+            <button class="preset-btn" onclick="document.getElementById('cYearsInput').value=30; updateCompound();">30年</button>
+          </div>
+        </div>
+
+        <!-- 他ツールへのリンク -->
+        <div style="margin-top: 24px; padding: 16px; background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: var(--border-radius-md);">
+          <p style="font-size: 14px; color: var(--text-secondary);">
+            💰 <a href="index.html" style="color: var(--accent-green); font-weight: 600;">手取り計算</a>
+            ｜🏡 <a href="furusato.html" style="color: var(--accent-green); font-weight: 600;">ふるさと納税</a>
+          </p>
+        </div>
+      </div>
+
+      <!-- Result Panel -->
+      <div class="glass-card animate-in delay-1" id="compound-result-panel">
+        <div class="card-header">
+          <div class="card-icon blue">💎</div>
+          <div class="card-title">シミュレーション結果</div>
+        </div>
+
+        <div class="result-hero" id="compound-result-hero">
+          <div class="result-label">将来の資産額</div>
+          <div class="result-value" id="cResultFinal">¥0</div>
+          <div class="result-sub">
+            運用益率 <strong><span id="cResultRate">0</span>%</strong>
+          </div>
+        </div>
+
+        <!-- 棒グラフ -->
+        <div class="chart-wrapper" id="c-chart-wrapper">
+          <canvas id="cBarChart"></canvas>
+          <div class="legend">
+            <div class="legend-item">
+              <span class="legend-dot" style="background: rgba(100,116,139,0.5);"></span> 元本
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot" style="background: #10b981;"></span> 運用益
+            </div>
+          </div>
+        </div>
+
+        <!-- 内訳 -->
+        <div class="stat-grid" id="c-stat-grid">
+          <div class="stat-card">
+            <div class="s-label">積立元本</div>
+            <div class="s-value" style="color: var(--text-secondary);" id="cResultDeposit">¥0</div>
+          </div>
+          <div class="stat-card">
+            <div class="s-label">運用益（複利効果）</div>
+            <div class="s-value" style="color: #10b981;" id="cResultReturn">¥0</div>
+          </div>
+        </div>
+
+        <!-- NISA情報 -->
+        <div class="nisa-info" id="c-nisa-info">
+          <h3>📋 新NISAとは？</h3>
+          <p>
+            2024年から始まった新NISAでは、<strong>年間360万円</strong>（つみたて枠120万＋成長投資枠240万）まで非課税で投資可能。
+            運用益に通常かかる約20%の税金が<strong>ゼロ</strong>になるため、長期の積立投資に最適です。
+            生涯の非課税保有限度額は<strong>1,800万円</strong>です。
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="compound-cta-section">
+      <h2 class="cta-title">今すぐ<span class="gradient-text">積立投資</span>を始める</h2>
+      <p class="cta-subtitle">新NISAに対応した証券口座を開設して、非課税で資産運用を始めましょう。</p>
+
+      <div class="cta-grid">
+        <div class="cta-card animate-in delay-1" id="cta-sbi">
+          <div class="cta-icon">🏦</div>
+          <h3>SBI証券</h3>
+          <p>ネット証券最大手。新NISA対応、業界最低水準の手数料。投資信託の取扱本数も豊富。</p>
+          <a href="#" class="cta-button green" id="cta-sbi-link">口座を開設する →</a>
+        </div>
+        <div class="cta-card animate-in delay-2" id="cta-rakuten-sec">
+          <div class="cta-icon">📱</div>
+          <h3>楽天証券</h3>
+          <p>楽天ポイントで投資可能。楽天カード積立でポイント還元も。アプリが使いやすい。</p>
+          <a href="#" class="cta-button purple" id="cta-rakuten-sec-link">口座を開設する →</a>
+        </div>
+        <div class="cta-card animate-in delay-3" id="cta-monex">
+          <div class="cta-icon">📊</div>
+          <h3>マネックス証券</h3>
+          <p>dポイントが貯まる。分析ツールが充実。iDeCoにも強い。</p>
+          <a href="#" class="cta-button orange" id="cta-monex-link">口座を開設する →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" id="compound-footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="privacy.html">プライバシーポリシー</a>
+        <a href="terms.html">利用規約</a>
+        <a href="contact.html">お問い合わせ</a>
+      </div>
+      <p>© 2026 MoneyLab. 本ツールの計算結果は概算です。投資にはリスクがあります。</p>
+    </div>
+  </footer>
+
+  <script src="js/compound.js"></script>
+</body>
+</html>
