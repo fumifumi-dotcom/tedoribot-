@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ふるさと納税 上限額シミュレーター 2026年版 | 控除限度額を即座に計算</title>
+  <meta name="description" content="年収を入力するだけでふるさと納税の控除上限額を即座に計算。2026年最新の税率に対応。自己負担2,000円で最大限お得に寄付できる金額がわかります。">
+  <meta name="keywords" content="ふるさと納税,上限額,控除限度額,シミュレーター,計算,2026">
+  <meta property="og:title" content="ふるさと納税 上限額シミュレーター 2026年版">
+  <meta property="og:description" content="年収を入力するだけでふるさと納税の上限額を即座に計算。2026年最新税率対応。">
+  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .suggestion-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      background: var(--bg-tertiary);
+      border-radius: var(--border-radius-md);
+      margin-bottom: 8px;
+      transition: var(--transition);
+      border: 1px solid transparent;
+    }
+    .suggestion-item:hover {
+      border-color: var(--glass-border);
+      transform: translateX(4px);
+    }
+    .suggestion-amount {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--accent-green);
+      min-width: 100px;
+    }
+    .suggestion-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      text-align: right;
+    }
+
+    .deduction-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .deduction-card {
+      background: var(--bg-tertiary);
+      border-radius: var(--border-radius-md);
+      padding: 16px;
+      text-align: center;
+    }
+    .deduction-card .d-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .deduction-card .d-value {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .how-section {
+      margin-top: 32px;
+      padding: 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--border-radius-lg);
+    }
+    .how-section h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .how-steps {
+      list-style: none;
+      counter-reset: step;
+    }
+    .how-steps li {
+      counter-increment: step;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--glass-border);
+      font-size: 14px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .how-steps li:last-child { border-bottom: none; }
+    .how-steps li::before {
+      content: counter(step);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent-green);
+      font-weight: 700;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 600px) {
+      .deduction-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo" id="furusato-logo">
+        <div class="logo-icon">¥</div>
+        <div class="logo-text"><span>MoneyLab</span></div>
+      </a>
+      <div class="header-badge">2026年度対応</div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="furusato-hero">
+    <div class="container">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        リアルタイム計算
+      </div>
+      <h1>
+        ふるさと納税<br>
+        <span class="gradient-text">上限額</span>シミュレーター
+      </h1>
+      <p class="hero-subtitle">
+        年収を入力するだけで、自己負担2,000円で寄付できる上限額を即座に計算。<br>
+        2026年度の最新税率に完全対応しています。
+      </p>
+    </div>
+  </section>
+
+  <!-- Main Calculator -->
+  <main class="container">
+    <div class="main-grid">
+
+      <!-- Input Panel -->
+      <div class="glass-card animate-in" id="furusato-input-panel">
+        <div class="card-header">
+          <div class="card-icon green">🏡</div>
+          <div class="card-title">条件を入力</div>
+        </div>
+
+        <div class="form-group" id="f-income-group">
+          <label class="form-label">
+            年収（額面）
+            <span class="value-display"><span id="fIncomeDisplay">500</span> 万円</span>
+          </label>
+          <div class="input-wrapper">
+            <input type="number" id="fIncomeInput" value="500" min="0" max="5000" step="10" aria-label="年収を万円単位で入力">
+            <span class="suffix">万円</span>
+          </div>
+          <input type="range" id="fIncomeSlider" min="0" max="3000" value="500" step="10" aria-label="年収スライダー">
+        </div>
+
+        <hr class="section-divider">
+
+        <div class="form-group" id="f-spouse-group">
+          <label class="form-label">配偶者控除</label>
+          <div class="toggle-group">
+            <button class="toggle-btn active" data-fspouse="no" id="f-spouse-no">なし</button>
+            <button class="toggle-btn" data-fspouse="yes" id="f-spouse-yes">あり</button>
+          </div>
+        </div>
+
+        <div class="form-group" id="f-dependents-group">
+          <label class="form-label">扶養家族の人数</label>
+          <select id="fDependentsSelect" aria-label="扶養家族の人数">
+            <option value="0" selected>0人</option>
+            <option value="1">1人</option>
+            <option value="2">2人</option>
+            <option value="3">3人</option>
+            <option value="4">4人</option>
+            <option value="5">5人以上</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="f-age-group">
+          <label class="form-label">年齢</label>
+          <div class="toggle-group">
+            <button class="toggle-btn active" data-fage="under40" id="f-age-under40">39歳以下</button>
+            <button class="toggle-btn" data-fage="40to64" id="f-age-40to64">40〜64歳</button>
+          </div>
+        </div>
+
+        <!-- 手取り計算へのリンク -->
+        <div class="how-section" style="margin-top: 24px; padding: 16px;">
+          <p style="font-size: 14px; color: var(--text-secondary);">
+            💰 手取り額も確認したい方はこちら →
+            <a href="index.html" style="color: var(--accent-green); font-weight: 600;">手取り計算シミュレーター</a>
+          </p>
+        </div>
+      </div>
+
+      <!-- Result Panel -->
+      <div class="glass-card animate-in delay-1" id="furusato-result-panel">
+        <div class="card-header">
+          <div class="card-icon blue">🎁</div>
+          <div class="card-title">計算結果</div>
+        </div>
+
+        <div class="result-hero" id="furusato-result-hero">
+          <div class="result-label">ふるさと納税の上限額（目安）</div>
+          <div class="result-value" id="fResultLimit">¥0</div>
+          <div class="result-sub">
+            自己負担 <strong>¥2,000</strong> で寄付できる最大額
+          </div>
+        </div>
+
+        <!-- チャート -->
+        <div class="chart-container" id="f-chart-area">
+          <canvas id="fDonutChart" width="200" height="200"></canvas>
+        </div>
+
+        <!-- 控除内訳 -->
+        <div class="deduction-grid" id="f-deduction-grid">
+          <div class="deduction-card">
+            <div class="d-label">所得税からの控除</div>
+            <div class="d-value" style="color: #3b82f6;" id="fIncomeTaxDeduction">¥0</div>
+          </div>
+          <div class="deduction-card">
+            <div class="d-label">住民税からの控除</div>
+            <div class="d-value" style="color: #6366f1;" id="fResidentTaxDeduction">¥0</div>
+          </div>
+          <div class="deduction-card">
+            <div class="d-label">自己負担額</div>
+            <div class="d-value" style="color: #64748b;" id="fSelfPayment">¥2,000</div>
+          </div>
+        </div>
+
+        <!-- 月額カード -->
+        <div class="monthly-card" id="f-monthly-card">
+          <span class="monthly-label">📅 月あたりの寄付目安</span>
+          <span class="monthly-value">¥<span id="fResultMonthly">0</span></span>
+        </div>
+
+        <!-- おすすめ寄付額 -->
+        <div style="margin-top: 24px;">
+          <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 12px;">🎁 おすすめの寄付額</h3>
+          <div id="fSuggestions"></div>
+        </div>
+
+        <!-- ふるさと納税の流れ -->
+        <div class="how-section">
+          <h3>📋 ふるさと納税の流れ</h3>
+          <ol class="how-steps">
+            <li>上限額を確認する（このシミュレーターで完了 ✅）</li>
+            <li>ふるさと納税サイトで寄付先を選ぶ</li>
+            <li>返礼品を受け取る</li>
+            <li>確定申告 or ワンストップ特例申請で控除を受ける</li>
+          </ol>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="furusato-cta-section">
+      <h2 class="cta-title">今すぐ<span class="gradient-text">寄付先を探す</span></h2>
+      <p class="cta-subtitle">人気のふるさと納税サイトで、お得な返礼品を見つけましょう。</p>
+
+      <div class="cta-grid">
+        <div class="cta-card animate-in delay-1" id="cta-satofuru">
+          <div class="cta-icon">🌾</div>
+          <h3>さとふる</h3>
+          <p>返礼品の種類が豊富。ランキング機能で人気の品が見つけやすい。</p>
+          <a href="#" class="cta-button green" id="cta-satofuru-link">さとふるで探す →</a>
+        </div>
+        <div class="cta-card animate-in delay-2" id="cta-furunavi">
+          <div class="cta-icon">🗺️</div>
+          <h3>ふるなび</h3>
+          <p>家電やギフト券など高還元率の返礼品が充実。</p>
+          <a href="#" class="cta-button purple" id="cta-furunavi-link">ふるなびで探す →</a>
+        </div>
+        <div class="cta-card animate-in delay-3" id="cta-rakuten">
+          <div class="cta-icon">🏪</div>
+          <h3>楽天ふるさと納税</h3>
+          <p>楽天ポイントが貯まる＆使える。お買い物マラソンで還元率UP。</p>
+          <a href="#" class="cta-button orange" id="cta-rakuten-link">楽天で探す →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" id="furusato-footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="privacy.html">プライバシーポリシー</a>
+        <a href="terms.html">利用規約</a>
+        <a href="contact.html">お問い合わせ</a>
+      </div>
+      <p>© 2026 MoneyLab. 本ツールの計算結果は概算です。正確な金額は税理士等にご確認ください。</p>
+    </div>
+  </footer>
+
+  <script src="js/furusato.js"></script>
+</body>
+</html>

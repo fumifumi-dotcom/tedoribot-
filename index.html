@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>手取り計算シミュレーター 2026年版 | 年収から手取り額を即座に計算</title>
+  <meta name="description" content="年収を入力するだけで手取り額・所得税・住民税・社会保険料を即座に自動計算。2026年最新の税率に対応。グラフで内訳が一目瞭然。">
+  <meta name="keywords" content="手取り計算,年収,手取り額,シミュレーター,所得税,住民税,社会保険料,2026">
+  <meta property="og:title" content="手取り計算シミュレーター 2026年版">
+  <meta property="og:description" content="年収を入力するだけで手取り額を即座に計算。2026年最新の税率対応。">
+  <meta property="og:type" content="website">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo" id="site-logo">
+        <div class="logo-icon">¥</div>
+        <div class="logo-text"><span>MoneyLab</span></div>
+      </a>
+      <div class="header-badge">2026年度対応</div>
+    </div>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero" id="hero-section">
+    <div class="container">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        リアルタイム計算
+      </div>
+      <h1>
+        あなたの<span class="gradient-text">手取り額</span>、<br>
+        瞬時にわかる。
+      </h1>
+      <p class="hero-subtitle">
+        年収を入力するだけで、所得税・住民税・社会保険料を自動計算。<br>
+        2026年度の最新税率に完全対応しています。
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== Main Calculator ===== -->
+  <main class="container">
+    <div class="main-grid">
+
+      <!-- === Input Panel === -->
+      <div class="glass-card animate-in" id="input-panel">
+        <div class="card-header">
+          <div class="card-icon green">📊</div>
+          <div class="card-title">条件を入力</div>
+        </div>
+
+        <!-- 年収入力 -->
+        <div class="form-group" id="income-group">
+          <label class="form-label">
+            年収（額面）
+            <span class="value-display"><span id="incomeDisplay">500</span> 万円</span>
+          </label>
+          <div class="input-wrapper">
+            <input
+              type="number"
+              id="incomeInput"
+              value="500"
+              min="0"
+              max="5000"
+              step="10"
+              aria-label="年収を万円単位で入力"
+            >
+            <span class="suffix">万円</span>
+          </div>
+          <input
+            type="range"
+            id="incomeSlider"
+            min="0"
+            max="3000"
+            value="500"
+            step="10"
+            aria-label="年収スライダー"
+          >
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- 配偶者 -->
+        <div class="form-group" id="spouse-group">
+          <label class="form-label">配偶者控除</label>
+          <div class="toggle-group">
+            <button class="toggle-btn active" data-spouse="no" id="spouse-no">なし</button>
+            <button class="toggle-btn" data-spouse="yes" id="spouse-yes">あり</button>
+          </div>
+        </div>
+
+        <!-- 扶養家族 -->
+        <div class="form-group" id="dependents-group">
+          <label class="form-label">扶養家族の人数</label>
+          <select id="dependentsSelect" aria-label="扶養家族の人数">
+            <option value="0" selected>0人</option>
+            <option value="1">1人</option>
+            <option value="2">2人</option>
+            <option value="3">3人</option>
+            <option value="4">4人</option>
+            <option value="5">5人以上</option>
+          </select>
+        </div>
+
+        <!-- 年齢区分 -->
+        <div class="form-group" id="age-group">
+          <label class="form-label">年齢</label>
+          <div class="toggle-group">
+            <button class="toggle-btn active" data-age="under40" id="age-under40">39歳以下</button>
+            <button class="toggle-btn" data-age="40to64" id="age-40to64">40〜64歳</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- === Result Panel === -->
+      <div class="glass-card animate-in delay-1" id="result-panel">
+        <div class="card-header">
+          <div class="card-icon blue">💰</div>
+          <div class="card-title">計算結果</div>
+        </div>
+
+        <!-- 手取り額 -->
+        <div class="result-hero" id="result-hero">
+          <div class="result-label">年間の手取り額</div>
+          <div class="result-value" id="resultTedori">¥0</div>
+          <div class="result-sub">
+            手取り率 <strong><span id="resultRate">0</span>%</strong>
+            ｜月額 <strong>¥<span id="resultMonthly">0</span></strong>
+          </div>
+        </div>
+
+        <!-- ドーナツチャート -->
+        <div class="chart-container" id="chart-area">
+          <canvas id="donutChart" width="220" height="220"></canvas>
+        </div>
+
+        <!-- 内訳リスト -->
+        <ul class="breakdown-list" id="breakdown-list">
+          <li class="breakdown-item" id="breakdown-income-tax-row">
+            <div class="breakdown-left">
+              <span class="breakdown-dot" style="background: #3b82f6;"></span>
+              <span class="breakdown-name">所得税</span>
+            </div>
+            <div class="breakdown-right">
+              <div class="breakdown-amount" id="breakdownIncomeTax">¥0</div>
+              <div class="breakdown-percent" id="percentIncomeTax">0%</div>
+            </div>
+          </li>
+          <li class="breakdown-item" id="breakdown-resident-tax-row">
+            <div class="breakdown-left">
+              <span class="breakdown-dot" style="background: #6366f1;"></span>
+              <span class="breakdown-name">住民税</span>
+            </div>
+            <div class="breakdown-right">
+              <div class="breakdown-amount" id="breakdownResidentTax">¥0</div>
+              <div class="breakdown-percent" id="percentResidentTax">0%</div>
+            </div>
+          </li>
+          <li class="breakdown-item" id="breakdown-health-row">
+            <div class="breakdown-left">
+              <span class="breakdown-dot" style="background: #f59e0b;"></span>
+              <span class="breakdown-name">健康保険料</span>
+            </div>
+            <div class="breakdown-right">
+              <div class="breakdown-amount" id="breakdownHealth">¥0</div>
+              <div class="breakdown-percent" id="percentHealth">0%</div>
+            </div>
+          </li>
+          <li class="breakdown-item" id="breakdownNursingRow" style="display: none;">
+            <div class="breakdown-left">
+              <span class="breakdown-dot" style="background: #ec4899;"></span>
+              <span class="breakdown-name">介護保険料</span>
+            </div>
+            <div class="breakdown-right">
+              <div class="breakdown-amount" id="breakdownNursing">¥0</div>
+              <div class="breakdown-percent" id="percentNursing">0%</div>
+            </div>
+          </li>
+          <li class="breakdown-item" id="breakdown-pension-row">
+            <div class="breakdown-left">
+              <span class="breakdown-dot" style="background: #ef4444;"></span>
+              <span class="breakdown-name">厚生年金保険料</span>
+            </div>
+            <div class="breakdown-right">
+              <div class="breakdown-amount" id="breakdownPension">¥0</div>
+              <div class="breakdown-percent" id="percentPension">0%</div>
+            </div>
+          </li>
+          <li class="breakdown-item" id="breakdown-employment-row">
+            <div class="breakdown-left">
+              <span class="breakdown-dot" style="background: #8b5cf6;"></span>
+              <span class="breakdown-name">雇用保険料</span>
+            </div>
+            <div class="breakdown-right">
+              <div class="breakdown-amount" id="breakdownEmployment">¥0</div>
+              <div class="breakdown-percent" id="percentEmployment">0%</div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- 月額カード -->
+        <div class="monthly-card" id="monthly-card">
+          <span class="monthly-label">📅 毎月の手取り</span>
+          <span class="monthly-value" id="monthlyValue">¥0</span>
+        </div>
+      </div>
+
+    </div><!-- /main-grid -->
+
+    <!-- ===== CTA Section ===== -->
+    <section class="cta-section" id="cta-section">
+      <h2 class="cta-title">手取りを<span class="gradient-text">もっと増やす</span>には？</h2>
+      <p class="cta-subtitle">年収アップ・節税・資産運用で、あなたの手取りを最大化しましょう。</p>
+
+      <div class="cta-grid">
+        <!-- CTA 1: 転職 -->
+        <div class="cta-card animate-in delay-1" id="cta-career">
+          <div class="cta-icon">🚀</div>
+          <h3>年収を上げる</h3>
+          <p>
+            今の市場価値を知っていますか？<br>
+            転職サイトで無料の年収診断を受けてみましょう。
+          </p>
+          <a href="#" class="cta-button green" id="cta-career-link">
+            年収診断を受ける →
+          </a>
+        </div>
+
+        <!-- CTA 2: ふるさと納税 -->
+        <div class="cta-card animate-in delay-2" id="cta-furusato">
+          <div class="cta-icon">🏡</div>
+          <h3>ふるさと納税で節税</h3>
+          <p>
+            実質2,000円で豪華な返礼品がもらえます。<br>
+            年収から上限額を計算してみましょう。
+          </p>
+          <a href="furusato.html" class="cta-button purple" id="cta-furusato-link">
+            上限額を計算する →
+          </a>
+        </div>
+
+        <!-- CTA 3: 資産運用 -->
+        <div class="cta-card animate-in delay-3" id="cta-invest">
+          <div class="cta-icon">📈</div>
+          <h3>NISAで資産運用</h3>
+          <p>
+            新NISAなら運用益が非課税。<br>
+            毎月の積立で将来の資産を増やしましょう。
+          </p>
+          <a href="#" class="cta-button orange" id="cta-invest-link">
+            積立シミュレーション →
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer" id="site-footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="#">プライバシーポリシー</a>
+        <a href="#">利用規約</a>
+        <a href="#">お問い合わせ</a>
+      </div>
+      <p>
+        © 2026 MoneyLab. 本ツールの計算結果は概算です。正確な金額は税理士等にご確認ください。
+      </p>
+    </div>
+  </footer>
+
+  <script src="js/calculator.js"></script>
+</body>
+</html>
