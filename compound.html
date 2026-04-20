@@ -106,6 +106,34 @@
       .stat-grid { grid-template-columns: 1fr; }
     }
   </style>
+  <link rel="canonical" href="https://tedori-keisan.com/compound.html">
+  <meta name="google-site-verification" content="N5c4TvYK9mIZq7FveUPkiafsuy-hzeakcOfRxiH_-70" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "手取り計算.com 積立シミュレーター",
+    "description": "新NISA対応の積立投資シミュレーター。複利効果を計算。",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "All",
+    "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "JPY"
+    }
+}
+  </script>
+
+  <!-- Google Analytics & AdSense (Placeholder IDs) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3STMJXD6N3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-3STMJXD6N3');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3012346545678100" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -113,12 +141,13 @@
     <div class="container header-inner">
       <a href="index.html" class="logo" id="compound-logo">
         <div class="logo-icon">¥</div>
-        <div class="logo-text"><span>MoneyLab</span></div>
+        <div class="logo-text"><span>手取り計算.com</span></div>
       </a>
       <nav class="header-nav" style="display:flex;gap:20px;align-items:center;">
         <a href="index.html" style="color:var(--text-secondary);font-size:13px;text-decoration:none;font-weight:500;">手取り計算</a>
         <a href="furusato.html" style="color:var(--text-secondary);font-size:13px;text-decoration:none;font-weight:500;">ふるさと納税</a>
         <a href="compound.html" style="color:var(--accent-green);font-size:13px;text-decoration:none;font-weight:600;">積立シミュレーション</a>
+        <a href="retirement.html" class="nav-item">退職金計算</a>
         <div class="header-badge">2026年度対応</div>
       </nav>
     </div>
@@ -266,29 +295,23 @@
 
     </div>
 
-    <!-- CTA Section -->
+    <!-- CTA Section (収益確定案件のみ) -->
     <section class="cta-section" id="compound-cta-section">
-      <h2 class="cta-title">今すぐ<span class="gradient-text">積立投資</span>を始める</h2>
-      <p class="cta-subtitle">新NISAに対応した証券口座を開設して、非課税で資産運用を始めましょう。</p>
+      <h2 class="cta-title">積立資金を<span class="gradient-text">最大化</span>する</h2>
+      <p class="cta-subtitle">投資の成果を最大化するには、元手となる「手取り」を増やすことと、税金を賢く取り戻すことが鍵です。</p>
 
       <div class="cta-grid">
-        <div class="cta-card animate-in delay-1" id="cta-sbi">
-          <div class="cta-icon">🏦</div>
-          <h3>SBI証券</h3>
-          <p>ネット証券最大手。新NISA対応、業界最低水準の手数料。投資信託の取扱本数も豊富。</p>
-          <a href="#" class="cta-button green" id="cta-sbi-link">口座を開設する →</a>
+        <div class="cta-card animate-in delay-1">
+          <div class="cta-icon">🎯</div>
+          <h3>ふるさと納税で実質減税</h3>
+          <p>投資と並行してふるさと納税を活用すれば、住民税を実質相殺。浮いた分をさらに積立に回せます。</p>
+          <a href="#" class="cta-button green" id="cta-rakuten-link">楽天ふるさと納税で探す →</a>
         </div>
-        <div class="cta-card animate-in delay-2" id="cta-rakuten-sec">
-          <div class="cta-icon">📱</div>
-          <h3>楽天証券</h3>
-          <p>楽天ポイントで投資可能。楽天カード積立でポイント還元も。アプリが使いやすい。</p>
-          <a href="#" class="cta-button purple" id="cta-rakuten-sec-link">口座を開設する →</a>
-        </div>
-        <div class="cta-card animate-in delay-3" id="cta-monex">
-          <div class="cta-icon">📊</div>
-          <h3>マネックス証券</h3>
-          <p>dポイントが貯まる。分析ツールが充実。iDeCoにも強い。</p>
-          <a href="#" class="cta-button orange" id="cta-monex-link">口座を開設する →</a>
+        <div class="cta-card animate-in delay-2">
+          <div class="cta-icon">💰</div>
+          <h3>年収を上げて投資額を増やす</h3>
+          <p>月3万円の積立を月5万円にするだけで、20年後の資産は数百万円変わります。まずは適正年収をチェック。</p>
+          <a href="#" class="cta-button purple" id="cta-career-link">無料の年収診断を受ける →</a>
         </div>
       </div>
     </section>
@@ -302,10 +325,11 @@
         <a href="terms.html">利用規約</a>
         <a href="contact.html">お問い合わせ</a>
       </div>
-      <p>© 2026 MoneyLab. 本ツールの計算結果は概算です。投資にはリスクがあります。</p>
+      <p>© 2026 手取り計算.com 本ツールの計算結果は概算です。投資にはリスクがあります。</p>
     </div>
   </footer>
 
+  <script src="js/affiliate.js"></script>
   <script src="js/compound.js"></script>
 </body>
 </html>

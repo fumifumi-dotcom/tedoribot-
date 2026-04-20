@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>退職金の手取り計算機【2026年最新】税金シミュレーター | 手取り計算.com</title>
+  <meta name="description" content="退職金にかかる所得税・住民税を自動計算し、最終的な手取り額をシミュレーションします。勤続年数に応じた退職所得控除に完全対応。">
+  <link rel="canonical" href="https://tedori-keisan.com/retirement.html">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="application/ld+json">
+  {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "手取り計算.com 退職金手取り計算機",
+      "description": "退職金にかかる税金（所得税・住民税）を計算し、実際の手取り額を算出するシミュレーター。",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "All",
+      "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "JPY"
+      }
+  }
+  </script>
+
+  <!-- Google Analytics & AdSense (Placeholder IDs) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3STMJXD6N3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-3STMJXD6N3');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3012346545678100" crossorigin="anonymous"></script>
+
+  <!-- OGP / Twitter Card -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="退職金の手取り計算機【2026年最新】| 手取り計算.com">
+  <meta property="og:description" content="退職金にかかる所得税・住民税を計算し、最終手取り額を即座にシミュレーション。">
+  <meta property="og:url" content="https://tedori-keisan.com/retirement.html">
+  <meta property="og:site_name" content="手取り計算.com">
+  <meta property="og:locale" content="ja_JP">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="退職金の手取り計算機【2026年最新】| 手取り計算.com">
+  <meta name="twitter:description" content="退職金にかかる所得税・住民税を計算し、最終手取り額を即座にシミュレーション。">
+  </head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">¥</div>
+        <div class="logo-text"><span>手取り計算.com</span></div>
+      </a>
+      <nav class="header-nav">
+        <a href="index.html" class="nav-item">手取り計算</a>
+        <a href="salary-list.html" class="nav-item">早見表</a>
+        <a href="furusato.html" class="nav-item">ふるさと納税</a>
+        <a href="compound.html" class="nav-item">積立計算</a>
+        <a href="retirement.html" class="nav-item active">退職金計算</a>
+      </nav>
+      <div class="header-badge">2026年度版</div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero-section" style="padding-top: 40px; text-align: center;">
+      <span class="hero-badge" style="background: rgba(245,158,11,0.1); color: #f59e0b;">完全無料・登録不要</span>
+      <h1 class="hero-title">退職金の手取り計算機</h1>
+      <p class="hero-subtitle">退職金から引かれる所得税・住民税をシミュレーションします。<br>勤続年数による「退職所得控除」を自動計算します。</p>
+    </section>
+
+    <section class="calculator-container" style="max-width: 900px; margin: 40px auto; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start;">
+      
+      <!-- 入力パネル -->
+      <div class="input-panel">
+        <div class="input-group">
+          <label>💰 退職金額（額面）</label>
+          <div class="input-with-unit">
+            <input type="number" id="retirementInput" value="2000" min="0" step="10">
+            <span class="unit">万円</span>
+          </div>
+          <input type="range" id="retirementSlider" class="range-slider" min="100" max="10000" step="100" value="2000">
+        </div>
+
+        <div class="input-group">
+          <label>⏳ 勤続年数</label>
+          <div class="input-with-unit">
+            <input type="number" id="yearsInput" value="30" min="1" max="50" step="1">
+            <span class="unit">年</span>
+          </div>
+          <p class="helper-text" style="font-size: 13px; color: var(--text-muted); margin-top: 8px;">※1年未満の端数は切り上げて計算してください（例：15年2ヶ月→16年）</p>
+        </div>
+
+        <div class="input-group">
+          <label>📜 退職理由</label>
+          <select id="reasonSelect" class="form-select" style="width: 100%; padding: 12px; border: 1px solid var(--glass-border); border-radius: var(--border-radius-md); background: var(--bg-tertiary); color: var(--text-primary); font-family: inherit;">
+            <option value="general">一般退職（定年・自己都合など）</option>
+            <option value="executive">役員等（勤続5年以下）での退職</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 結果パネル -->
+      <div class="result-panel">
+        <div class="result-header">
+          <h2>退職金 手取り額</h2>
+          <div class="main-result" id="resultTedori">¥0</div>
+          <div class="rate-badge">手取り率 <span id="resultRate">0</span>%</div>
+        </div>
+
+        <div class="breakdown-list">
+          <div class="breakdown-item">
+            <span class="label">🏢 額面退職金</span>
+            <span class="value" id="breakdownGross">¥0</span>
+          </div>
+          <hr style="border: 0; border-top: 1px dashed var(--glass-border); margin: 8px 0;">
+          <div class="breakdown-item">
+            <span class="label">🛡️ 退職所得控除</span>
+            <span class="value" id="breakdownDeduction" style="color: var(--accent-green);">¥0</span>
+          </div>
+          <div class="breakdown-item">
+            <span class="label">📋 課税退職所得金額</span>
+            <span class="value" id="breakdownTaxable">¥0</span>
+          </div>
+          <hr style="border: 0; border-top: 1px dashed var(--glass-border); margin: 8px 0;">
+          <div class="breakdown-item">
+            <span class="label" style="display: flex; align-items: center; gap: 8px;"><div class="color-dot" style="background: #3b82f6;"></div>所得税（復興税込）</span>
+            <span class="value" id="breakdownIncomeTax">¥0</span>
+          </div>
+          <div class="breakdown-item">
+            <span class="label" style="display: flex; align-items: center; gap: 8px;"><div class="color-dot" style="background: #6366f1;"></div>住民税</span>
+            <span class="value" id="breakdownResidentTax">¥0</span>
+          </div>
+        </div>
+        <p class="disclaimer" style="margin-top: 16px;">※社会保険料は引き落とされません。退職前に「退職所得の受給に関する申告書」を提出した前提の計算です。</p>
+        
+        <!-- 動的CTA表示領域 -->
+        <div id="dynamic-recommendation" style="display: none; margin-top: 32px; animation: slideUp 0.5s ease forwards;">
+          <!-- JSで内容を注入します -->
+        </div>
+      </div>
+    </section>
+
+    <!-- UI共通化CSS追加 -->
+    <style>
+      .nav-item.active {
+        color: var(--accent-green);
+        background: rgba(16, 185, 129, 0.1);
+        font-weight: 700;
+        border-radius: var(--border-radius-sm);
+        padding: 6px 12px;
+      }
+      .nav-item { padding: 6px 12px; }
+      @media (max-width: 900px) {
+        .calculator-container { grid-template-columns: 1fr; }
+      }
+    </style>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="privacy.html">プライバシーポリシー</a>
+        <a href="terms.html">利用規約</a>
+        <a href="contact.html">お問い合わせ</a>
+      </div>
+      <p>© 2026 手取り計算.com</p>
+    </div>
+  </footer>
+
+  <script src="js/affiliate.js"></script>
+  <script src="js/retirement.js"></script>
+</body>
+</html>

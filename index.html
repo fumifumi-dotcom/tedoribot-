@@ -10,8 +10,35 @@
   <meta property="og:description" content="年収を入力するだけで手取り額を即座に計算。2026年最新の税率対応。">
   <meta property="og:type" content="website">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="">
+  <link rel="canonical" href="https://tedori-keisan.com/">
   <link rel="stylesheet" href="css/style.css">
+  <meta name="google-site-verification" content="N5c4TvYK9mIZq7FveUPkiafsuy-hzeakcOfRxiH_-70" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "手取り計算.com 手取り計算機",
+    "description": "2026年最新の税率・社会保険料に対応した手取り計算シミュレーター。",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "All",
+    "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "JPY"
+    }
+}
+  </script>
+
+  <!-- Google Analytics & AdSense (Placeholder IDs) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3STMJXD6N3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-3STMJXD6N3');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3012346545678100" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -21,12 +48,13 @@
     <div class="container header-inner">
       <a href="/" class="logo" id="site-logo">
         <div class="logo-icon">¥</div>
-        <div class="logo-text"><span>MoneyLab</span></div>
+        <div class="logo-text"><span>手取り計算.com</span></div>
       </a>
       <nav class="header-nav" style="display:flex;gap:20px;align-items:center;">
         <a href="index.html" style="color:var(--accent-green);font-size:13px;text-decoration:none;font-weight:600;">手取り計算</a>
         <a href="furusato.html" style="color:var(--text-secondary);font-size:13px;text-decoration:none;font-weight:500;">ふるさと納税</a>
         <a href="compound.html" style="color:var(--text-secondary);font-size:13px;text-decoration:none;font-weight:500;">積立シミュレーション</a>
+        <a href="retirement.html" class="nav-item">退職金計算</a>
         <div class="header-badge">2026年度対応</div>
       </nav>
     </div>
@@ -214,12 +242,26 @@
         <div class="monthly-card" id="monthly-card">
           <span class="monthly-label">📅 毎月の手取り</span>
           <span class="monthly-value" id="monthlyValue">¥0</span>
+          <p class="disclaimer">※上記は概算です。正確な税額は自治体や個人の状況により異なります。</p>
+        </div>
+        
+        <!-- 動的CTA表示領域 -->
+        <div id="dynamic-recommendation" style="display: none; margin-top: 32px; animation: slideUp 0.5s ease forwards;">
+          <!-- JSで内容を注入します -->
         </div>
       </div>
 
     </div><!-- /main-grid -->
 
     <!-- ===== CTA Section ===== -->
+    
+    <section style="max-width: 900px; margin: 40px auto; text-align: center;">
+      <a href="salary-list.html" style="display: block; background: linear-gradient(135deg, rgba(16,185,129,0.1) 0%, rgba(59,130,246,0.1) 100%); border: 1px solid var(--accent-green); border-radius: var(--border-radius-lg); padding: 32px; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 12px 24px rgba(0,0,0,0.1)';" onmouseout="this.style.transform='none'; this.style.boxShadow='none';">
+        <h2 style="color: var(--accent-green); font-size: 24px; margin-bottom: 8px;">📊 年収別 手取り早見表はこちら</h2>
+        <p style="color: var(--text-secondary); font-size: 15px;">100万〜2000万円まで、110パターンの手取り・税金額を一覧で比較できます</p>
+      </a>
+    </section>
+
     <section class="cta-section" id="cta-section">
       <h2 class="cta-title">手取りを<span class="gradient-text">もっと増やす</span>には？</h2>
       <p class="cta-subtitle">年収アップ・節税・資産運用で、あなたの手取りを最大化しましょう。</p>
@@ -263,6 +305,115 @@
             積立シミュレーション →
           </a>
         </div>
+
+        <a href="articles/130man-wall.html" style="display: block; border: 1px solid var(--glass-border); border-radius: var(--border-radius-md); overflow: hidden; text-decoration: none; background: var(--bg-secondary); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)';" onmouseout="this.style.transform='none';">
+          <div style="background: rgba(245,158,11,0.1); height: 8px;"></div>
+          <div style="padding: 24px;">
+            <span style="color: #f59e0b; font-size: 12px; font-weight: bold;">世帯年収ハック</span>
+            <h3 style="color: var(--text-primary); margin-top: 12px; margin-bottom: 8px; font-size: 18px;">106万の壁・130万の壁とは？働き損になる本当の理由</h3>
+            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">パート・主婦の方必見。社会保険の壁を越えると訪れる手取り激減の罠とは。</p>
+          </div>
+        </a>
+
+        <a href="articles/tax-deduction.html" style="display: block; border: 1px solid var(--glass-border); border-radius: var(--border-radius-md); overflow: hidden; text-decoration: none; background: var(--bg-secondary); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)';" onmouseout="this.style.transform='none';">
+          <div style="background: rgba(59,130,246,0.1); height: 8px;"></div>
+          <div style="padding: 24px;">
+            <span style="color: #3b82f6; font-size: 12px; font-weight: bold;">明細書の読み方</span>
+            <h3 style="color: var(--text-primary); margin-top: 12px; margin-bottom: 8px; font-size: 18px;">給与明細の「控除」完全解剖。何が引かれているか知る</h3>
+            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">健康保険、厚生年金、雇用保険…額面から問答無用で引かれる内訳を暴露。</p>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+  
+    <section style="margin-top: 60px; margin-bottom: 40px; border-top: 1px solid var(--glass-border); padding-top: 40px;">
+      <h2 style="text-align: center; color: var(--text-primary); margin-bottom: 32px; font-size: 24px;">📝 お金と税金のおすすめコラム</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; max-width: 900px; margin: 0 auto;">
+        
+        <a href="articles/why-tax-high.html" style="display: block; border: 1px solid var(--glass-border); border-radius: var(--border-radius-md); overflow: hidden; text-decoration: none; background: var(--bg-secondary); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)';" onmouseout="this.style.transform='none';">
+          <div style="background: rgba(239,68,68,0.1); height: 8px;"></div>
+          <div style="padding: 24px;">
+            <span style="color: #ef4444; font-size: 12px; font-weight: bold;">マネーコラム</span>
+            <h3 style="color: var(--text-primary); margin-top: 12px; margin-bottom: 8px; font-size: 18px;">なぜ日本の税金は高いのか？「累進課税」の罠と対策</h3>
+            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">年収が上がっても手取りが増えない理由を、税制の仕組みから徹底解説。</p>
+          </div>
+        </a>
+
+        <a href="articles/furusato-guide.html" style="display: block; border: 1px solid var(--glass-border); border-radius: var(--border-radius-md); overflow: hidden; text-decoration: none; background: var(--bg-secondary); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)';" onmouseout="this.style.transform='none';">
+          <div style="background: rgba(59,130,246,0.1); height: 8px;"></div>
+          <div style="padding: 24px;">
+            <span style="color: #3b82f6; font-size: 12px; font-weight: bold;">節税ガイド</span>
+            <h3 style="color: var(--text-primary); margin-top: 12px; margin-bottom: 8px; font-size: 18px;">ふるさと納税はやらないと損？初心者向け完全解説</h3>
+            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">仕組みがわからなくて放置している人必見。なぜ100%得すると言い切れるのか。</p>
+          </div>
+        </a>
+
+
+        <a href="articles/130man-wall.html" style="display: block; border: 1px solid var(--glass-border); border-radius: var(--border-radius-md); overflow: hidden; text-decoration: none; background: var(--bg-secondary); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)';" onmouseout="this.style.transform='none';">
+          <div style="background: rgba(245,158,11,0.1); height: 8px;"></div>
+          <div style="padding: 24px;">
+            <span style="color: #f59e0b; font-size: 12px; font-weight: bold;">世帯年収ハック</span>
+            <h3 style="color: var(--text-primary); margin-top: 12px; margin-bottom: 8px; font-size: 18px;">106万の壁・130万の壁とは？働き損になる本当の理由</h3>
+            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">パート・主婦の方必見。社会保険の壁を越えると訪れる手取り激減の罠とは。</p>
+          </div>
+        </a>
+
+        <a href="articles/tax-deduction.html" style="display: block; border: 1px solid var(--glass-border); border-radius: var(--border-radius-md); overflow: hidden; text-decoration: none; background: var(--bg-secondary); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)';" onmouseout="this.style.transform='none';">
+          <div style="background: rgba(59,130,246,0.1); height: 8px;"></div>
+          <div style="padding: 24px;">
+            <span style="color: #3b82f6; font-size: 12px; font-weight: bold;">明細書の読み方</span>
+            <h3 style="color: var(--text-primary); margin-top: 12px; margin-bottom: 8px; font-size: 18px;">給与明細の「控除」完全解剖。何が引かれているか知る</h3>
+            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">健康保険、厚生年金、雇用保険…額面から問答無用で引かれる内訳を暴露。</p>
+          </div>
+        </a>
+
+        <a href="articles/nisa-guide.html" style="display: block; border: 1px solid var(--glass-border); border-radius: var(--border-radius-md); overflow: hidden; text-decoration: none; background: var(--bg-secondary); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)';" onmouseout="this.style.transform='none';">
+          <div style="background: rgba(16,185,129,0.1); height: 8px;"></div>
+          <div style="padding: 24px;">
+            <span style="color: #10b981; font-size: 12px; font-weight: bold;">資産運用ガイド</span>
+            <h3 style="color: var(--text-primary); margin-top: 12px; margin-bottom: 8px; font-size: 18px;">新NISAとは？非課税で資産を増やす唯一の合法テクニック</h3>
+            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">初心者でもわかる新NISAの仕組みと、月3万円で1200万円を作るシミュレーション。</p>
+          </div>
+        </a>
+
+        <a href="articles/market-value.html" style="display: block; border: 1px solid var(--glass-border); border-radius: var(--border-radius-md); overflow: hidden; text-decoration: none; background: var(--bg-secondary); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)';" onmouseout="this.style.transform='none';">
+          <div style="background: rgba(139,92,246,0.1); height: 8px;"></div>
+          <div style="padding: 24px;">
+            <span style="color: #8b5cf6; font-size: 12px; font-weight: bold;">キャリア戦略</span>
+            <h3 style="color: var(--text-primary); margin-top: 12px; margin-bottom: 8px; font-size: 18px;">年収アップの近道「市場価値」を今すぐ調べるべき理由</h3>
+            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">転職しなくても自分の適正年収を知っておくだけでキャリアが変わる。</p>
+          </div>
+        </a>
+
+        <a href="articles/tedori-vs-gakumen.html" style="display: block; border: 1px solid var(--glass-border); border-radius: var(--border-radius-md); overflow: hidden; text-decoration: none; background: var(--bg-secondary); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)';" onmouseout="this.style.transform='none';">
+          <div style="background: rgba(16,185,129,0.1); height: 8px;"></div>
+          <div style="padding: 24px;">
+            <span style="color: #10b981; font-size: 12px; font-weight: bold;">基礎知識</span>
+            <h3 style="color: var(--text-primary); margin-top: 12px; margin-bottom: 8px; font-size: 18px;">額面と手取りの差が生まれる5つの原因</h3>
+            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">年収500万でも手取りは約389万。差額111万円の正体を解剖。</p>
+          </div>
+        </a>
+
+        <a href="articles/juminzei-guide.html" style="display: block; border: 1px solid var(--glass-border); border-radius: var(--border-radius-md); overflow: hidden; text-decoration: none; background: var(--bg-secondary); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)';" onmouseout="this.style.transform='none';">
+          <div style="background: rgba(239,68,68,0.1); height: 8px;"></div>
+          <div style="padding: 24px;">
+            <span style="color: #ef4444; font-size: 12px; font-weight: bold;">税金ガイド</span>
+            <h3 style="color: var(--text-primary); margin-top: 12px; margin-bottom: 8px; font-size: 18px;">住民税はいくら？安くする3つの裏技</h3>
+            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">年収別の住民税一覧と、ふるさと納税で取り戻す方法。</p>
+          </div>
+        </a>
+
+        <a href="articles/shakai-hoken.html" style="display: block; border: 1px solid var(--glass-border); border-radius: var(--border-radius-md); overflow: hidden; text-decoration: none; background: var(--bg-secondary); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)';" onmouseout="this.style.transform='none';">
+          <div style="background: rgba(245,158,11,0.1); height: 8px;"></div>
+          <div style="padding: 24px;">
+            <span style="color: #f59e0b; font-size: 12px; font-weight: bold;">社会保険の真実</span>
+            <h3 style="color: var(--text-primary); margin-top: 12px; margin-bottom: 8px; font-size: 18px;">社会保険料が高すぎる！仕組みと金額を完全解説</h3>
+            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">年収別の社会保険料一覧と手取りを守る方法。</p>
+          </div>
+        </a>
+
       </div>
     </section>
 
@@ -277,11 +428,12 @@
         <a href="#">お問い合わせ</a>
       </div>
       <p>
-        © 2026 MoneyLab. 本ツールの計算結果は概算です。正確な金額は税理士等にご確認ください。
+        © 2026 手取り計算.com 本ツールの計算結果は概算です。正確な金額は税理士等にご確認ください。
       </p>
     </div>
   </footer>
 
+  <script src="js/affiliate.js"></script>
   <script src="js/calculator.js"></script>
 </body>
 </html>

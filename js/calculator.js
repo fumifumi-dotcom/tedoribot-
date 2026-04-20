@@ -332,9 +332,15 @@ function update() {
   ];
 
   drawDonutChart(DOM.canvas, chartData);
+
+  // 動的CTAの呼び出し
+  if (typeof window.renderDynamicRecommendation === 'function') {
+    window.renderDynamicRecommendation(annualIncome);
+  }
 }
 
 // ============================================================
+
 // イベントバインド
 // ============================================================
 

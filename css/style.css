@@ -7,35 +7,39 @@
 
 /* --- Design Tokens --- */
 :root {
-  --bg-primary: #0a0e1a;
-  --bg-secondary: #111827;
-  --bg-tertiary: #1e293b;
-  --bg-card: rgba(255, 255, 255, 0.04);
-  --bg-card-hover: rgba(255, 255, 255, 0.07);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-border-hover: rgba(255, 255, 255, 0.15);
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  /* ライトテーマの背景色 */
+  --bg-primary: #f8fafc;     /* 背景全体のオフホワイト */
+  --bg-secondary: #f1f5f9;   /* 少し濃いグレー */
+  --bg-tertiary: #ffffff;    /* 要素内部の純白 */
+  --bg-card: #ffffff;        /* カードの純白 */
+  --bg-card-hover: #f1f5f9;
+  --glass-border: #e2e8f0;   /* カードの枠線 */
+  --glass-border-hover: #cbd5e1;
+  --glass-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01); /* クリーンなドロップシャドウ */
 
-  --text-primary: #f1f5f9;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
-  --text-accent: #10b981;
+  /* 力強い視認性を持つテキストカラー */
+  --text-primary: #0f172a;   /* 真っ黒に近いネイビー（見やすさ抜群） */
+  --text-secondary: #475569; /* 濃いめのグレー */
+  --text-muted: #64748b;     /* サブテキスト */
+  --text-accent: #059669;
 
-  --accent-green: #10b981;
-  --accent-emerald: #34d399;
-  --accent-blue: #3b82f6;
-  --accent-indigo: #6366f1;
-  --accent-purple: #8b5cf6;
-  --accent-orange: #f59e0b;
-  --accent-red: #ef4444;
-  --accent-pink: #ec4899;
+  /* アクセントカラー（白背景で映える濃い色） */
+  --accent-green: #059669;
+  --accent-emerald: #10b981;
+  --accent-blue: #2563eb;
+  --accent-indigo: #4f46e5;
+  --accent-purple: #7c3aed;
+  --accent-orange: #ea580c;
+  --accent-red: #dc2626;
+  --accent-pink: #db2777;
 
-  --gradient-primary: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
-  --gradient-secondary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-  --gradient-warm: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
-  --gradient-bg: radial-gradient(ellipse at 20% 50%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
-                 radial-gradient(ellipse at 80% 20%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
-                 radial-gradient(ellipse at 50% 80%, rgba(139, 92, 246, 0.04) 0%, transparent 50%);
+  /* グラデーション */
+  --gradient-primary: linear-gradient(135deg, #059669 0%, #2563eb 100%);
+  --gradient-secondary: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  --gradient-warm: linear-gradient(135deg, #ea580c 0%, #dc2626 100%);
+  --gradient-bg: radial-gradient(ellipse at 20% 0%, rgba(16, 185, 129, 0.05) 0%, transparent 40%),
+                 radial-gradient(ellipse at 80% 20%, rgba(37, 99, 235, 0.03) 0%, transparent 40%),
+                 radial-gradient(ellipse at 50% 100%, rgba(124, 58, 237, 0.02) 0%, transparent 40%);
 
   --font-primary: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
   --border-radius-xl: 24px;
@@ -108,7 +112,7 @@ body::before {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(10, 14, 26, 0.8);
+  background: rgba(255, 255, 255, 0.85); /* クリーンなヘッダー背景 */
 }
 
 .header-inner {
@@ -649,7 +653,7 @@ select:focus {
 .cta-card:hover {
   border-color: var(--glass-border-hover);
   transform: translateY(-4px);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08); /* ライトテーマ用ソフトシャドウ */
 }
 
 .cta-card:hover::before {
