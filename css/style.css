@@ -3,19 +3,19 @@
    ================================================================ */
 
 /* --- Google Fonts --- */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap');
 
 /* --- Design Tokens --- */
 :root {
-  /* ライトテーマの背景色 */
-  --bg-primary: #f8fafc;     /* 背景全体のオフホワイト */
-  --bg-secondary: #f1f5f9;   /* 少し濃いグレー */
-  --bg-tertiary: #ffffff;    /* 要素内部の純白 */
-  --bg-card: #ffffff;        /* カードの純白 */
-  --bg-card-hover: #f1f5f9;
-  --glass-border: #e2e8f0;   /* カードの枠線 */
+  /* ライトテーマの背景色 - 美しい透明感を引き立てるベース */
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-tertiary: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-card-hover: #ffffff;
+  --glass-border: #e2e8f0;
   --glass-border-hover: #cbd5e1;
-  --glass-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01); /* クリーンなドロップシャドウ */
+  --glass-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.03), 0 4px 10px -6px rgba(0, 0, 0, 0.02);
 
   /* 力強い視認性を持つテキストカラー */
   --text-primary: #0f172a;   /* 真っ黒に近いネイビー（見やすさ抜群） */
@@ -37,11 +37,11 @@
   --gradient-primary: linear-gradient(135deg, #059669 0%, #2563eb 100%);
   --gradient-secondary: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
   --gradient-warm: linear-gradient(135deg, #ea580c 0%, #dc2626 100%);
-  --gradient-bg: radial-gradient(ellipse at 20% 0%, rgba(16, 185, 129, 0.05) 0%, transparent 40%),
-                 radial-gradient(ellipse at 80% 20%, rgba(37, 99, 235, 0.03) 0%, transparent 40%),
-                 radial-gradient(ellipse at 50% 100%, rgba(124, 58, 237, 0.02) 0%, transparent 40%);
+  --gradient-bg: radial-gradient(ellipse at 10% 0%, rgba(16, 185, 129, 0.06) 0%, transparent 50%),
+                 radial-gradient(ellipse at 90% 20%, rgba(37, 99, 235, 0.05) 0%, transparent 50%),
+                 radial-gradient(ellipse at 50% 100%, rgba(124, 58, 237, 0.04) 0%, transparent 50%);
 
-  --font-primary: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-primary: 'Outfit', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
   --border-radius-xl: 24px;
   --border-radius-lg: 16px;
   --border-radius-md: 12px;
@@ -120,6 +120,21 @@ body::before {
   align-items: center;
   justify-content: space-between;
 }
+
+.header-nav a,
+.nav-item {
+  color: var(--text-secondary);
+  font-size: 13px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--transition-fast);
+}
+
+.header-nav a:hover,
+.nav-item:hover {
+  color: var(--accent-green);
+}
+
 
 .logo {
   display: flex;
@@ -227,6 +242,7 @@ body::before {
   grid-template-columns: 1fr 1fr;
   gap: 32px;
   padding-bottom: 60px;
+  align-items: start;
 }
 
 @media (max-width: 900px) {
@@ -235,20 +251,27 @@ body::before {
   }
 }
 
-/* --- Glass Card --- */
+/* --- Clean Card (元Glass Card) --- */
 .glass-card {
   background: var(--bg-card);
   border: 1px solid var(--glass-border);
   border-radius: var(--border-radius-xl);
   padding: 32px;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
   box-shadow: var(--glass-shadow);
   transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+@media (max-width: 600px) {
+  .glass-card {
+    padding: 24px 20px;
+  }
 }
 
 .glass-card:hover {
-  border-color: var(--glass-border-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.06);
 }
 
 .card-header {
@@ -359,12 +382,14 @@ input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
-  height: 6px;
-  border-radius: 3px;
-  background: var(--bg-tertiary);
+  height: 8px;
+  border-radius: 4px;
+  background: #e2e8f0;
   outline: none;
-  margin-top: 12px;
+  margin-top: 24px;
+  margin-bottom: 8px;
   cursor: pointer;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.06);
 }
 
 input[type="range"]::-webkit-slider-thumb {
@@ -407,28 +432,29 @@ input[type="range"]::-moz-range-thumb {
   min-width: 80px;
   padding: 10px 16px;
   background: var(--bg-tertiary);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--border-radius-sm);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  border-radius: var(--border-radius-md);
   color: var(--text-secondary);
   font-family: var(--font-primary);
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
-  transition: var(--transition);
+  transition: var(--transition-fast);
   text-align: center;
+  box-shadow: inset 0 0 0 1px #e2e8f0;
 }
 
 .toggle-btn:hover {
-  background: var(--bg-card-hover);
-  border-color: var(--glass-border-hover);
   color: var(--text-primary);
+  background: #f1f5f9;
 }
 
 .toggle-btn.active {
-  background: rgba(16, 185, 129, 0.15);
-  border-color: var(--accent-green);
+  background: rgba(16, 185, 129, 0.08);
   color: var(--accent-green);
-  font-weight: 600;
+  font-weight: 700;
+  box-shadow: inset 0 0 0 2px var(--accent-green);
 }
 
 /* --- Select Dropdown --- */
@@ -461,8 +487,8 @@ select:focus {
 /* --- Results Section --- */
 .result-hero {
   text-align: center;
-  padding: 28px 0;
-  margin-bottom: 28px;
+  padding: 24px 0;
+  margin-bottom: 24px;
   border-bottom: 1px solid var(--glass-border);
 }
 
@@ -476,7 +502,7 @@ select:focus {
 .result-value {
   font-size: clamp(36px, 5vw, 48px);
   font-weight: 800;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   background: var(--gradient-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -513,23 +539,28 @@ select:focus {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 0;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
 }
 
 .breakdown-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 16px;
-  background: var(--bg-tertiary);
-  border-radius: var(--border-radius-md);
-  transition: var(--transition);
-  border: 1px solid transparent;
+  padding: 12px 16px;
+  background: #ffffff;
+  border-bottom: 1px solid var(--glass-border);
+  transition: var(--transition-fast);
+}
+
+.breakdown-item:last-child {
+  border-bottom: none;
 }
 
 .breakdown-item:hover {
-  border-color: var(--glass-border);
-  transform: translateX(4px);
+  background: #f8fafc;
 }
 
 .breakdown-left {
@@ -543,6 +574,7 @@ select:focus {
   height: 10px;
   border-radius: 50%;
   flex-shrink: 0;
+  box-shadow: 0 0 6px currentColor;
 }
 
 .breakdown-name {

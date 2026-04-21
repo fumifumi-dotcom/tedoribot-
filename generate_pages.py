@@ -144,6 +144,20 @@ def generate_page_html(nenshu_man):
   <meta name="keywords" content="年収{nenshu_man}万,手取り,所得税,住民税,社会保険料,2026">
   <meta property="og:title" content="年収{fmt(nenshu_man)}万円の手取り額【2026年版】">
   <meta property="og:description" content="年収{fmt(nenshu_man)}万円の手取りは約{fmt(r['tedori'])}円。税金・保険料の内訳を解説。">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://tedori-keisan.pages.dev/images/ogp.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0ea5e9">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3STMJXD6N3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){{dataLayer.push(arguments);}}
+    gtag('js', new Date());
+    gtag('config', 'G-3STMJXD6N3');
+  </script>
+  <link rel="manifest" href="../manifest.json">
   <link rel="stylesheet" href="../css/style.css">
   <style>
     .page-content {{ max-width: 800px; margin: 0 auto; padding: 40px 20px 80px; }}
@@ -175,9 +189,11 @@ def generate_page_html(nenshu_man):
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <a href="../index.html" class="logo"><div class="logo-icon">¥</div><div class="logo-text"><span>MoneyLab</span></div></a>
+      <a href="../index.html" class="logo"><div class="logo-icon">¥</div><div class="logo-text"><span>手取り計算.com</span></div></a>
       <div class="header-badge">2026年度対応</div>
     </div>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3012346545678100" crossorigin="anonymous"></script>
   </header>
 
   <main class="page-content">
@@ -251,23 +267,23 @@ def generate_page_html(nenshu_man):
 
     <section class="cta-section" style="padding: 20px 0 40px;">
       <div class="cta-grid">
-        <div class="cta-card">
+        <div class="cta-card" id="cta-career">
           <div class="cta-icon">🚀</div>
           <h3>年収を上げる</h3>
           <p>転職サイトで無料の年収診断を受けてみましょう。</p>
-          <a href="#" class="cta-button green">年収診断を受ける →</a>
+          <a href="#" id="cta-career-link" class="cta-button green">年収診断を受ける →</a>
         </div>
-        <div class="cta-card">
+        <div class="cta-card" id="cta-furusato">
           <div class="cta-icon">🏡</div>
           <h3>ふるさと納税</h3>
           <p>実質2,000円で豪華な返礼品がもらえます。</p>
-          <a href="#" class="cta-button purple">上限額を計算する →</a>
+          <a href="../furusato.html" id="cta-furusato-link" class="cta-button purple">上限額を計算する →</a>
         </div>
-        <div class="cta-card">
+        <div class="cta-card" id="cta-nisa-ideco">
           <div class="cta-icon">📈</div>
-          <h3>新NISAで運用</h3>
-          <p>運用益が非課税。毎月の積立で資産を増やしましょう。</p>
-          <a href="#" class="cta-button orange">積立シミュレーション →</a>
+          <h3>NISA vs iDeCo</h3>
+          <p>今年の税金をダイレクトに減らせる裏ワザ比較。</p>
+          <a href="../articles/nisa-vs-ideco.html" class="cta-button orange">徹底比較を見る →</a>
         </div>
       </div>
     </section>
@@ -281,9 +297,10 @@ def generate_page_html(nenshu_man):
         <a href="../terms.html">利用規約</a>
         <a href="../contact.html">お問い合わせ</a>
       </div>
-      <p>© 2026 MoneyLab. 本ツールの計算結果は概算です。正確な金額は税理士等にご確認ください。</p>
+      <p>© 2026 手取り計算.com 本ツールの計算結果は概算です。正確な金額は税理士等にご確認ください。</p>
     </div>
   </footer>
+  <script src="../js/affiliate.js"></script>
 </body>
 </html>"""
     return html
@@ -327,9 +344,25 @@ def main():
     with open(sitemap_path, 'w', encoding='utf-8') as f:
         f.write('<?xml version="1.0" encoding="UTF-8"?>\n')
         f.write('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n')
-        f.write('  <url><loc>https://example.com/</loc><priority>1.0</priority></url>\n')
+        f.write('  <url><loc>https://tedori-keisan.com/</loc><priority>1.0</priority></url>\n')
+        f.write('  <url><loc>https://tedori-keisan.com/furusato.html</loc><priority>1.0</priority></url>\n')
+        f.write('  <url><loc>https://tedori-keisan.com/compound.html</loc><priority>1.0</priority></url>\n')
+        f.write('  <url><loc>https://tedori-keisan.com/lifetime_tax.html</loc><priority>1.0</priority></url>\n')
+        f.write('  <url><loc>https://tedori-keisan.com/retirement.html</loc><priority>0.9</priority></url>\n')
+        f.write('  <url><loc>https://tedori-keisan.com/salary-list.html</loc><priority>0.9</priority></url>\n')
+        f.write('  <url><loc>https://tedori-keisan.com/privacy.html</loc><priority>0.3</priority></url>\n')
+        f.write('  <url><loc>https://tedori-keisan.com/terms.html</loc><priority>0.3</priority></url>\n')
+        f.write('  <url><loc>https://tedori-keisan.com/contact.html</loc><priority>0.3</priority></url>\n')
         for nenshu in targets:
-            f.write(f'  <url><loc>https://example.com/pages/nenshu-{nenshu}.html</loc><priority>0.8</priority></url>\n')
+            f.write(f'  <url><loc>https://tedori-keisan.com/pages/nenshu-{nenshu}.html</loc><priority>0.8</priority></url>\n')
+            
+        # articles配下の全記事を自動追加
+        articles_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'articles')
+        if os.path.exists(articles_dir):
+            for article_file in os.listdir(articles_dir):
+                if article_file.endswith('.html'):
+                    f.write(f'  <url><loc>https://tedori-keisan.com/articles/{article_file}</loc><priority>0.8</priority></url>\n')
+
         f.write('</urlset>\n')
     print(f"✅ sitemap.xml を生成しました。")
 

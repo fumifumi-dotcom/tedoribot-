@@ -22,21 +22,39 @@ const AFFILIATE_LINKS = {
   // 成果報酬：登録完了時
   career: {
     url: 'https://px.a8.net/svt/ejp?a8mat=4B1OTT+6P4KS2+47GS+5YRHE',
-    label: '無料の年収診断を受ける →',
   },
 
   // 楽天ふるさと納税（A8.net提携済み）
   // 成果報酬：購入金額の一定%
   rakutenFurusato: {
     url: 'https://rpx.a8.net/svt/ejp?a8mat=4B1OTR+ACPDGY+2HOM+6C1VM&rakuten=y&a8ejpredirect=http%3A%2F%2Fhb.afl.rakuten.co.jp%2Fhgc%2F0ea62065.34400275.0ea62066.204f04c0%2Fa26041903646_4B1OTR_ACPDGY_2HOM_6C1VM%3Fpc%3Dhttp%253A%252F%252Fevent.rakuten.co.jp%252Ffurusato%252F%26m%3Dhttp%253A%252F%252Fm.rakuten.co.jp%252F',
-    label: '楽天ふるさと納税で探す →',
   },
 
-  // =============================
-  // ⏳ 申請中（承認後にURLを差し替え）
-  // =============================
-  // satofuru: { url: '承認後に差し替え', label: 'さとふるで探す →' },
-  // sbi: { url: '承認後に差し替え', label: 'SBI証券で口座開設 →' },
+  // さとふる（審査中 → 承認後にA8リンクに差し替え）
+  satofuru: {
+    url: 'https://www.satofull.jp/',
+  },
+
+  // au PAYふるさと納税（A8.net提携済み ✅）
+  // 成果報酬：購入金額の一定%
+  auPayFurusato: {
+    url: 'https://px.a8.net/svt/ejp?a8mat=4B1QDN+C37VZM+54OC+5YJRM',
+  },
+
+  // 松井証券 NISA（A8.net提携済み）
+  matsuiNisa: {
+    url: 'https://px.a8.net/svt/ejp?a8mat=4B1PLP+ACPDGY+3XCC+6AZAQ',
+  },
+
+  // 松井証券 iDeCo（A8.net提携済み）
+  matsuiIdeco: {
+    url: 'https://px.a8.net/svt/ejp?a8mat=4B1OTT+6MQUCY+3XCC+BXIYQ',
+  },
+
+  // 楽天トラベル（A8.net提携済み）
+  rakutenTravel: {
+    url: 'https://rpx.a8.net/svt/ejp?a8mat=4B1OTR+ACPDGY+2HOM+6I9N5&rakuten=y&a8ejpredirect=http%3A%2F%2Fhb.afl.rakuten.co.jp%2Fhgc%2F0eb4779e.5d30c5ba.0eb4779f.b871e4e3%2Fa26041903646_4B1OTR_ACPDGY_2HOM_6I9N5%3Fpc%3Dhttp%253A%252F%252Ftravel.rakuten.co.jp%252F%26m%3Dhttp%253A%252F%252Ftravel.rakuten.co.jp%252F',
+  },
 };
 
 /**
@@ -49,21 +67,15 @@ const CTA_MAPPING = {
   // 転職系CTA（全ページ共通）
   'cta-career-link': 'career',
   'cta-career-link-salary-list': 'career',
-  'cta-career': 'career',           // index.html用
   
-  // ふるさと納税系CTA
+  // ふるさと納税系CTA（3サイト併記: さとふる・au PAY・楽天）
+  'cta-satofuru-link': 'satofuru',
+  'cta-aupay-link': 'auPayFurusato',
   'cta-rakuten-link': 'rakutenFurusato',
-  'cta-rakuten': 'rakutenFurusato',     // furusato.html用
-  'cta-satofuru-link': 'rakutenFurusato',
-  'cta-satofuru': 'rakutenFurusato',    // furusato.html用
-  'cta-furunavi-link': 'rakutenFurusato',
-  'cta-furunavi': 'rakutenFurusato',    // furusato.html用
   'cta-furusato-link': 'rakutenFurusato',
-  'cta-furusato': 'rakutenFurusato',    // index.html用
   
-  // 投資系CTA → 提携済みのdodaに転送（松井証券承認後に差替）
-  'cta-invest-link': 'career',
-  'cta-invest': 'career',              // index.html用
+  // 投資系CTA (松井証券承認済)
+  'cta-matsui-nisa-link': 'matsuiNisa',
 };
 
 /**
@@ -77,9 +89,6 @@ function applyAffiliateLinks() {
       el.href = config.url;
       el.target = '_blank';
       el.rel = 'noopener noreferrer sponsored';
-      if (config.label) {
-        el.textContent = config.label;
-      }
     }
   });
 }
@@ -164,6 +173,7 @@ document.addEventListener('click', function(e) {
   if (linkUrl.includes('a8.net')) {
     if (linkUrl.includes('4B1OTT')) campaign = 'doda_career';
     if (linkUrl.includes('rakuten')) campaign = 'rakuten_furusato';
+    if (linkUrl.includes('4B1QDN')) campaign = 'aupay_furusato';
   }
 
   const incomeInput = document.getElementById('incomeInput');

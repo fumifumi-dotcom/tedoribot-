@@ -162,6 +162,60 @@ function calculateTedori(annualIncome, options = {}) {
 // ============================================================
 
 const DOM = {};
+let isMonthlyMode = false;
+
+// 偏差値テーブルの簡易定義（年代別の平均や上位層目安）
+const DEVIATION_TABLE = {
+  'under40': { avg: 400_0000, sd: 150_0000 },
+  '40to64':  { avg: 550_0000, sd: 200_0000 }
+};
+
+// リアルタイムタイマー制御用
+let taxTimerId = null;
+let currentTaxCounter = 0;
+let taxPerSecond = 0;
+let lastTimerUpdate = 0;
+
+function calculateDeviation(income, ageBracket) {
+  const table = DEVIATION_TABLE[ageBracket] || DEVIATION_TABLE['under40'];
+  // 簡易な偏差値計算（(値 - 平均) / 標準偏差 * 10 + 50）
+  let score = Math.round((income - table.avg) / table.sd * 10 + 50);
+  score = Math.max(20, Math.min(80, score)); // 20〜80の間に収める
+  
+  let rankStr = "平均的な層";
+  if (score >= 70) rankStr = "上位 2%";
+  else if (score >= 65) rankStr = "上位 6%";
+  else if (score >= 60) rankStr = "上位 15%";
+  else if (score >= 55) rankStr = "上位 30%";
+  else if (score < 40) rankStr = "下位 15%";
+  else if (score < 45) rankStr = "下位 30%";
+
+  return { score, rankStr };
+}
+
+function startTaxMeter(totalAnnualTax) {
+  // 1年 = 31,536,000秒
+  taxPerSecond = totalAnnualTax / 31536000;
+  currentTaxCounter = 0;
+  lastTimerUpdate = performance.now();
+
+  const valEl = document.getElementById('realtimeTaxValue');
+  if (!valEl) return;
+
+  function tick(now) {
+    const deltaMs = now - lastTimerUpdate;
+    lastTimerUpdate = now;
+    
+    // 秒間増加量を足し込む
+    currentTaxCounter += taxPerSecond * (deltaMs / 1000);
+    valEl.textContent = currentTaxCounter.toFixed(2);
+    
+    taxTimerId = requestAnimationFrame(tick);
+  }
+
+  if (taxTimerId) cancelAnimationFrame(taxTimerId);
+  taxTimerId = requestAnimationFrame(tick);
+}
 
 function initDOM() {
   DOM.incomeInput = document.getElementById('incomeInput');
@@ -191,7 +245,15 @@ function initDOM() {
   DOM.percentEmployment = document.getElementById('percentEmployment');
   DOM.percentNursing = document.getElementById('percentNursing');
 
+  DOM.percentNursing = document.getElementById('percentNursing');
+
   DOM.canvas = document.getElementById('donutChart');
+  
+  DOM.modeYear = document.getElementById('mode-year');
+  DOM.modeMonth = document.getElementById('mode-month');
+  DOM.resultLabelText = document.getElementById('result-label-text');
+  DOM.dynamicRecommendation = document.getElementById('dynamic-recommendation');
+  DOM.shareTwitterBtn = document.getElementById('share-twitter-btn');
 }
 
 function formatCurrency(value) {
@@ -203,58 +265,102 @@ function formatMan(value) {
 }
 
 // ============================================================
-// ドーナツチャートの描画
+// ドーナツチャートの描画 (Chart.js版)
 // ============================================================
 
-function drawDonutChart(canvas, data) {
+let myChart = null;
+
+function drawDonutChart(canvas, data, rate) {
   const ctx = canvas.getContext('2d');
-  const dpr = window.devicePixelRatio || 1;
-  const size = 220;
+  
+  const labels = data.map(d => d.label);
+  const values = data.map(d => d.value);
+  const colors = data.map(d => d.color);
 
-  canvas.width = size * dpr;
-  canvas.height = size * dpr;
-  canvas.style.width = size + 'px';
-  canvas.style.height = size + 'px';
-  ctx.scale(dpr, dpr);
+  // 初回のみChartを生成、以降はUpdateでアニメーション変化
+  if (!myChart) {
+    // センターテキストを描画するためのカスタムプラグイン
+    const centerTextPlugin = {
+      id: 'centerText',
+      beforeDraw: function(chart) {
+        if (chart.config.options.elements.center) {
+          const ctxC = chart.ctx;
+          const centerConfig = chart.config.options.elements.center;
+          const text = centerConfig.text;
+          
+          ctxC.save();
+          // ライトテーマ用のネイビー文字
+          ctxC.fillStyle = '#1e293b'; 
+          ctxC.font = 'bold 24px Inter, sans-serif';
+          ctxC.textAlign = 'center';
+          ctxC.textBaseline = 'middle';
+          
+          const centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
+          const centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
+          
+          ctxC.fillText(text, centerX, centerY);
+          ctxC.restore();
+        }
+      }
+    };
 
-  const cx = size / 2;
-  const cy = size / 2;
-  const outerRadius = 95;
-  const innerRadius = 65;
+    Chart.register(centerTextPlugin);
 
-  ctx.clearRect(0, 0, size, size);
-
-  const total = data.reduce((sum, d) => sum + d.value, 0);
-  if (total <= 0) return;
-
-  let startAngle = -Math.PI / 2;
-
-  data.forEach((item) => {
-    const sliceAngle = (item.value / total) * Math.PI * 2;
-    const endAngle = startAngle + sliceAngle;
-
-    ctx.beginPath();
-    ctx.arc(cx, cy, outerRadius, startAngle, endAngle);
-    ctx.arc(cx, cy, innerRadius, endAngle, startAngle, true);
-    ctx.closePath();
-    ctx.fillStyle = item.color;
-    ctx.fill();
-
-    startAngle = endAngle;
-  });
-
-  // Center text
-  ctx.fillStyle = '#f1f5f9';
-  ctx.font = '700 13px Inter, sans-serif';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText('手取り率', cx, cy - 10);
-
-  ctx.font = '800 24px Inter, sans-serif';
-  const tedoriRate = data.find(d => d.label === '手取り');
-  const rate = tedoriRate ? ((tedoriRate.value / total) * 100).toFixed(1) : '0';
-  ctx.fillText(rate + '%', cx, cy + 16);
+    myChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: labels,
+        datasets: [{
+          data: values,
+          backgroundColor: colors,
+          borderWidth: 2,
+          hoverOffset: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '70%',
+        animation: {
+          animateScale: true,
+          animateRotate: true,
+          duration: 800,
+          easing: 'easeOutQuart'
+        },
+        plugins: {
+          legend: {
+            display: false // ツールチップのみで凡例非表示
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                let label = context.label || '';
+                if (label) {
+                  label += ': ';
+                }
+                if (context.parsed !== null) {
+                  label += new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'JPY' }).format(context.parsed);
+                }
+                return label;
+              }
+            }
+          }
+        },
+        elements: {
+          center: {
+            text: rate
+          }
+        }
+      }
+    });
+  } else {
+    // データ更新（アニメーションでヌルヌル動く）
+    myChart.data.datasets[0].data = values;
+    myChart.options.elements.center.text = rate;
+    myChart.update();
+  }
 }
+
 
 // ============================================================
 // メイン更新ロジック
@@ -291,22 +397,25 @@ function update() {
   DOM.incomeDisplay.textContent = formatCurrency(income);
 
   // Results
-  DOM.resultTedori.textContent = '¥' + formatCurrency(result.tedori);
+  const divisor = isMonthlyMode ? 12 : 1;
+  DOM.resultLabelText.textContent = isMonthlyMode ? '1ヶ月分の手取り概算' : '年間の手取り額';
+  
+  DOM.resultTedori.textContent = '¥' + formatCurrency(result.tedori / divisor);
   DOM.resultMonthly.textContent = formatCurrency(result.monthlyTedori);
   DOM.resultRate.textContent = result.tedoriRate.toFixed(1);
   DOM.monthlyValue.textContent = '¥' + formatCurrency(result.monthlyTedori);
 
   // Breakdown
-  DOM.breakdownIncomeTax.textContent = '¥' + formatCurrency(result.incomeTax);
-  DOM.breakdownResidentTax.textContent = '¥' + formatCurrency(result.residentTax);
-  DOM.breakdownHealth.textContent = '¥' + formatCurrency(result.healthInsurance);
-  DOM.breakdownPension.textContent = '¥' + formatCurrency(result.pension);
-  DOM.breakdownEmployment.textContent = '¥' + formatCurrency(result.employmentInsurance);
+  DOM.breakdownIncomeTax.textContent = '¥' + formatCurrency(result.incomeTax / divisor);
+  DOM.breakdownResidentTax.textContent = '¥' + formatCurrency(result.residentTax / divisor);
+  DOM.breakdownHealth.textContent = '¥' + formatCurrency(result.healthInsurance / divisor);
+  DOM.breakdownPension.textContent = '¥' + formatCurrency(result.pension / divisor);
+  DOM.breakdownEmployment.textContent = '¥' + formatCurrency(result.employmentInsurance / divisor);
 
   // Nursing insurance row visibility
   if (result.nursingInsurance > 0) {
     DOM.breakdownNursingRow.style.display = 'flex';
-    DOM.breakdownNursing.textContent = '¥' + formatCurrency(result.nursingInsurance);
+    DOM.breakdownNursing.textContent = '¥' + formatCurrency(result.nursingInsurance / divisor);
     DOM.percentNursing.textContent = (result.nursingInsurance / annualIncome * 100).toFixed(1) + '%';
   } else {
     DOM.breakdownNursingRow.style.display = 'none';
@@ -321,21 +430,54 @@ function update() {
     DOM.percentEmployment.textContent = (result.employmentInsurance / annualIncome * 100).toFixed(1) + '%';
   }
 
-  // Donut Chart
   const chartData = [
-    { label: '手取り', value: result.tedori, color: '#10b981' },
-    { label: '所得税', value: result.incomeTax, color: '#3b82f6' },
-    { label: '住民税', value: result.residentTax, color: '#6366f1' },
-    { label: '健康保険', value: result.healthInsurance + result.nursingInsurance, color: '#f59e0b' },
-    { label: '厚生年金', value: result.pension, color: '#ef4444' },
-    { label: '雇用保険', value: result.employmentInsurance, color: '#8b5cf6' },
+    { label: '手取り', value: Math.floor(result.tedori / divisor), color: '#10b981' },
+    { label: '所得税', value: Math.floor(result.incomeTax / divisor), color: '#f43f5e' },
+    { label: '住民税', value: Math.floor(result.residentTax / divisor), color: '#ec4899' },
+    { label: '社会保険料', value: Math.floor(result.socialInsurance / divisor), color: '#f59e0b' }
   ];
 
-  drawDonutChart(DOM.canvas, chartData);
+  const centerAmountLabel = '¥' + formatCurrency(Math.floor(result.tedori / divisor));
+  drawDonutChart(DOM.canvas, chartData, centerAmountLabel);
 
   // 動的CTAの呼び出し
   if (typeof window.renderDynamicRecommendation === 'function') {
     window.renderDynamicRecommendation(annualIncome);
+  }
+
+  // ==== 診断メッセージとシェア機能 ====
+  if (DOM.dynamicRecommendation && DOM.shareTwitterBtn) {
+    const totalTax = result.incomeTax + result.residentTax + result.socialInsurance;
+    const iphoneCount = Math.floor(totalTax / 150000); 
+    const isZeroTax = totalTax <= 0;
+
+    // 偏差値ロジックの呼び出し
+    const deviation = calculateDeviation(annualIncome, options.age);
+
+    // リアルタイム税金メーターの起動
+    startTaxMeter(totalTax);
+
+    let diagnosticHtml = `<div style="background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2); padding: 16px; border-radius: 8px; margin-top: 16px;">`;
+    diagnosticHtml += `<p style="margin:0; color: #ef4444; font-weight: bold; font-size: 15px;">🚨 絶望・搾取され度診断</p>`;
+    
+    if (isZeroTax) {
+      diagnosticHtml += `<p style="margin: 8px 0 0; color: var(--text-secondary); font-size: 14px;">税金や社会保険料はほぼかかりません。全額が手取りとなります✌️</p>`;
+    } else {
+      diagnosticHtml += `<p style="margin: 8px 0 0; color: var(--text-secondary); font-size: 14px;">あなたの年収偏差値は<strong>【${deviation.score}】（同年代の${deviation.rankStr}）</strong>です。<br>一方で、国に納めている金額（年間 約${formatCurrency(totalTax)}円）は、`;
+      if (iphoneCount >= 1) {
+        diagnosticHtml += `<strong>最新iPhoneがなんと約${iphoneCount}台買える金額</strong>に相当します💸<br>まさに搾取され度MAXの【社畜レベル神】です😱</p>`;
+      } else {
+        diagnosticHtml += `<strong>毎月のスマホ代や光熱費がずっと払える金額</strong>です💸</p>`;
+      }
+    }
+    diagnosticHtml += `</div>`;
+    DOM.dynamicRecommendation.innerHTML = diagnosticHtml;
+    DOM.dynamicRecommendation.style.display = 'block';
+
+    const shareRank = isZeroTax ? "無税の神" : `偏差値${deviation.score}(${deviation.rankStr})`;
+    const shareText = `【絶望診断・私の社畜レベル】\n判定：${shareRank}\n\n私の手取り率（年収${formatMan(annualIncome)}万円）は【 ${(result.tedoriRate).toFixed(1)}% 】でした💸\n国に年間 ${formatMan(totalTax)}万円 も搾取されています…\n\n#手取り計算 #税金高すぎ\n`;
+    const shareUrl = "https://tedori-keisan.com/";
+    DOM.shareTwitterBtn.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
   }
 }
 
@@ -376,6 +518,34 @@ function bindEvents() {
 
   // 扶養家族セレクト
   DOM.dependentsSelect.addEventListener('change', update);
+
+  // 月額・年額モード切替
+  if (DOM.modeYear && DOM.modeMonth) {
+    DOM.modeYear.addEventListener('click', () => {
+      isMonthlyMode = false;
+      DOM.modeYear.classList.add('active');
+      DOM.modeYear.style.background = 'var(--bg-card)';
+      DOM.modeYear.style.color = 'var(--text-primary)';
+      DOM.modeYear.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+      DOM.modeMonth.classList.remove('active');
+      DOM.modeMonth.style.background = 'transparent';
+      DOM.modeMonth.style.color = 'var(--text-muted)';
+      DOM.modeMonth.style.boxShadow = 'none';
+      update();
+    });
+    DOM.modeMonth.addEventListener('click', () => {
+      isMonthlyMode = true;
+      DOM.modeMonth.classList.add('active');
+      DOM.modeMonth.style.background = 'var(--bg-card)';
+      DOM.modeMonth.style.color = 'var(--text-primary)';
+      DOM.modeMonth.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+      DOM.modeYear.classList.remove('active');
+      DOM.modeYear.style.background = 'transparent';
+      DOM.modeYear.style.color = 'var(--text-muted)';
+      DOM.modeYear.style.boxShadow = 'none';
+      update();
+    });
+  }
 }
 
 // ============================================================

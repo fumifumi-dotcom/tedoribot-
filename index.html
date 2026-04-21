@@ -9,9 +9,13 @@
   <meta property="og:title" content="手取り計算シミュレーター 2026年版">
   <meta property="og:description" content="年収を入力するだけで手取り額を即座に計算。2026年最新の税率対応。">
   <meta property="og:type" content="website">
+  <meta property="og:image" content="https://tedori-keisan.pages.dev/images/ogp.png">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://tedori-keisan.com/">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0ea5e9">
   <meta name="google-site-verification" content="N5c4TvYK9mIZq7FveUPkiafsuy-hzeakcOfRxiH_-70" />
 
   <script type="application/ld+json">
@@ -39,6 +43,52 @@
     gtag('config', 'G-3STMJXD6N3');
   </script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3012346545678100" crossorigin="anonymous"></script>
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/favicon.svg">
+
+  <!-- SEO HACK: FAQ Schema for maximum SERP real estate -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "手取りは額面の何割ですか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "一般的に手取りは額面給与の約75%〜85%となります。正確な金額は所得税、住民税、社会保険料の控除額によって変動します。当サイトのシミュレーターで1円単位の正確な金額を計算できます。"
+      }
+    }, {
+      "@type": "Question",
+      "name": "NISAやふるさと納税で手取りは増えますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ふるさと納税を活用することで翌年の住民税が控除され、実質的な手元に残る価値（返礼品＋税金控除）を最大化できます。また新NISAを活用すれば投資の運用益が非課税になるため、将来の資産を爆発的に増やせます。まずは証券口座の手数料が安い松井証券などのネット証券で始めるのが鉄則です。"
+      }
+    }]
+  }
+  </script>
+
+  <!-- SEO HACK: Breadcrumb List -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "name": "手取り計算.com トップ",
+      "item": "https://tedori-keisan.com/"
+    },{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "お金の知識",
+      "item": "https://tedori-keisan.com/index"
+    }]
+  }
+  </script>
 </head>
 
 <body>
@@ -52,9 +102,11 @@
       </a>
       <nav class="header-nav" style="display:flex;gap:20px;align-items:center;">
         <a href="index.html" style="color:var(--accent-green);font-size:13px;text-decoration:none;font-weight:600;">手取り計算</a>
+        <a href="lifestyle.html" style="color:var(--text-secondary);font-size:13px;text-decoration:none;font-weight:500;">家賃・生活費</a>
         <a href="furusato.html" style="color:var(--text-secondary);font-size:13px;text-decoration:none;font-weight:500;">ふるさと納税</a>
         <a href="compound.html" style="color:var(--text-secondary);font-size:13px;text-decoration:none;font-weight:500;">積立シミュレーション</a>
         <a href="retirement.html" class="nav-item">退職金計算</a>
+        <a href="lifetime_tax.html" style="color:#f43f5e;font-size:13px;text-decoration:none;font-weight:700;">⚠️一生涯の税金</a>
         <div class="header-badge">2026年度対応</div>
       </nav>
     </div>
@@ -71,6 +123,10 @@
         あなたの<span class="gradient-text">手取り額</span>、<br>
         瞬時にわかる。
       </h1>
+
+      <div style="margin-bottom: 24px; display: inline-block; background: rgba(59, 130, 246, 0.1); color: #3b82f6; padding: 4px 12px; border-radius: 9999px; font-size: 13px; font-weight: bold;">
+        🕒 最終更新日: 2026年04月21日
+      </div>
       <p class="hero-subtitle">
         年収を入力するだけで、所得税・住民税・社会保険料を自動計算。<br>
         2026年度の最新税率に完全対応しています。
@@ -82,11 +138,22 @@
   <main class="container">
     <div class="main-grid">
 
-      <!-- === Input Panel === -->
-      <div class="glass-card animate-in" id="input-panel">
+      <!-- === LEFT COLUMN WRAPPER === -->
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        <!-- === Input Panel === -->
+        <div class="glass-card animate-in" id="input-panel">
         <div class="card-header">
           <div class="card-icon green">📊</div>
           <div class="card-title">条件を入力</div>
+        </div>
+
+        <!-- OCR読み取り -->
+        <div style="margin-bottom: 24px; text-align: center;">
+          <input type="file" id="ocrInput" accept="image/*" capture="environment" style="display: none;">
+          <button id="ocrBtn" style="background: var(--bg-card); border: 2px dashed var(--accent-blue); color: var(--accent-blue); padding: 12px 24px; border-radius: 12px; font-weight: 700; cursor: pointer; width: 100%; transition: all 0.2s;" onmouseover="this.style.background='rgba(14,165,233,0.05)';" onmouseout="this.style.background='var(--bg-card)';">
+            📷 給与明細の写真を撮って自動入力 (Beta)
+          </button>
+          <div id="ocrStatus" style="font-size: 12px; color: var(--text-secondary); margin-top: 8px;">※画像は安全のためサーバーに送信されずスマホ内で処理されます</div>
         </div>
 
         <!-- 年収入力 -->
@@ -152,22 +219,56 @@
         </div>
       </div>
 
+      <!-- === Extra Cards (Left Bottom space filler) === -->
+      <div class="glass-card animate-in delay-2" style="background: var(--bg-tertiary); padding: 24px;">
+        <h3 style="font-size: 16px; margin-bottom: 16px; color: var(--text-primary);">💡 手取りを本気で増やすなら</h3>
+        
+        <a href="/furusato.html" style="display: flex; display: block; background: var(--bg-card); border: 1px solid var(--accent-blue); padding: 16px; border-radius: 12px; text-decoration: none; margin-bottom: 12px; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)';" onmouseout="this.style.transform='none';">
+          <div style="font-weight: 800; color: var(--accent-blue); margin-bottom: 4px;">🎯 ふるさと納税 上限額シミュレーター</div>
+          <div style="font-size: 13px; color: var(--text-secondary);">やらないと毎年数万円を国に没収されています。自分の上限を知って返礼品を勝ち取ろう！</div>
+        </a>
+
+        <a href="/lifetime_tax.html" style="display: flex; display: block; background: var(--bg-card); border: 1px solid var(--accent-green); padding: 16px; border-radius: 12px; text-decoration: none; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)';" onmouseout="this.style.transform='none';">
+          <div style="font-weight: 800; color: var(--accent-green); margin-bottom: 4px;">📅 生涯の手取り・税金 計算ツール</div>
+          <div style="font-size: 13px; color: var(--text-secondary);">一生で国に「いくら」搾取されるのか？新機能であなたの生涯手取りを診断します。</div>
+        </a>
+      </div>
+    </div>
+    <!-- === END LEFT COLUMN WRAPPER === -->
+
+    <!-- === RIGHT COLUMN WRAPPER === -->
+    <div style="display: flex; flex-direction: column; gap: 24px;">
       <!-- === Result Panel === -->
       <div class="glass-card animate-in delay-1" id="result-panel">
-        <div class="card-header">
+        <div class="card-header" style="display: flex; align-items: center;">
           <div class="card-icon blue">💰</div>
           <div class="card-title">計算結果</div>
+          <div class="display-mode-toggle" style="margin-left: auto; display: flex; gap: 4px; background: var(--bg-secondary); padding: 4px; border-radius: 8px;">
+            <button class="mode-btn active" id="mode-year" style="border: none; background: var(--bg-card); padding: 4px 12px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">年額</button>
+            <button class="mode-btn" id="mode-month" style="border: none; background: transparent; padding: 4px 12px; border-radius: 6px; font-size: 13px; color: var(--text-muted); cursor: pointer;">月額</button>
+          </div>
         </div>
 
         <!-- 手取り額 -->
         <div class="result-hero" id="result-hero">
-          <div class="result-label">年間の手取り額</div>
+          <div class="result-label" id="result-label-text">年間の手取り額</div>
           <div class="result-value" id="resultTedori">¥0</div>
           <div class="result-sub">
             手取り率 <strong><span id="resultRate">0</span>%</strong>
             ｜月額 <strong>¥<span id="resultMonthly">0</span></strong>
           </div>
         </div>
+
+        <!-- 残酷な税金メーター -->
+        <div id="realtimeTaxContainer" style="background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 12px; padding: 16px; margin: 16px 20px 24px; text-align: center; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);">
+          <div style="font-size: 13px; color: #ef4444; font-weight: bold; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+            <span style="display:inline-block; width:8px; height:8px; background:#ef4444; border-radius:50%; animation: pulse 1.5s infinite;"></span>
+            このページを開いてから引かれた税金
+          </div>
+          <div style="font-size: 32px; font-weight: 900; font-family: 'Courier New', Courier, monospace; color: #ef4444;">¥ <span id="realtimeTaxValue">0.00</span></div>
+          <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">（あなたの年間天引き額から1秒単位で算出中...）</div>
+        </div>
+        <style>@keyframes pulse { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }</style>
 
         <!-- ドーナツチャート -->
         <div class="chart-container" id="chart-area">
@@ -245,13 +346,22 @@
           <p class="disclaimer">※上記は概算です。正確な税額は自治体や個人の状況により異なります。</p>
         </div>
         
-        <!-- 動的CTA表示領域 -->
+        <!-- 動的CTA＆診断メッセージ表示領域 -->
         <div id="dynamic-recommendation" style="display: none; margin-top: 32px; animation: slideUp 0.5s ease forwards;">
           <!-- JSで内容を注入します -->
         </div>
-      </div>
 
-    </div><!-- /main-grid -->
+        <!-- バズ用シェアボタン -->
+        <div style="margin-top: 24px; text-align: center;">
+          <a href="#" id="share-twitter-btn" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; background: #000; color: #fff; text-decoration: none; padding: 12px 24px; border-radius: 50px; font-weight: bold; font-size: 15px; transition: transform 0.2s;">
+            <svg style="width:18px;height:18px;margin-right:8px;fill:currentColor;" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.004 3.916H5.078z"/></svg>
+            絶望的な手取り額をシェアする
+          </a>
+        </div>
+      </div>
+    </div> <!-- /RIGHT COLUMN WRAPPER -->
+
+  </div><!-- /main-grid -->
 
     <!-- ===== CTA Section ===== -->
     
@@ -298,7 +408,7 @@
           <div class="cta-icon">📈</div>
           <h3>NISAで資産運用</h3>
           <p>
-            新NISAなら運用益が非課税。<br>
+            <a href="/articles/nisa-guide.html" style="color:#10b981; font-weight:bold; text-decoration:underline;">新NISA</a>なら運用益が非課税。<br>
             毎月の積立で将来の資産を増やしましょう。
           </p>
           <a href="compound.html" class="cta-button orange" id="cta-invest-link">
@@ -327,7 +437,45 @@
       </div>
     </section>
 
-  
+    <!-- ===== 📈 今週の人気ランキング（自動更新枠） ===== -->
+    <section style="margin-top: 60px; margin-bottom: 40px; padding: 0 20px;">
+      <h2 style="text-align: center; color: var(--text-primary); margin-bottom: 32px; font-size: 24px;">🔥 今週アクセスの多いページ</h2>
+      <!-- PDCA_TRENDING_START -->
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; max-width: 900px; margin: 0 auto;">
+
+        <a href="furusato.html" style="display: block; border: 1px solid var(--glass-border); border-radius: var(--border-radius-md); overflow: hidden; text-decoration: none; background: var(--bg-secondary); transition: transform 0.2s; position: relative;" onmouseover="this.style.transform='translateY(-4px)';" onmouseout="this.style.transform='none';">
+          <div style="position: absolute; top: 0; right: 0; background: #f43f5e; color: white; font-weight: bold; padding: 4px 12px; border-bottom-left-radius: 8px; font-size: 14px;">NO.1</div>
+          <div style="background: #f43f5e20; height: 8px;"></div>
+          <div style="padding: 24px;">
+            <span style="color: #f43f5e; font-size: 12px; font-weight: bold;">🔥 急上昇ランキング</span>
+            <h3 style="color: var(--text-primary); margin-top: 12px; margin-bottom: 8px; font-size: 18px;">ふるさと納税 上限額シミュレーター 2026年版 | 控除限度額を即座に計算</h3>
+            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">年収を入力するだけでふるさと納税の控除上限額を即座に計算。2026年最新の税率に対応。自己負担2,000円で最大限お得に...</p>
+          </div>
+        </a>
+
+        <a href="retirement.html" style="display: block; border: 1px solid var(--glass-border); border-radius: var(--border-radius-md); overflow: hidden; text-decoration: none; background: var(--bg-secondary); transition: transform 0.2s; position: relative;" onmouseover="this.style.transform='translateY(-4px)';" onmouseout="this.style.transform='none';">
+          <div style="position: absolute; top: 0; right: 0; background: #3b82f6; color: white; font-weight: bold; padding: 4px 12px; border-bottom-left-radius: 8px; font-size: 14px;">NO.2</div>
+          <div style="background: #3b82f620; height: 8px;"></div>
+          <div style="padding: 24px;">
+            <span style="color: #3b82f6; font-size: 12px; font-weight: bold;">🔥 急上昇ランキング</span>
+            <h3 style="color: var(--text-primary); margin-top: 12px; margin-bottom: 8px; font-size: 18px;">退職金の手取り計算機【2026年最新】税金シミュレーター | 手取り計算.com</h3>
+            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">退職金にかかる所得税・住民税を自動計算し、最終的な手取り額をシミュレーションします。勤続年数に応じた退職所得控除に完全対...</p>
+          </div>
+        </a>
+
+        <a href="salary-list.html" style="display: block; border: 1px solid var(--glass-border); border-radius: var(--border-radius-md); overflow: hidden; text-decoration: none; background: var(--bg-secondary); transition: transform 0.2s; position: relative;" onmouseover="this.style.transform='translateY(-4px)';" onmouseout="this.style.transform='none';">
+          <div style="position: absolute; top: 0; right: 0; background: #10b981; color: white; font-weight: bold; padding: 4px 12px; border-bottom-left-radius: 8px; font-size: 14px;">NO.3</div>
+          <div style="background: #10b98120; height: 8px;"></div>
+          <div style="padding: 24px;">
+            <span style="color: #10b981; font-size: 12px; font-weight: bold;">🔥 急上昇ランキング</span>
+            <h3 style="color: var(--text-primary); margin-top: 12px; margin-bottom: 8px; font-size: 18px;">【2026年最新】年収別 手取り早見表（100万〜2000万）税金シミュレーション | 手取り計算.com</h3>
+            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">年収ごとの手取り額、所得税、住民税、社会保険料のリアルな金額を一覧にまとめました。なぜ年収が上がっても手取りが増えないの...</p>
+          </div>
+        </a>
+</div>
+      <!-- PDCA_TRENDING_END -->
+    </section>
+
     <section style="margin-top: 60px; margin-bottom: 40px; border-top: 1px solid var(--glass-border); padding-top: 40px;">
       <h2 style="text-align: center; color: var(--text-primary); margin-bottom: 32px; font-size: 24px;">📝 お金と税金のおすすめコラム</h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; max-width: 900px; margin: 0 auto;">
@@ -374,7 +522,7 @@
           <div style="padding: 24px;">
             <span style="color: #10b981; font-size: 12px; font-weight: bold;">資産運用ガイド</span>
             <h3 style="color: var(--text-primary); margin-top: 12px; margin-bottom: 8px; font-size: 18px;">新NISAとは？非課税で資産を増やす唯一の合法テクニック</h3>
-            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">初心者でもわかる新NISAの仕組みと、月3万円で1200万円を作るシミュレーション。</p>
+            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">初心者でもわかる<a href="/articles/nisa-guide.html" style="color:#10b981; font-weight:bold; text-decoration:underline;">新NISA</a>の仕組みと、月3万円で1200万円を作るシミュレーション。</p>
           </div>
         </a>
 
@@ -401,7 +549,7 @@
           <div style="padding: 24px;">
             <span style="color: #ef4444; font-size: 12px; font-weight: bold;">税金ガイド</span>
             <h3 style="color: var(--text-primary); margin-top: 12px; margin-bottom: 8px; font-size: 18px;">住民税はいくら？安くする3つの裏技</h3>
-            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">年収別の住民税一覧と、ふるさと納税で取り戻す方法。</p>
+            <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">年収別の住民税一覧と、<a href="/furusato.html" style="color:#3b82f6; font-weight:bold; text-decoration:underline;">ふるさと納税</a>で取り戻す方法。</p>
           </div>
         </a>
 
@@ -417,12 +565,50 @@
       </div>
     </section>
 
+    <!-- ===== SEO FAQ Section ===== -->
+    <section class="container" style="max-width: 800px; margin: 60px auto; padding: 0 20px;">
+      <h2 style="font-size: 24px; color: var(--text-primary); margin-bottom: 24px; text-align: center;">💡 手取りに関するよくある質問と対策</h2>
+      
+      <div style="background: var(--bg-tertiary); border: 1px solid var(--glass-border); border-radius: var(--border-radius-lg); overflow: hidden; margin-bottom: 16px;">
+        <div style="padding: 20px; border-bottom: 1px solid var(--glass-border); background: var(--bg-secondary);">
+          <h3 style="font-size: 16px; margin: 0; display: flex; align-items: center; gap: 8px;">🤔 なぜ額面の8割ほどしか手元に残らないの？</h3>
+        </div>
+        <div style="padding: 20px; font-size: 14px; color: var(--text-secondary); line-height: 1.8;">
+          給与からは主に「所得税」「住民税」「社会保険料（健康保険・厚生年金・雇用保険など）」が天引き（源泉徴収）されます。<br>
+          特に負担が大きいのが<strong>社会保険料</strong>で、年収の約15%を占めます。これらは給与天引きされるため、多くの人が気づかないうちに大きな額を国に支払っています。
+        </div>
+      </div>
+
+      <div style="background: var(--bg-tertiary); border: 1px solid var(--glass-border); border-radius: var(--border-radius-lg); overflow: hidden; margin-bottom: 16px;">
+        <div style="padding: 20px; border-bottom: 1px solid var(--glass-border); background: var(--bg-secondary);">
+          <h3 style="font-size: 16px; margin: 0; display: flex; align-items: center; gap: 8px;">💰 今すぐできる具体的な手取り（実質手取り）を増やす方法は？</h3>
+        </div>
+        <div style="padding: 20px; font-size: 14px; color: var(--text-secondary); line-height: 1.8;">
+          最も簡単な対策は<strong>ふるさと納税</strong>です。あなたが支払うべき住民税を事前に好きな自治体に前払いするだけで、実質2,000円の負担で豪華な返礼品（お肉やお米など）がもらえ、生活費を大きく浮かせることができます。<br>
+          👉 <a href="furusato.html" style="color: var(--accent-green); font-weight: bold;">ふるさと納税の上限額を計算する</a>
+        </div>
+      </div>
+
+      <div style="background: var(--bg-tertiary); border: 1px solid var(--glass-border); border-radius: var(--border-radius-lg); overflow: hidden;">
+        <div style="padding: 20px; border-bottom: 1px solid var(--glass-border); background: var(--bg-secondary);">
+          <h3 style="font-size: 16px; margin: 0; display: flex; align-items: center; gap: 8px;">🛡️ NISAとiDeCo、結局どっちをやるべき？</h3>
+        </div>
+        <div style="padding: 20px; font-size: 14px; color: var(--text-secondary); line-height: 1.8;">
+          結論から言うと、<strong>利益を非課税にしたいならNISA</strong>、<strong>今年の税金そのものをダイレクトに減らしたいならiDeCo</strong>です。<br>
+          特に年収500万円以上で税金が高いと感じている方は、iDeCoの圧倒的な節税効果を活用しないと大損します。<br>
+          👉 <a href="articles/nisa-vs-ideco.html" style="color: var(--accent-blue); font-weight: bold;">【徹底比較】NISA vs iDeCoの詳細記事はこちら</a>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- ===== Footer ===== -->
   <footer class="site-footer" id="site-footer">
     <div class="container">
       <div class="footer-links">
+        <a href="/html_sitemap.html">全記事一覧（サイトマップ）</a>
+        <a href="/cases/index.html">シミュレーション事例一覧</a>
         <a href="#">プライバシーポリシー</a>
         <a href="#">利用規約</a>
         <a href="#">お問い合わせ</a>
@@ -433,7 +619,25 @@
     </div>
   </footer>
 
+  <!-- Chart.js for Animated Graphs -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Tesseract.js for OCR -->
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
   <script src="js/affiliate.js"></script>
   <script src="js/calculator.js"></script>
+  <script src="js/ocr.js"></script>
+  
+  <!-- PWA Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').then(registration => {
+          console.log('SW registered: ', registration);
+        }).catch(registrationError => {
+          console.log('SW registration failed: ', registrationError);
+        });
+      });
+    }
+  </script>
 </body>
 </html>

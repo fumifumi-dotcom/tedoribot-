@@ -1,0 +1,21 @@
+{
+  "name": "手取り計算・年収シミュレーター 2026年最新版",
+  "short_name": "手取り計算",
+  "description": "2026年の税制改正に対応した最新の手取り計算アプリ",
+  "start_url": "/?source=pwa",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0ea5e9",
+  "icons": [
+    {
+      "src": "/images/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

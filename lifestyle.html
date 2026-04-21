@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>家賃・生活費シミュレーター | 手取りから逆算する黄金比</title>
+  <meta name="description" content="毎月の手取り額を入力するだけで、家賃の適正目安・食費・貯金額を自動計算。無理のない生活費の黄金比をシミュレーションします。">
+  <meta name="keywords" content="家賃目安,手取り,生活費,シミュレーター,貯金,一人暮らし">
+  <meta property="og:title" content="手取りから逆算！家賃・生活費シミュレーター">
+  <meta property="og:description" content="毎月の手取り額から、理想の家賃・生活費・貯金額を1秒で即計算。">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://tedori-keisan.pages.dev/images/ogp.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://tedori-keisan.com/lifestyle.html">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0ea5e9">
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3012346545678100" crossorigin="anonymous"></script>
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/favicon.svg">
+
+  <!-- SEO HACK: FAQ Schema for maximum SERP real estate -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "手取りは額面の何割ですか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "一般的に手取りは額面給与の約75%〜85%となります。正確な金額は所得税、住民税、社会保険料の控除額によって変動します。当サイトのシミュレーターで1円単位の正確な金額を計算できます。"
+      }
+    }, {
+      "@type": "Question",
+      "name": "NISAやふるさと納税で手取りは増えますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ふるさと納税を活用することで翌年の住民税が控除され、実質的な手元に残る価値（返礼品＋税金控除）を最大化できます。また新NISAを活用すれば投資の運用益が非課税になるため、将来の資産を爆発的に増やせます。まずは証券口座の手数料が安い松井証券などのネット証券で始めるのが鉄則です。"
+      }
+    }]
+  }
+  </script>
+
+  <!-- SEO HACK: Breadcrumb List -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "name": "手取り計算.com トップ",
+      "item": "https://tedori-keisan.com/"
+    },{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "お金の知識",
+      "item": "https://tedori-keisan.com/lifestyle"
+    }]
+  }
+  </script>
+</head>
+
+<body>
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo" id="site-logo">
+        <div class="logo-icon">¥</div>
+        <div class="logo-text"><span>手取り計算.com</span></div>
+      </a>
+      <nav class="header-nav" style="display:flex;gap:20px;align-items:center;">
+        <a href="index.html" class="nav-item">手取り計算</a>
+        <a href="lifestyle.html" style="color:var(--accent-green);font-size:13px;text-decoration:none;font-weight:600;">家賃・生活費計算</a>
+        <a href="compound.html" class="nav-item">積立シミュレーション</a>
+        <a href="furusato.html" class="nav-item">ふるさと納税</a>
+        <a href="retirement.html" class="nav-item">退職金計算</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-green);">
+        <span class="dot" style="background: var(--accent-green);"></span>
+        ベストな生活バランス
+      </div>
+      <h1>
+        <span class="gradient-text" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">家賃・生活費</span>シミュレーター<br>
+      </h1>
+
+      <div style="margin-bottom: 24px; display: inline-block; background: rgba(59, 130, 246, 0.1); color: #3b82f6; padding: 4px 12px; border-radius: 9999px; font-size: 13px; font-weight: bold;">
+        🕒 最終更新日: 2026年04月21日
+      </div>
+      <p class="hero-subtitle">
+        毎月の手取り額をもとに、「無理のない家賃基準」や「理想の貯金額」の黄金比を算出します。
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== Main Calculator ===== -->
+  <main class="container">
+    <div class="main-grid" style="align-items: start;">
+
+      <!-- === Input Panel === -->
+      <div class="glass-card animate-in" id="input-panel">
+        <div class="card-header">
+          <div class="card-icon green" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">🏠</div>
+          <div class="card-title">条件を入力</div>
+        </div>
+
+        <div class="form-group" id="month-income-group">
+          <label class="form-label">
+            毎月の手取り額
+            <span class="value-display"><span id="monthIncomeDisplay" style="color: #10b981;">25.0</span> 万円</span>
+          </label>
+          <div class="input-wrapper">
+            <input
+              type="number"
+              id="monthIncomeInput"
+              value="25.0"
+              min="5.0"
+              max="200.0"
+              step="0.5"
+            >
+            <span class="suffix">万円</span>
+          </div>
+          <input
+            type="range"
+            id="monthIncomeSlider"
+            min="5.0"
+            max="100.0"
+            value="25.0"
+            step="0.5"
+            style="accent-color: #10b981;"
+          >
+        </div>
+        
+        <div class="form-group" style="margin-top:24px;">
+           <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">
+             ※残業代などを含めた「実際に毎月口座に振り込まれる金額」を入力してください。<br>
+             ※ボーナスは除外して計算するのが、生活費破産を防ぐコツです。
+           </p>
+        </div>
+      </div>
+
+      <!-- === Result Panel === -->
+      <div class="glass-card animate-in delay-1" id="result-panel">
+        <div class="card-header">
+          <div class="card-icon blue" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">💰</div>
+          <div class="card-title">生活費バランスの黄金比</div>
+        </div>
+
+        <!-- 理想の家賃ピックアップ -->
+        <div class="result-hero" style="border-radius: var(--border-radius-md);">
+          <div class="result-label">適正な家賃の目安（手取りの25〜30%）</div>
+          <div class="result-value" id="resultRent">¥0</div>
+          <div class="result-sub">
+            毎月 <strong>¥<span id="resultSaving">0</span></strong> （15%）の貯金設定です
+          </div>
+        </div>
+
+        <!-- チャート -->
+        <div class="chart-container" style="margin-top: 32px; display: flex; justify-content: center;">
+          <canvas id="lifestyleChart" width="220" height="220"></canvas>
+        </div>
+
+        <!-- 内訳リスト -->
+        <ul class="breakdown-list" style="margin-top: 32px;" id="lifestyle-breakdown">
+          <!-- JSで動的に構築 -->
+        </ul>
+
+        <!-- バイラルシェアボタン (追加) -->
+        <div style="margin-top: 32px; text-align: center;">
+          <a href="#" id="share-twitter-btn" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; justify-content: center; width: 100%; max-width: 320px; background: #000; color: #fff; text-decoration: none; font-weight: bold; border-radius: 999px; padding: 16px 24px; font-size: 15px; transition: opacity 0.2s;">
+            <svg style="width: 18px; height: 18px; fill: white; margin-right: 8px;" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            この絶望的な結果をXに投稿する
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <section class="cta-section">
+      <h2 style="text-align: center; margin-bottom: 24px; font-size: 22px;">家賃が高くてキツイ、貯金できないなら👇</h2>
+      <div class="cta-grid">
+        <div class="cta-card animate-in delay-3">
+          <div class="cta-icon">🚀</div>
+          <h3>稼いで手取りを増やす</h3>
+          <p>そもそもの「給料」が少なければ節約には限界があります。あなたの適正年収を調べてみましょう。</p>
+          <a href="#" class="cta-button green" id="cta-career-link">無料の市場価値診断 →</a>
+        </div>
+        <div class="cta-card animate-in delay-2">
+          <div class="cta-icon">🏡</div>
+          <h3>税金を減らして手取りを増やす</h3>
+          <p>会社員ができる最強の現金防衛術「<a href="/furusato.html" style="color:#3b82f6; font-weight:bold; text-decoration:underline;">ふるさと納税</a>」。まだやっていない人は今すぐチェック。</p>
+          <a href="furusato.html" class="cta-button purple">ふるさと納税シミュレーター →</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="/html_sitemap.html">全記事一覧（サイトマップ）</a>
+        <a href="privacy.html">プライバシーポリシー</a>
+        <a href="terms.html">利用規約</a>
+        <a href="contact.html">お問い合わせ</a>
+      </div>
+      <p>© 2026 手取り計算.com</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/affiliate.js"></script>
+  <script src="js/lifestyle.js"></script>
+</body>
+</html>

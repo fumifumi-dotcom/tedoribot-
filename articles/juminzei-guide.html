@@ -34,6 +34,52 @@
     ]
   }
   </script>
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/favicon.svg">
+
+  <!-- SEO HACK: FAQ Schema for maximum SERP real estate -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "手取りは額面の何割ですか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "一般的に手取りは額面給与の約75%〜85%となります。正確な金額は所得税、住民税、社会保険料の控除額によって変動します。当サイトのシミュレーターで1円単位の正確な金額を計算できます。"
+      }
+    }, {
+      "@type": "Question",
+      "name": "NISAやふるさと納税で手取りは増えますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ふるさと納税を活用することで翌年の住民税が控除され、実質的な手元に残る価値（返礼品＋税金控除）を最大化できます。また新NISAを活用すれば投資の運用益が非課税になるため、将来の資産を爆発的に増やせます。まずは証券口座の手数料が安い松井証券などのネット証券で始めるのが鉄則です。"
+      }
+    }]
+  }
+  </script>
+
+  <!-- SEO HACK: Breadcrumb List -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "name": "手取り計算.com トップ",
+      "item": "https://tedori-keisan.com/"
+    },{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "お金の知識",
+      "item": "https://tedori-keisan.com/juminzei-guide"
+    }]
+  }
+  </script>
 </head>
 <body>
   <header class="site-header">
@@ -51,6 +97,10 @@
     <article style="background: var(--bg-secondary); padding: 40px; border-radius: var(--border-radius-lg); border: 1px solid var(--glass-border);">
       <span style="display:inline-block; background:rgba(239,68,68,0.1); color:#ef4444; padding:4px 12px; border-radius:4px; font-weight:bold; margin-bottom:16px;">税金ガイド</span>
       <h1 style="font-size: 28px; color: var(--text-primary); margin-bottom: 24px; line-height: 1.4;">【2026年】住民税はいくら？計算方法と安くする3つの裏技</h1>
+
+      <div style="margin-bottom: 24px; display: inline-block; background: rgba(59, 130, 246, 0.1); color: #3b82f6; padding: 4px 12px; border-radius: 9999px; font-size: 13px; font-weight: bold;">
+        🕒 最終更新日: 2026年04月21日
+      </div>
       
       <p style="color: var(--text-secondary); font-size: 16px; margin-bottom: 40px;">
         「住民税って結局いくら引かれてるの？」「安くする方法はないの？」という疑問に完全回答します。住民税は<strong>前年の年収をベースに計算され、翌年6月から天引き</strong>される仕組みです。だから転職して年収が下がっても、前年の高い年収で計算された住民税が襲ってきます。
@@ -93,7 +143,7 @@
 
       <div style="background: rgba(59,130,246,0.05); border: 1px solid #3b82f6; padding: 32px; border-radius: 8px; margin-top: 40px; text-align: center;">
         <h3 style="color: #3b82f6; margin-top: 0; margin-bottom: 16px;">🎯 今すぐできる住民税対策</h3>
-        <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 24px;">住民税を取り戻す最も確実な方法は「ふるさと納税」です。年末まで待たずに今すぐ始めましょう。</p>
+        <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 24px;">住民税を取り戻す最も確実な方法は「<a href="/furusato.html" style="color:#3b82f6; font-weight:bold; text-decoration:underline;">ふるさと納税</a>」です。年末まで待たずに今すぐ始めましょう。</p>
         <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;">
           <a href="#" id="cta-furusato-link" class="cta-button" style="display:inline-block; padding: 14px 24px; font-size: 15px; font-weight: bold; background: #3b82f6; color: white; min-width: 200px;">楽天ふるさと納税で探す →</a>
           <a href="#" id="cta-career-link" class="cta-button" style="display:inline-block; padding: 14px 24px; font-size: 15px; font-weight: bold; background: var(--accent-green); color: white; min-width: 200px;">年収を上げて根本解決 →</a>

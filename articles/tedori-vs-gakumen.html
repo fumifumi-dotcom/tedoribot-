@@ -48,6 +48,52 @@
     ]
   }
   </script>
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/favicon.svg">
+
+  <!-- SEO HACK: FAQ Schema for maximum SERP real estate -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "手取りは額面の何割ですか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "一般的に手取りは額面給与の約75%〜85%となります。正確な金額は所得税、住民税、社会保険料の控除額によって変動します。当サイトのシミュレーターで1円単位の正確な金額を計算できます。"
+      }
+    }, {
+      "@type": "Question",
+      "name": "NISAやふるさと納税で手取りは増えますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ふるさと納税を活用することで翌年の住民税が控除され、実質的な手元に残る価値（返礼品＋税金控除）を最大化できます。また新NISAを活用すれば投資の運用益が非課税になるため、将来の資産を爆発的に増やせます。まずは証券口座の手数料が安い松井証券などのネット証券で始めるのが鉄則です。"
+      }
+    }]
+  }
+  </script>
+
+  <!-- SEO HACK: Breadcrumb List -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "name": "手取り計算.com トップ",
+      "item": "https://tedori-keisan.com/"
+    },{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "お金の知識",
+      "item": "https://tedori-keisan.com/tedori-vs-gakumen"
+    }]
+  }
+  </script>
 </head>
 <body>
   <header class="site-header">
@@ -65,6 +111,10 @@
     <article style="background: var(--bg-secondary); padding: 40px; border-radius: var(--border-radius-lg); border: 1px solid var(--glass-border);">
       <span style="display:inline-block; background:rgba(16,185,129,0.1); color:#10b981; padding:4px 12px; border-radius:4px; font-weight:bold; margin-bottom:16px;">基礎知識</span>
       <h1 style="font-size: 28px; color: var(--text-primary); margin-bottom: 24px; line-height: 1.4;">年収と手取りの関係を完全理解。額面と手取りの差が生まれる5つの原因</h1>
+
+      <div style="margin-bottom: 24px; display: inline-block; background: rgba(59, 130, 246, 0.1); color: #3b82f6; padding: 4px 12px; border-radius: 9999px; font-size: 13px; font-weight: bold;">
+        🕒 最終更新日: 2026年04月21日
+      </div>
       
       <p style="color: var(--text-secondary); font-size: 16px; margin-bottom: 40px;">
         求人票に「年収500万円」と書いてあっても、実際にあなたの口座に振り込まれるのは約389万円。<strong>差額の111万円はすべて税金と社会保険料</strong>として国に持っていかれます。この「額面」と「手取り」のギャップが一体何から生まれているのか、5つの原因を徹底解剖します。
@@ -80,7 +130,7 @@
       <p style="color: var(--text-secondary); margin-bottom: 24px;">失業時の生活保障のための保険料です。金額は比較的少額ですが、確実に引かれます。</p>
 
       <h2 style="font-size: 22px; color: var(--accent-green); margin-top: 40px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--glass-border);">原因④ 所得税（累進課税で5%〜45%）</h2>
-      <p style="color: var(--text-secondary); margin-bottom: 24px;">年収が上がるほど税率が跳ね上がる「累進課税」の仕組みで計算される税金です。年収500万で約14万円、年収1000万では約80万円以上にもなります。ふるさと納税やiDeCoで控除を活用することが防衛の要です。</p>
+      <p style="color: var(--text-secondary); margin-bottom: 24px;">年収が上がるほど税率が跳ね上がる「累進課税」の仕組みで計算される税金です。年収500万で約14万円、年収1000万では約80万円以上にもなります。<a href="/furusato.html" style="color:#3b82f6; font-weight:bold; text-decoration:underline;">ふるさと納税</a>やiDeCoで控除を活用することが防衛の要です。</p>
 
       <h2 style="font-size: 22px; color: var(--accent-green); margin-top: 40px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid var(--glass-border);">原因⑤ 住民税（一律約10%）</h2>
       <p style="color: var(--text-secondary); margin-bottom: 24px;">前年の所得に対してかかる税金です。税率は一律約10%で、所得税よりも重い負担になることが多いです。<strong>ふるさと納税で最もダイレクトに取り戻せる</strong>のがこの住民税です。</p>

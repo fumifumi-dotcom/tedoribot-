@@ -52,6 +52,52 @@
   ]
 }
   </script>
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/favicon.svg">
+
+  <!-- SEO HACK: FAQ Schema for maximum SERP real estate -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "手取りは額面の何割ですか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "一般的に手取りは額面給与の約75%〜85%となります。正確な金額は所得税、住民税、社会保険料の控除額によって変動します。当サイトのシミュレーターで1円単位の正確な金額を計算できます。"
+      }
+    }, {
+      "@type": "Question",
+      "name": "NISAやふるさと納税で手取りは増えますか？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ふるさと納税を活用することで翌年の住民税が控除され、実質的な手元に残る価値（返礼品＋税金控除）を最大化できます。また新NISAを活用すれば投資の運用益が非課税になるため、将来の資産を爆発的に増やせます。まずは証券口座の手数料が安い松井証券などのネット証券で始めるのが鉄則です。"
+      }
+    }]
+  }
+  </script>
+
+  <!-- SEO HACK: Breadcrumb List -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1,
+      "name": "手取り計算.com トップ",
+      "item": "https://tedori-keisan.com/"
+    },{
+      "@type": "ListItem",
+      "position": 2,
+      "name": "お金の知識",
+      "item": "https://tedori-keisan.com/why-tax-high"
+    }]
+  }
+  </script>
 </head>
 <body>
   <header class="site-header">
@@ -73,6 +119,10 @@
     <article style="background: var(--bg-secondary); padding: 40px; border-radius: var(--border-radius-lg); border: 1px solid var(--glass-border);">
       <span style="display:inline-block; background:rgba(239,68,68,0.1); color:#ef4444; padding:4px 12px; border-radius:4px; font-weight:bold; margin-bottom:16px;">マネーコラム</span>
       <h1 style="font-size: 28px; color: var(--text-primary); margin-bottom: 24px; line-height: 1.4;">なぜ日本の税金は高いのか？年収が上がっても手取りが増えない「累進課税」の罠</h1>
+
+      <div style="margin-bottom: 24px; display: inline-block; background: rgba(59, 130, 246, 0.1); color: #3b82f6; padding: 4px 12px; border-radius: 9999px; font-size: 13px; font-weight: bold;">
+        🕒 最終更新日: 2026年04月21日
+      </div>
       
       <p style="color: var(--text-secondary); font-size: 16px; margin-bottom: 40px;">
         毎月の給与明細を見て「あれ？額面は上がってるのに、手取りが全然増えていない…」とため息をついた経験は誰にでもあるはずです。日本では年収が上がるほど、引かれる税金がどんどんえげつないことになっていきます。その残酷な仕組みと、私たちができる唯一の「防衛策」について解説します。

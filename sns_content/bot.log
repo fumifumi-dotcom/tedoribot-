@@ -1,0 +1,101 @@
+Traceback (most recent call last):
+  File "/Users/imamichifumitaka/Downloads/ミカタ_経理/今道_生活を豊かに/money-tools/auto_x_poster.py", line 2, in <module>
+    import tweepy
+ModuleNotFoundError: No module named 'tweepy'
+/Users/imamichifumitaka/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+Error: No tweets found in all_tweets.txt
+/Users/imamichifumitaka/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+Error: No tweets found in all_tweets.txt
+/Users/imamichifumitaka/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+❌ Error posting tweet: 402 Payment Required
+Your enrolled account [2032843384243847168] does not have any credits to fulfill this request.
+/Users/imamichifumitaka/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+Posting tweet:
+【悲報】年収210万円の真実
+
+額面：210万円
+手取り：166万円（手取り率79.3%）
+天引き：44万円
+
+搾取されすぎ…
+
+あなたの年収の正確な手取りは？
+👉 https://tedori-keisan.com/salary-list.html
+
+#手取り計算 #年収 #税金高すぎ #MoneyLab
+❌ Error posting tweet: 402 Payment Required
+Your enrolled account [2032843384243847168] does not have any credits to fulfill this request.
+/Users/imamichifumitaka/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+Posting tweet:
+【悲報】年収220万円の真実
+
+額面：220万円
+手取り：173万円（手取り率78.8%）
+天引き：47万円
+
+あなたは大丈夫？
+
+あなたの年収の正確な手取りは？
+👉 https://tedori-keisan.com/salary-list.html
+
+#手取り計算 #年収 #税金高すぎ #MoneyLab
+✅ Successfully posted tweet ID: 2046091730144170222
+/Users/imamichifumitaka/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+Posting tweet:
+【⚠手取り180万の人、マジで危険です】
+
+年収230万だからと安心していませんか？
+でも毎月、凄まじい額を国に搾取され続けています。
+
+額面：230万円
+天引き：なんと💸50万円💸
+
+何も対策しないと生涯でポルシェ数台分損します。
+自分の『本当の手取りと税金』、今すぐ把握してください👇
+https://tedori-keisan.com
+
+#手取り計算 #税金高すぎ #節税
+❌ Error posting tweet: 403 Forbidden
+You are not permitted to perform this action.
+/Users/imamichifumitaka/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+Posting tweet:
+【悲報】年収240万円の真実
+
+日本の「累進課税」の威力を見逃していませんか？
+
+・額面：240万円
+・手取り：187万円（手取り率77.9%）
+・税＋保険料：53万円
+
+頑張って年収を上げても、意外と手取りが増えない理由がこれです。
+あなたの手取りは世間と比べてどうですか？👇
+https://tedori-keisan.com
+
+#手取り計算 #年収 #お金の勉強
+❌ Error posting tweet: 403 Forbidden
+You are not permitted to perform this action.
+/Users/imamichifumitaka/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+Posting tweet:
+「ふるさと納税やNISA、自分はいくらできる？」
+
+年収250万円のあなたの場合、
+実は【56万円】も税金・保険料を引かれています。
+
+この金額を把握して、賢く節税できるかどうかが将来の分かれ道です。
+まずは「プロフィールのリンク」から自分の正確な手取り額を1秒で確認👇
+
+#手取り #節税 #新NISA
+✅ Successfully posted tweet ID: 2046095263782383661
+[2026-04-20 14:21:43] [FOLLOW] Searching for targets...
+[2026-04-20 14:21:44] [FOLLOW] ❌ Error during auto-follow: 400 Bad Request
+$.target_user_id: does not match the regex pattern ^[0-9]{1,19}$
+[2026-04-20 14:22:15] [FOLLOW] Searching for targets...
+[2026-04-20 14:22:16] [FOLLOW] ✅ Successfully followed user ID: 965779013942652928
