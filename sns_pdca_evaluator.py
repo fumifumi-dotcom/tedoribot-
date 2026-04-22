@@ -108,11 +108,23 @@ def evaluate_and_update_scores():
         avg_scores[base_tpl_id] = avg
         print(f"Template {base_tpl_id}: {avg:.1f} pts (from {len(strengths)} tweets)")
 
+    BEST_TREND_FILE = os.path.join(DIR, 'best_trend.json')
+    best_trend_kw = None
+    best_trend_score = 0.0
+
     if trend_scores:
         print("\n--- 🌍 市場トレンド戦闘力 レポート (アウトバウンド便乗効果) ---")
         for kw, strengths in trend_scores.items():
             avg = sum(strengths) / len(strengths)
             print(f"Market Trend {kw}: {avg:.1f} pts (from {len(strengths)} usages)")
+            if avg > best_trend_score:
+                best_trend_score = avg
+                best_trend_kw = kw
+
+        if best_trend_kw:
+            with open(BEST_TREND_FILE, 'w', encoding='utf-8') as f:
+                json.dump({'best_trend': best_trend_kw, 'score': best_trend_score}, f, ensure_ascii=False)
+            print(f"🌟 Best Trend Saved: {best_trend_kw} ({best_trend_score:.1f} pts)")
 
     # 基準となる全体平均
     global_avg = sum(avg_scores.values()) / len(avg_scores) if avg_scores else 1.0

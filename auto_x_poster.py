@@ -103,11 +103,11 @@ def generate_tax_video(data):
         {'label': '社会保険', 'val': data['social_raw'], 'color': (245, 158, 11)}
     ]
     
-    title_font = get_font(64)
-    sub_font = get_font(36)
-    center_font = get_font(42)
-    item_font = get_font(48)
-    val_font = get_font(40)
+    title_font = get_font(72)
+    sub_font = get_font(40)
+    center_font = get_font(48)
+    item_font = get_font(52)
+    val_font = get_font(48)
     
     for f_idx in range(total_frames):
         # イージング（アニメーションの滑らかさ）
@@ -155,7 +155,7 @@ def generate_tax_video(data):
             # 数値もパラパラ変わる
             current_val = round((sec['val']/10000) * progress)
             val_str = f"約 {current_val}万円"
-            draw.text((legend_x + 350, y_pos - 5), val_str, font=val_font, fill=(71, 85, 105))
+            draw.text((legend_x + 350, y_pos - 5), val_str, font=val_font, fill=(15, 23, 42))
             
         draw.text((width - 320, height - 50), "手取り計算.com (2026年版)", font=get_font(24), fill=(148, 163, 184))
         
@@ -184,6 +184,17 @@ def generate_dynamic_tweet():
     # 外部トレンドキーワードの取得（インバウンド情報）
     trend_kw = fetch_external_trend()
     
+    # 過去の成功データ（PDCA結果）を読み込む
+    best_trend_info = ""
+    try:
+        best_trend_file = 'sns_content/best_trend.json'
+        if os.path.exists(best_trend_file):
+            with open(best_trend_file, 'r', encoding='utf-8') as f:
+                bt = json.load(f)
+                best_trend_info = f"\n【過去の成功データ】: 前回は『{bt.get('best_trend', '')}』の文脈で大きな反響がありました。この成功パターン（読者の感情を抉る構成）を踏襲、またはさらに超える内容にしてください。"
+    except Exception as e:
+        print(f"⚠️ Could not load best trend: {e}")
+
     API_KEY_GEMINI = os.environ.get("GEMINI_API_KEY", "")
     
     main_text = ""
@@ -200,7 +211,7 @@ def generate_dynamic_tweet():
 【今日の最新トレンド】: {trend_kw}
 【ターゲティング年収】: {data['income']}万円
 【手取り額】: 約{data['tedori']}万円
-【国に奪われる税金等の総額】: 年間約{data['tax_total']}万円
+【国に奪われる税金等の総額】: 年間約{data['tax_total']}万円{best_trend_info}
 
 【条件】
 ・冒頭で「{trend_kw}の件もヤバいけど…」等とトレンドに軽く触れた後、すぐに「それ以上にヤバいのが税金」という話へ滑らかにスライドさせてください。
