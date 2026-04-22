@@ -3,12 +3,13 @@ name: Tedoribot Autonomous Runner
 on:
   schedule:
     # JST = UTC + 9
-    # 日本時間 8:00
-    - cron: '0 23 * * *'
-    # 日本時間 12:00
-    - cron: '0 3 * * *'
-    # 日本時間 20:00
-    - cron: '0 11 * * *'
+    # GitHub Actionsの遅延回避のため15分に設定
+    # 日本時間 8:15
+    - cron: '15 23 * * *'
+    # 日本時間 12:15
+    - cron: '15 3 * * *'
+    # 日本時間 20:15
+    - cron: '15 11 * * *'
   workflow_dispatch:
 
 jobs:
