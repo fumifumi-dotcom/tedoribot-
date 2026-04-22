@@ -4,6 +4,7 @@ import tweepy
 import random
 import sys
 import time
+import datetime
 import urllib.request
 import xml.etree.ElementTree as ET
 from PIL import Image, ImageDraw, ImageFont
@@ -95,12 +96,35 @@ def generate_tax_video(data):
     
     frames = []
     
-    # グラフデータ
+    # グラフデータとカラーテーマの分岐
     gross = data['gross_raw']
+    current_hour = datetime.datetime.now().hour
+    if 5 <= current_hour < 11:
+        bg_color = (240, 248, 255)
+        text_color = (15, 23, 42)
+        subtext_color = (100, 116, 139)
+        color_tedori = (59, 130, 246)
+        color_tax = (239, 68, 68)
+        color_social = (14, 165, 233)
+    elif 11 <= current_hour < 17:
+        bg_color = (255, 250, 240)
+        text_color = (15, 23, 42)
+        subtext_color = (100, 116, 139)
+        color_tedori = (245, 158, 11)
+        color_tax = (220, 38, 38)
+        color_social = (251, 146, 60)
+    else:
+        bg_color = (15, 23, 42)
+        text_color = (248, 250, 252)
+        subtext_color = (148, 163, 184)
+        color_tedori = (16, 185, 129)
+        color_tax = (225, 29, 72)
+        color_social = (139, 92, 246)
+
     sections = [
-        {'label': '手取り', 'val': data['tedori_raw'], 'color': (16, 185, 129)},
-        {'label': '税金', 'val': data['tax_raw'], 'color': (244, 63, 94)},
-        {'label': '社会保険', 'val': data['social_raw'], 'color': (245, 158, 11)}
+        {'label': '手取り', 'val': data['tedori_raw'], 'color': color_tedori},
+        {'label': '税金', 'val': data['tax_raw'], 'color': color_tax},
+        {'label': '社会保険', 'val': data['social_raw'], 'color': color_social}
     ]
     
     title_font = get_font(72)
@@ -114,11 +138,11 @@ def generate_tax_video(data):
         progress = min(f_idx / (total_frames * 0.8), 1.0)
         progress = 1.0 - math.pow(1.0 - progress, 3) # Cubic ease-out
         
-        img = Image.new('RGB', (width, height), color=(248, 250, 252))
+        img = Image.new('RGB', (width, height), color=bg_color)
         draw = ImageDraw.Draw(img)
         
-        draw.text((80, 60), f"年収{data['income']}万円の「本当の」手取り", font=title_font, fill=(15, 23, 42))
-        draw.text((80, 140), f"額面{data['income']}万でも、年間 {data['tax_total']}万円 が天引きされます", font=sub_font, fill=(100, 116, 139))
+        draw.text((80, 60), f"年収{data['income']}万円の「本当の」手取り", font=title_font, fill=text_color)
+        draw.text((80, 140), f"額面{data['income']}万でも、年間 {data['tax_total']}万円 が天引きされます", font=sub_font, fill=subtext_color)
         
         # 円グラフの描画
         bbox = [80, 220, 80 + 340, 220 + 340]
@@ -132,7 +156,7 @@ def generate_tax_video(data):
             
         # ドーナツ型にするための内側の白円
         inner_bbox = [150, 290, 150 + 200, 290 + 200]
-        draw.ellipse(inner_bbox, fill=(248, 250, 252))
+        draw.ellipse(inner_bbox, fill=bg_color)
         
         # 中心テキスト（手取り率がカウントアップ）
         current_rate = round(data['rate'] * progress, 1)
@@ -140,8 +164,8 @@ def generate_tax_video(data):
         text_bbox = draw.textbbox((0, 0), center_text, font=center_font)
         text_w = text_bbox[2] - text_bbox[0]
         text_h = text_bbox[3] - text_bbox[1]
-        draw.text((250 - text_w/2, 390 - text_h/2), center_text, font=center_font, fill=(15, 23, 42))
-        draw.text((250 - 45, 340), "手取り率", font=get_font(24), fill=(100, 116, 139))
+        draw.text((250 - text_w/2, 390 - text_h/2), center_text, font=center_font, fill=text_color)
+        draw.text((250 - 45, 340), "手取り率", font=get_font(24), fill=subtext_color)
         
         # 凡例（Legend）
         legend_x = 520
@@ -150,14 +174,14 @@ def generate_tax_video(data):
         for i, sec in enumerate(sections):
             y_pos = legend_y + (i * 90)
             draw.rounded_rectangle([legend_x, y_pos, legend_x + 30, y_pos + 30], radius=8, fill=sec['color'])
-            draw.text((legend_x + 50, y_pos - 10), f"{sec['label']}", font=item_font, fill=(15, 23, 42))
+            draw.text((legend_x + 50, y_pos - 10), f"{sec['label']}", font=item_font, fill=text_color)
             
             # 数値もパラパラ変わる
             current_val = round((sec['val']/10000) * progress)
             val_str = f"約 {current_val}万円"
-            draw.text((legend_x + 350, y_pos - 5), val_str, font=val_font, fill=(15, 23, 42))
+            draw.text((legend_x + 350, y_pos - 5), val_str, font=val_font, fill=text_color)
             
-        draw.text((width - 320, height - 50), "手取り計算.com (2026年版)", font=get_font(24), fill=(148, 163, 184))
+        draw.text((width - 320, height - 50), "手取り計算.com (2026年版)", font=get_font(24), fill=subtext_color)
         
         # 配列に追加
         frames.append(np.array(img))
@@ -195,6 +219,15 @@ def generate_dynamic_tweet():
     except Exception as e:
         print(f"⚠️ Could not load best trend: {e}")
 
+    # 時間帯別ペルソナの設定
+    current_hour = datetime.datetime.now().hour
+    if 5 <= current_hour < 11:
+        persona_rule = "【通勤・労働の絶望】「今日も満員電車お疲れ様です。でも今日あなたが稼ぐお金の〇%は国に奪われます」といった、朝から働く意欲を削ぐような労働者への同情と絶望から入ってください。"
+    elif 11 <= current_hour < 17:
+        persona_rule = "【節約の無力感】「ランチ代を数百円ケチっても無駄です。年収〇〇万なら毎月〇万が税金で消えます」といった、昼休憩中のサラリーマンに刺さる生活感のある絶望から入ってください。"
+    else:
+        persona_rule = "【将来の不安・副業喚起】「手取り〇〇万で将来不安じゃないですか？国に搾取されるだけの人生でいいんですか？」といった、夜リラックスしている時に将来への強烈な危機感と行動喚起を促す入りにしてください。"
+
     API_KEY_GEMINI = os.environ.get("GEMINI_API_KEY", "")
     
     main_text = ""
@@ -214,7 +247,7 @@ def generate_dynamic_tweet():
 【国に奪われる税金等の総額】: 年間約{data['tax_total']}万円{best_trend_info}
 
 【条件】
-・冒頭で「{trend_kw}の件もヤバいけど…」等とトレンドに軽く触れた後、すぐに「それ以上にヤバいのが税金」という話へ滑らかにスライドさせてください。
+・{persona_rule} トレンドワード「{trend_kw}」も冒頭に自然に絡めてください。
 ・事実を並べるだけでなく、視聴者がハッとするような「皮肉」や「絶望感」を含めてください。
 ・【最重要】読者が「絶対にストレスを感じない」レベルの究極の見やすさを追求してください。
 　- 1文は極端に短く、テンポ良く読めるようにする。
