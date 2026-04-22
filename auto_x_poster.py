@@ -10,6 +10,7 @@ from PIL import Image, ImageDraw, ImageFont
 import math
 import imageio
 import numpy as np
+import google.generativeai as genai
 
 def fetch_external_trend():
     """Yahoo Business RSSから最新の外部トレンド（インバウンド情報）を取得"""
@@ -175,35 +176,55 @@ def generate_dynamic_tweet():
     except:
         income = 250
         
-    # 年収が1500万円を超えたら250万円にリセットしてループ
     if income > 1500:
         income = 250
 
     data = calculate_salary_data(income)
     
-    # バズ・テンプレートを外部JSON（スコア付きデータベース）から読み込み
-    db_file = 'sns_content/templates.json'
-    with open(db_file, 'r', encoding='utf-8') as f:
-        templates = json.load(f)
+    # 外部トレンドキーワードの取得（インバウンド情報）
+    trend_kw = fetch_external_trend()
     
-    # 淘汰システム：スコア（重み）に基づいたランダム抽選
-    weights = [max(float(t.get('score', 1.0)), 0.1) for t in templates]
-    template = random.choices(templates, weights=weights, k=1)[0]
+    API_KEY_GEMINI = os.environ.get("GEMINI_API_KEY", "")
     
-    template_id = template['id']
-    main_text = template['main']
-    reply_text = template.get('reply', '')
-    
-    # 外部トレンドキーワードの動的挿入
-    trend_kw = "日本の景気"
-    if '{trend_keyword}' in main_text:
-        full_trend = fetch_external_trend()
-        trend_kw = full_trend
-        # 学習エンジンのため、外部情報に便乗したことを評価IDとして残す
-        template_id = f"{template_id}::[{trend_kw}]"
+    main_text = ""
+    # Gemini APIキーが設定されている場合はAIで完全動的生成
+    if API_KEY_GEMINI:
+        try:
+            genai.configure(api_key=API_KEY_GEMINI)
+            model = genai.GenerativeModel('gemini-1.5-flash') # 高速・無料枠対応モデル
+            
+            prompt = f"""
+あなたは「国や税金による理不尽な搾取」に静かに怒る、エリートSNSマーケターです。
+以下の【今日の最新トレンド】と【年収データ】を自然に結びつけて、見た人が思わず「ヤバい」とブックマークしてしまうX（Twitter）の投稿本文（130文字以内）を1つだけ作成してください。
 
-    main_text = main_text.format(trend_keyword=trend_kw, **data)
-    reply_text = reply_text.format(trend_keyword=trend_kw, **data)
+【今日の最新トレンド】: {trend_kw}
+【ターゲティング年収】: {data['income']}万円
+【手取り額】: 約{data['tedori']}万円
+【国に奪われる税金等の総額】: 年間約{data['tax_total']}万円
+
+【条件】
+・冒頭で「{trend_kw}の件もヤバいけど…」等とトレンドに軽く触れた後、すぐに「それ以上にヤバいのが税金」という話へ滑らかにスライドさせてください。
+・事実を並べるだけでなく、視聴者がハッとするような「皮肉」や「絶望感」を含めてください。
+・URLは書かず、必ず最後は「プロフ見て」や「プロフの手取りチェッカーを見て」といった言葉でプロフィール欄へ誘導してください。
+・ハッシュタグは一切不要です。
+"""
+            response = model.generate_content(prompt)
+            main_text = response.text.strip()
+            
+            # AIが「」などをつけて返した場合は除去
+            main_text = main_text.replace("「", "").replace("」", "")
+            if main_text.startswith('"') and main_text.endswith('"'):
+                main_text = main_text[1:-1]
+        except Exception as e:
+            print(f"⚠️ Gemini API Error: {e}")
+            
+    # Geminiがエラーだった場合やAPIキーがない場合のフォールバック（緊急用）
+    if not main_text:
+        main_text = f"いま世間は『{trend_kw}』の話題で持ちきりですが、それより年収{data['income']}万円のあなたが【年間{data['tax_total']}万円】も国に奪われている事実の方が大問題です。手取りなんてたった{data['tedori']}万円。\n\n現実に絶望したい人はプロフ見て。"
+
+    # 学習エンジン用ID
+    template_id = f"gemini_LLM::[{trend_kw}]"
+    reply_text = "" # リンクはプロフィール誘導に絞るため今回は不要
     
     # 次の年収（+10万円）を保存
     with open(state_file, 'w', encoding='utf-8') as f:
