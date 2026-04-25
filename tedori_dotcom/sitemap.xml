@@ -11,12 +11,15 @@
   <url><loc>https://tedori-keisan.com/pages/gesshu-15.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/gesshu-20-bonus2m.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/gesshu-20.html</loc><priority>0.7</priority></url>
+  <url><loc>https://tedori-keisan.com/pages/gesshu-25-bonus2m.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/gesshu-25.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/gesshu-30.html</loc><priority>0.7</priority></url>
+  <url><loc>https://tedori-keisan.com/pages/gesshu-35-nobonus.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/gesshu-35.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/gesshu-40.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/gesshu-45.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/gesshu-50-bonus2m.html</loc><priority>0.7</priority></url>
+  <url><loc>https://tedori-keisan.com/pages/gesshu-50-nobonus.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/gesshu-50.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/gesshu-55-bonus2m.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/gesshu-55.html</loc><priority>0.7</priority></url>
@@ -30,6 +33,7 @@
   <url><loc>https://tedori-keisan.com/pages/gesshu-95.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/jikyu-1500.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/jikyu-2000.html</loc><priority>0.7</priority></url>
+  <url><loc>https://tedori-keisan.com/pages/jikyu-2200.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/nenshu-1000-age-25.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/nenshu-1000-age-30.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/nenshu-1000-age-35.html</loc><priority>0.7</priority></url>
@@ -584,6 +588,7 @@
   <url><loc>https://tedori-keisan.com/pages/nenshu-970.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/nenshu-980.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/nenshu-990.html</loc><priority>0.7</priority></url>
+  <url><loc>https://tedori-keisan.com/pages/nikkyu-11000.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/nikkyu-17000.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/nikkyu-20000.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/nikkyu-21000.html</loc><priority>0.7</priority></url>
