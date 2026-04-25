@@ -229,6 +229,14 @@
     }, 200);
   }
 
+  // A8.net 提携済みアフィリエイトリンク
+  const AFF = {
+    career: 'https://px.a8.net/svt/ejp?a8mat=4B1OTT+6P4KS2+47GS+5YRHE',
+    rakutenFurusato: 'https://rpx.a8.net/svt/ejp?a8mat=4B1OTR+ACPDGY+2HOM+6C1VM&rakuten=y&a8ejpredirect=http%3A%2F%2Fhb.afl.rakuten.co.jp%2Fhgc%2F0ea62065.34400275.0ea62066.204f04c0%2Fa26041903646_4B1OTR_ACPDGY_2HOM_6C1VM%3Fpc%3Dhttp%253A%252F%252Fevent.rakuten.co.jp%252Ffurusato%252F%26m%3Dhttp%253A%252F%252Fm.rakuten.co.jp%252F',
+    matsuiNisa: 'https://px.a8.net/svt/ejp?a8mat=4B1PLP+ACPDGY+3XCC+6AZAQ',
+    matsuiIdeco: 'https://px.a8.net/svt/ejp?a8mat=4B1OTT+6MQUCY+3XCC+BXIYQ',
+  };
+
   function renderLead() {
     const score = getScore();
     const pot = getPotential();
@@ -241,9 +249,8 @@
           <div class="score-unit">/ 100点</div>
         </div>
         <p style="font-size:16px; margin-bottom:8px;">あなたには年間 <span class="highlight-amber" style="font-size:24px;">${pot}万円分</span> の最適化余地があります。</p>
-        <p style="font-size:14px; color:var(--text-secondary); margin-bottom:24px; line-height:1.7;">改善の具体的な方法を、LINE限定で<strong>完全無料</strong>でお届けします。<br>さらに今なら<strong>「人生最適化チェックリスト（PDF）」</strong>を無料プレゼント。</p>
-        <button class="btn-primary btn-line" onclick="window.open('https://line.me/R/ti/p/@xxx','_blank'); state='result'; render();">LINEで改善レポートを無料で受け取る</button>
-        <p style="font-size:11px; color:var(--text-muted); margin-top:12px;">※ このページを閉じると結果は消えます</p>
+        <p style="font-size:14px; color:var(--text-secondary); margin-bottom:24px; line-height:1.7;">あなたの回答を分析した結果、<strong>今すぐ改善できる具体的なアクション</strong>が見つかりました。<br>すべて無料で始められます。</p>
+        <button class="btn-primary" onclick="state='result'; render();">あなた専用の改善プランを見る（無料）</button>
       </div>
     `;
   }
@@ -251,56 +258,78 @@
   function renderResult() {
     const score = getScore();
     const pot = getPotential();
+    const m = answers.money?.value || 'mid';
+    const c = answers.career?.value || 'mid';
+
     app.innerHTML = `
       <div class="diag-card">
-        <div class="diag-badge"><span class="dot" style="background:var(--accent-green);"></span> あなた専用レポート</div>
-        <h1 style="font-size:24px; font-weight:800; line-height:1.4; margin-bottom:16px;">人生満足度 ${score}点のあなたへ。<br>年間<span class="highlight-amber">${pot}万円</span>の改善余地があります。</h1>
+        <div class="diag-badge"><span class="dot" style="background:var(--accent-green);"></span> あなた専用の改善プラン</div>
+        <h1 style="font-size:24px; font-weight:800; line-height:1.4; margin-bottom:16px;">満足度 ${score}点のあなたが<br>年間<span class="highlight-amber">${pot}万円</span>得するための3ステップ</h1>
 
+        <!-- STEP 1: 転職・年収アップ（収入不満の場合に強調） -->
         <div class="result-section">
-          <h3>● あなたの現状分析</h3>
-          <h2>手取り額は「人生の満足度」を決めない</h2>
-          <p>多くの人が「もっと稼げば幸せになれる」と考えます。しかし年収が上がっても満足度が上がらない人は驚くほど多い。<br>原因は<span class="highlight-amber">お金の使い方・キャリアの方向性・人間関係のバランス</span>が最適化されていないからです。</p>
-        </div>
-
-        <div class="result-section">
-          <h3>● 改善の3つの軸</h3>
-          <h2>収入 × キャリア × ライフスタイルの同時最適化</h2>
+          <h3>STEP 1${m !== 'ok' ? '（最優先）' : ''}</h3>
+          <h2>🚀 まずは自分の「適正年収」を知る</h2>
+          <p>${m === 'low' ? '収入に全く満足していないあなたは、今の年収が市場価値より低い可能性が高いです。' : m === 'mid' ? 'やや不満を感じているなら、同じスキルでもっと高い年収の会社がある可能性があります。' : '収入に満足していても、適正年収を知っておくことはキャリア戦略の基本です。'}転職しなくても<strong>自分の市場価値を知るだけ</strong>で、年収交渉や副業選びの判断軸が変わります。</p>
           <ul class="check-list">
-            <li><strong>収入最適化</strong>：控除・節税制度をフル活用し、同じ年収でも手取りを最大化</li>
-            <li><strong>キャリア設計</strong>：5年後の自分から逆算した、具体的なスキル投資計画</li>
-            <li><strong>ライフバランス</strong>：時間とお金の配分を見直し、満足度を最大化するポートフォリオ</li>
+            <li>完全無料で5分で診断完了</li>
+            <li>転職しなくてもOK — 市場価値を知るだけ</li>
+            <li>年収100〜300万円アップの事例多数</li>
           </ul>
+          <a href="${AFF.career}" target="_blank" rel="noopener sponsored" class="btn-primary" style="background:linear-gradient(135deg, var(--accent-green), var(--accent-blue));">【無料】年収・市場価値診断を受ける →</a>
         </div>
 
-        <div class="testimonial-box">
-          「年収500万で満足度48点だった自分が、転職せずにスコア82点まで改善できました。変えたのは"お金の使い方"と"時間配分"だけ。レポートのアクションプランが具体的すぎて驚きました。」<br>
-          <span style="font-size:12px; color:var(--text-muted); font-style:normal;">— 32歳・IT企業勤務</span>
-        </div>
-
+        <!-- STEP 2: ふるさと納税 -->
         <div class="result-section">
-          <h3>● 完全版レポートのご案内</h3>
-          <h2>あなた専用「人生最適化 完全レポート」（30ページ超）</h2>
-          <p>ここまでの無料診断はあくまで概要です。完全版レポートでは、AIがあなたの状況を徹底分析し、<strong>具体的なアクションプラン</strong>を30ページ超のPDFで即時お届けします。</p>
+          <h3>STEP 2</h3>
+          <h2>🏡 ふるさと納税で「確実に」手取りを増やす</h2>
+          <p>ふるさと納税をまだやっていないなら、<strong>毎年数万円を国に捨てている</strong>のと同じです。自己負担たった2,000円で、お肉・お米・海鮮などの返礼品がもらえます。やらない理由がありません。</p>
           <ul class="check-list">
-            <li>あなたの控除漏れチェックと年間節約額シミュレーション</li>
-            <li>5年間のキャリア・収入シミュレーション（3パターン）</li>
-            <li>時間×お金の最適配分マトリクス</li>
-            <li>今月から始められるアクションリスト（優先順位付き）</li>
+            <li>自己負担2,000円で返礼品がもらえる</li>
+            <li>年収500万なら約6万円分の返礼品</li>
+            <li>楽天ポイントも貯まってさらにお得</li>
           </ul>
+          <a href="${AFF.rakutenFurusato}" target="_blank" rel="noopener sponsored" class="btn-primary" style="background:linear-gradient(135deg, #ea580c, #dc2626);">楽天ふるさと納税で返礼品を探す →</a>
+          <a href="/furusato.html" style="display:block; text-align:center; margin-top:12px; font-size:13px; color:var(--accent-blue); text-decoration:none;">→ まずは自分の上限額を計算する</a>
         </div>
 
-        <div class="urgency-box">
-          <div class="timer-box">⏰ 初回限定価格 終了まで <span id="cd">14:59</span></div>
-          <h2 style="font-size:20px; font-weight:800; color:#dc2626; margin-bottom:8px;">この${pot}万円の改善余地、放置しますか？</h2>
-          <p style="font-size:14px; color:var(--text-secondary); margin-bottom:20px;">通常3,000円 → <strong style="font-size:24px; color:var(--text-primary);">初回限定 ¥1,000</strong></p>
-          <button class="btn-primary btn-danger" onclick="window.location.href='https://buy.stripe.com/test_placeholder'">完全版レポートを受け取る（初回限定 ¥1,000）</button>
-          <p style="font-size:11px; color:var(--text-muted); margin-top:12px;">安全なStripe決済ページへ移動します ｜ 即時PDF納品</p>
+        <!-- STEP 3: 証券口座・NISA -->
+        <div class="result-section">
+          <h3>STEP 3</h3>
+          <h2>📈 NISAで「お金に働いてもらう」仕組みを作る</h2>
+          <p>手取りを増やしたら、次は<strong>増えたお金を非課税で運用</strong>する番です。新NISAなら運用益が完全非課税。月3万円の積立で、20年後には約1,200万円になります。</p>
+          <ul class="check-list">
+            <li>運用益が完全非課税（通常は約20%課税）</li>
+            <li>月100円からスタート可能</li>
+            <li>ネット証券なら手数料無料</li>
+          </ul>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <a href="${AFF.matsuiNisa}" target="_blank" rel="noopener sponsored" class="btn-primary" style="flex:1; min-width:200px; background:linear-gradient(135deg, #4f46e5, #7c3aed);">松井証券でNISA口座を開設 →</a>
+            <a href="${AFF.matsuiIdeco}" target="_blank" rel="noopener sponsored" class="btn-primary btn-outline" style="flex:1; min-width:200px;">iDeCoで節税も始める →</a>
+          </div>
+          <a href="/compound.html" style="display:block; text-align:center; margin-top:12px; font-size:13px; color:var(--accent-blue); text-decoration:none;">→ 積立シミュレーションで将来の資産を計算する</a>
         </div>
 
-        <div style="margin-top:32px; background:rgba(59,130,246,0.06); border:1px solid rgba(59,130,246,0.15); border-radius:var(--border-radius-lg); padding:28px; text-align:center;">
-          <h3 style="font-size:18px; font-weight:700; margin-bottom:8px;">📱 月額プラン：毎月届くAIライフコーチ</h3>
-          <p style="font-size:14px; color:var(--text-secondary); margin-bottom:16px;">月額980円で、毎週パーソナライズされたアドバイスがLINEに届きます。</p>
-          <button class="btn-primary btn-outline" onclick="window.location.href='https://buy.stripe.com/test_placeholder_sub'">月額プランを見る（¥980/月）</button>
+        <!-- まとめ -->
+        <div style="margin-top:32px; background:rgba(16,185,129,0.06); border:1px solid rgba(16,185,129,0.15); border-radius:var(--border-radius-lg); padding:28px;">
+          <h3 style="font-size:18px; font-weight:700; margin-bottom:12px; text-align:center;">📋 あなたの改善プランまとめ</h3>
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; text-align:center;">
+            <div style="padding:16px; background:var(--bg-card); border-radius:var(--border-radius-md); border:1px solid var(--glass-border);">
+              <div style="font-size:24px; margin-bottom:4px;">🚀</div>
+              <div style="font-size:13px; font-weight:700;">年収診断</div>
+              <div style="font-size:11px; color:var(--text-muted);">5分・無料</div>
+            </div>
+            <div style="padding:16px; background:var(--bg-card); border-radius:var(--border-radius-md); border:1px solid var(--glass-border);">
+              <div style="font-size:24px; margin-bottom:4px;">🏡</div>
+              <div style="font-size:13px; font-weight:700;">ふるさと納税</div>
+              <div style="font-size:11px; color:var(--text-muted);">実質2,000円</div>
+            </div>
+            <div style="padding:16px; background:var(--bg-card); border-radius:var(--border-radius-md); border:1px solid var(--glass-border);">
+              <div style="font-size:24px; margin-bottom:4px;">📈</div>
+              <div style="font-size:13px; font-weight:700;">NISA口座開設</div>
+              <div style="font-size:11px; color:var(--text-muted);">手数料無料</div>
+            </div>
+          </div>
         </div>
 
         <div style="margin-top:40px; text-align:center;">
@@ -308,20 +337,21 @@
         </div>
       </div>
     `;
-    startTimer(15*60, document.getElementById('cd'));
-  }
 
-  function startTimer(dur, el) {
-    let t = dur;
-    const iv = setInterval(() => {
-      const m = String(Math.floor(t/60)).padStart(2,'0');
-      const s = String(t%60).padStart(2,'0');
-      if(el) el.textContent = m+':'+s;
-      if(--t < 0) { t = 0; clearInterval(iv); }
-    }, 1000);
+    // GA4トラッキング
+    if(typeof gtag === 'function') {
+      gtag('event', 'diagnosis_complete', {
+        'event_category': 'diagnosis',
+        'score': score,
+        'money_answer': m,
+        'career_answer': c,
+        'potential': pot
+      });
+    }
   }
 
   render();
   </script>
 </body>
 </html>
+
