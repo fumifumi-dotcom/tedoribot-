@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>手取り計算ウィジェット</title>
+  <style>
+    :root {
+      --primary: #0ea5e9;
+      --bg: #ffffff;
+      --text: #1e293b;
+      --border: #e2e8f0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      margin: 0;
+      padding: 16px;
+      background: var(--bg);
+      color: var(--text);
+      text-align: center;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-sizing: border-box;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .widget-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin: 0 0 12px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .input-wrapper {
+      position: relative;
+      margin-bottom: 16px;
+    }
+    input {
+      width: 100%;
+      padding: 12px 40px 12px 12px;
+      font-size: 18px;
+      font-weight: bold;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      box-sizing: border-box;
+      text-align: right;
+      transition: border-color 0.2s;
+    }
+    input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    .suffix {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #64748b;
+      font-weight: bold;
+    }
+    button {
+      width: 100%;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #0284c7;
+    }
+    .brand {
+      font-size: 11px;
+      color: #94a3b8;
+      margin-top: 12px;
+      display: block;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="widget-title">
+    <span style="color:var(--primary)">¥</span> 最新の手取り額を計算
+  </div>
+  <div class="input-wrapper">
+    <input type="number" id="incomeInput" placeholder="500" value="500" min="0" max="50000">
+    <span class="suffix">万円</span>
+  </div>
+  <button id="calcBtn">計算結果を見る</button>
+  <a href="https://tedori-keisan.com" target="_blank" class="brand">Powered by 手取り計算.com</a>
+
+  <script>
+    document.getElementById('calcBtn').addEventListener('click', () => {
+      const income = document.getElementById('incomeInput').value || 0;
+      // 親ウィンドウを遷移させる、無理なら別タブで開く
+      const url = `https://tedori-keisan.com/index.html?income=${income}&utm_source=widget`;
+      try {
+        if (window.top !== window.self) {
+          window.top.location.href = url;
+        } else {
+          window.location.href = url;
+        }
+      } catch (e) {
+        // クロスオリジン等で弾かれた場合は別タブ
+        window.open(url, '_blank');
+      }
+    });
+
+    // Enterキーでも計算
+    document.getElementById('incomeInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        document.getElementById('calcBtn').click();
+      }
+    });
+  </script>
+</body>
+</html>

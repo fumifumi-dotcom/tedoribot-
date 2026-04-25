@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ブロガー・メディア運営者様へ（無料ウィジェット） | 手取り計算.com</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .generator-container { max-width: 800px; margin: 40px auto; padding: 20px; }
+    .hero-section { text-align: center; margin-bottom: 40px; }
+    .card { background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: var(--border-radius-xl); padding: 32px; box-shadow: var(--glass-shadow); margin-bottom: 24px; }
+    .code-block { background: #1e293b; color: #e2e8f0; padding: 16px; border-radius: 8px; font-family: monospace; font-size: 14px; overflow-x: auto; position: relative; margin: 16px 0; }
+    .copy-btn { position: absolute; top: 12px; right: 12px; background: #3b82f6; color: white; border: none; padding: 6px 12px; border-radius: 4px; font-size: 12px; cursor: pointer; transition: background 0.2s; }
+    .copy-btn:hover { background: #2563eb; }
+    .preview-box { border: 2px dashed var(--glass-border); padding: 20px; border-radius: 8px; background: rgba(255,255,255,0.5); display: flex; justify-content: center; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo" id="site-logo">
+        <div class="logo-icon">¥</div>
+        <div class="logo-text"><span>手取り計算.com</span></div>
+      </a>
+      <nav class="header-nav" style="display:flex;gap:20px;align-items:center;">
+        <a href="index.html" style="color:var(--text-secondary);font-size:13px;text-decoration:none;font-weight:500;">手取り計算</a>
+        <a href="diagnosis.html" style="color:#8b5cf6;font-size:13px;text-decoration:none;font-weight:700;">🔮 人生診断</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="generator-container">
+    <div class="hero-section">
+      <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(16,185,129,0.1); color: #10b981; padding: 6px 16px; border-radius: 999px; font-size: 13px; font-weight: 600; margin-bottom: 16px;">完全無料・登録不要</div>
+      <h1 style="font-size: 32px; font-weight: 800; margin-bottom: 16px;">あなたのブログに「手取り計算ツール」を<br>埋め込みませんか？</h1>
+      <p style="color: var(--text-secondary); line-height: 1.7;">転職記事や節約記事の直帰率を下げ、ユーザーの滞在時間を伸ばす効果があります。<br>以下のコードをコピペするだけで、今すぐ無料で設置可能です。</p>
+    </div>
+
+    <div class="card">
+      <h2 style="font-size: 20px; font-weight: bold; margin-bottom: 16px;">📝 埋め込みコード</h2>
+      <p style="font-size: 14px; color: var(--text-secondary);">以下のHTMLコードを、WordPress等のカスタムHTMLブロックに貼り付けてください。</p>
+      
+      <div class="code-block">
+        <button class="copy-btn" onclick="copyCode()">コピーする</button>
+        <code id="embedCode">
+&lt;iframe src="https://tedori-keisan.com/widget.html" width="100%" height="220" style="border:none; border-radius:12px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1); max-width:320px; margin:0 auto; display:block;" title="手取り計算ウィジェット"&gt;&lt;/iframe&gt;
+        </code>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 style="font-size: 20px; font-weight: bold; margin-bottom: 16px;">👀 プレビュー</h2>
+      <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">実際のブログ上ではこのように表示されます。モバイルでもPCでも綺麗に表示されるレスポンシブ対応です。</p>
+      <div class="preview-box">
+        <iframe src="widget.html" width="100%" height="220" style="border:none; border-radius:12px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1); max-width:320px; margin:0 auto; display:block;" title="手取り計算ウィジェット"></iframe>
+      </div>
+    </div>
+
+    <div class="card" style="background: rgba(59,130,246,0.05); border-color: rgba(59,130,246,0.2);">
+      <h3 style="font-size: 18px; font-weight: bold; margin-bottom: 12px; color: #2563eb;">💡 設置のメリット</h3>
+      <ul style="line-height: 1.8; color: var(--text-secondary); font-size: 14px; padding-left: 20px;">
+        <li><strong>滞在時間アップ:</strong> 記事を読んでいる途中で自分の手取りを計算させることで、ユーザーのページ滞在時間が伸び、SEO評価の向上に繋がります。</li>
+        <li><strong>転職記事との相性抜群:</strong> 転職アフィリエイト記事の文中に「まずは今の自分の手取りを計算してみましょう」と誘導することで、コンバージョン率が向上します。</li>
+        <li><strong>完全無料・メンテナンス不要:</strong> 税制改正や社会保険料の料率変更など、面倒なアップデートはすべて当サイト側で自動更新します。</li>
+      </ul>
+    </div>
+  </main>
+
+  <footer class="site-footer" style="text-align:center; padding: 40px 20px; border-top: 1px solid var(--glass-border);">
+    <p style="font-size: 12px; color: var(--text-muted);">© 2026 手取り計算.com</p>
+  </footer>
+
+  <script>
+    function copyCode() {
+      const code = document.getElementById('embedCode').innerText.trim();
+      navigator.clipboard.writeText(code).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        const originalText = btn.innerText;
+        btn.innerText = 'コピー完了！';
+        btn.style.background = '#10b981';
+        setTimeout(() => {
+          btn.innerText = originalText;
+          btn.style.background = '#3b82f6';
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>
