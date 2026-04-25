@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI人生満足度診断｜あなたの改善ポイントを60秒で無料診断 | 手取り計算.com</title>
+  <meta name="description" content="収入・キャリア・ライフスタイルの3軸であなたの人生満足度をAIが無料診断。年間の改善余地を算出し、具体的なアクションプランをお届けします。">
+  <meta property="og:title" content="AI人生満足度診断｜あなたの改善余地を60秒で無料診断">
+  <meta property="og:description" content="収入だけでは見えない本当の人生満足度をAIが診断。あなた専用の改善レポートをお届けします。">
+  <meta property="og:type" content="website">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://tedori-keisan.com/diagnosis.html">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3STMJXD6N3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-3STMJXD6N3');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3012346545678100" crossorigin="anonymous"></script>
+  <style>
+    /* ── 診断ページ専用スタイル ── */
+    .diag-container { max-width: 680px; margin: 0 auto; padding: 40px 20px 80px; }
+    .diag-hero { text-align: center; margin-bottom: 40px; }
+    .diag-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(139,92,246,0.08); border: 1px solid rgba(139,92,246,0.2); padding: 6px 16px; border-radius: 999px; font-size: 13px; font-weight: 600; color: #8b5cf6; margin-bottom: 20px; }
+    .diag-badge .dot { width: 8px; height: 8px; background: #8b5cf6; border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+    .diag-title { font-size: clamp(24px, 4vw, 36px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.3; margin-bottom: 12px; }
+    .diag-subtitle { font-size: 15px; color: var(--text-secondary); line-height: 1.7; }
+    .diag-card { background: var(--bg-card); border: 1px solid var(--glass-border); border-radius: var(--border-radius-xl); padding: 32px; box-shadow: var(--glass-shadow); animation: fadeInUp 0.5s ease-out forwards; margin-bottom: 24px; }
+    .q-title { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+    .q-num { font-size: 13px; font-weight: 600; color: #8b5cf6; margin-bottom: 8px; }
+    .option-list { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+    .option-item { display: flex; align-items: center; gap: 14px; padding: 16px 20px; background: var(--bg-tertiary); border: 2px solid transparent; border-radius: var(--border-radius-md); cursor: pointer; transition: all 0.2s; box-shadow: inset 0 0 0 1px var(--glass-border); }
+    .option-item:hover { background: rgba(139,92,246,0.05); box-shadow: inset 0 0 0 2px #8b5cf6; transform: translateX(4px); }
+    .option-num { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(139,92,246,0.1); color: #8b5cf6; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+    .option-text { font-size: 15px; font-weight: 500; color: var(--text-primary); }
+    .progress-row { display: flex; gap: 6px; margin-top: 24px; }
+    .progress-dot { flex: 1; height: 4px; border-radius: 2px; background: var(--glass-border); transition: background 0.3s; }
+    .progress-dot.active { background: #8b5cf6; }
+    .progress-dot.done { background: var(--accent-green); }
+    .loading-bar-wrap { width: 100%; height: 6px; background: var(--glass-border); border-radius: 3px; overflow: hidden; margin: 24px 0; }
+    .loading-bar-fill { height: 100%; background: linear-gradient(90deg, #8b5cf6, #6366f1, #3b82f6); width: 0%; transition: width 0.3s ease; border-radius: 3px; }
+    .score-circle { width: 160px; height: 160px; border-radius: 50%; background: linear-gradient(135deg, rgba(139,92,246,0.1), rgba(59,130,246,0.1)); border: 4px solid #8b5cf6; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 24px; }
+    .score-value { font-size: 48px; font-weight: 900; background: linear-gradient(135deg, #8b5cf6, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; }
+    .score-unit { font-size: 14px; color: var(--text-muted); font-weight: 500; }
+    .highlight-amber { color: #d97706; font-weight: 800; }
+    .result-section { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--glass-border); }
+    .result-section h3 { font-size: 13px; font-weight: 700; color: #8b5cf6; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+    .result-section h2 { font-size: 20px; font-weight: 800; margin-bottom: 12px; }
+    .result-section p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 16px; }
+    .check-list { list-style: none; margin-bottom: 20px; }
+    .check-list li { position: relative; padding-left: 24px; margin-bottom: 8px; font-size: 14px; color: var(--text-primary); line-height: 1.6; }
+    .check-list li::before { content: "✓"; position: absolute; left: 0; color: var(--accent-green); font-weight: 700; }
+    .testimonial-box { border-left: 3px solid #8b5cf6; background: rgba(139,92,246,0.04); padding: 16px 20px; border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0; font-style: italic; font-size: 14px; color: var(--text-primary); line-height: 1.7; margin: 20px 0; }
+    .btn-primary { display: inline-flex; align-items: center; justify-content: center; width: 100%; background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%); color: white; padding: 16px 32px; border-radius: 9999px; font-weight: 700; font-size: 16px; text-decoration: none; border: none; cursor: pointer; box-shadow: 0 8px 24px rgba(139,92,246,0.3); transition: all 0.2s; font-family: inherit; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(139,92,246,0.4); }
+    .btn-line { background: linear-gradient(135deg, #06C755, #059c45); box-shadow: 0 8px 24px rgba(6,199,85,0.3); }
+    .btn-line:hover { box-shadow: 0 12px 32px rgba(6,199,85,0.4); }
+    .btn-danger { background: linear-gradient(135deg, #ef4444, #dc2626); box-shadow: 0 8px 24px rgba(239,68,68,0.3); animation: pulseRed 2.5s infinite; }
+    .btn-danger:hover { box-shadow: 0 12px 32px rgba(239,68,68,0.4); }
+    .btn-outline { background: transparent; border: 2px solid var(--glass-border); color: var(--text-primary); box-shadow: none; }
+    .btn-outline:hover { background: var(--bg-tertiary); box-shadow: none; }
+    .timer-box { background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.15); color: #ef4444; padding: 12px; text-align: center; border-radius: var(--border-radius-sm); font-weight: 700; font-size: 18px; margin-bottom: 20px; }
+    .urgency-box { background: linear-gradient(135deg, rgba(239,68,68,0.06), rgba(245,158,11,0.06)); border: 1px solid rgba(239,68,68,0.12); border-radius: var(--border-radius-lg); padding: 32px; text-align: center; margin-top: 32px; }
+    @keyframes pulseRed { 0% { box-shadow: 0 8px 24px rgba(239,68,68,0.3); } 50% { box-shadow: 0 8px 32px rgba(239,68,68,0.5); } 100% { box-shadow: 0 8px 24px rgba(239,68,68,0.3); } }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo" id="site-logo">
+        <div class="logo-icon">¥</div>
+        <div class="logo-text"><span>手取り計算.com</span></div>
+      </a>
+      <nav class="header-nav" style="display:flex;gap:20px;align-items:center;">
+        <a href="index.html" style="color:var(--text-secondary);font-size:13px;text-decoration:none;font-weight:500;">手取り計算</a>
+        <a href="lifestyle.html" style="color:var(--text-secondary);font-size:13px;text-decoration:none;font-weight:500;">家賃・生活費</a>
+        <a href="furusato.html" style="color:var(--text-secondary);font-size:13px;text-decoration:none;font-weight:500;">ふるさと納税</a>
+        <a href="diagnosis.html" style="color:#8b5cf6;font-size:13px;text-decoration:none;font-weight:700;">🔮 人生診断</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="diag-container" id="diag-app"></main>
+
+  <!-- Footer -->
+  <footer class="site-footer" id="site-footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="/html_sitemap.html">全記事一覧</a>
+        <a href="#">プライバシーポリシー</a>
+        <a href="#">利用規約</a>
+        <a href="#">特定商取引法に基づく表記</a>
+      </div>
+      <p>© 2026 手取り計算.com</p>
+    </div>
+  </footer>
+
+  <script>
+  // ============================================================
+  // AI人生満足度診断ファネル
+  // ============================================================
+  const app = document.getElementById('diag-app');
+  let state = 'intro';
+  let qIndex = 0;
+  let answers = {};
+
+  const questions = [
+    { id:'money', title:'今の収入に満足していますか？',
+      options:[
+        {label:'全く満足していない — もっと稼ぎたい', value:'low', score:3},
+        {label:'やや不満がある — 贅沢はできない', value:'mid', score:2},
+        {label:'まあまあ満足している', value:'ok', score:1}
+      ]},
+    { id:'career', title:'今のキャリアに将来性を感じますか？',
+      options:[
+        {label:'不安しかない — このままでいいのか疑問', value:'low', score:3},
+        {label:'少し不安がある — 漠然とした将来像', value:'mid', score:2},
+        {label:'特に不安はない — 方向性は見えている', value:'ok', score:1}
+      ]},
+    { id:'life', title:'プライベート（人間関係・健康・趣味）は充実していますか？',
+      options:[
+        {label:'充実していない — 仕事に追われている', value:'low', score:3},
+        {label:'まあまあ — 可もなく不可もなく', value:'mid', score:2},
+        {label:'充実している — バランスが取れている', value:'ok', score:1}
+      ]}
+  ];
+
+  function getScore() {
+    let t = 0;
+    questions.forEach(q => { if(answers[q.id]) t += answers[q.id].score; });
+    return Math.round((1 - (t - 3) / 6) * 100);
+  }
+
+  function getPotential() {
+    const s = getScore();
+    if(s < 40) return 52;
+    if(s < 60) return 36;
+    if(s < 80) return 24;
+    return 15;
+  }
+
+  function render() {
+    app.innerHTML = '';
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    if(state === 'intro') renderIntro();
+    else if(state === 'question') renderQuestion();
+    else if(state === 'loading') renderLoading();
+    else if(state === 'lead') renderLead();
+    else if(state === 'result') renderResult();
+  }
+
+  function renderIntro() {
+    app.innerHTML = `
+      <div class="diag-hero">
+        <div class="diag-badge"><span class="dot"></span> AI人生満足度診断</div>
+        <h1 class="diag-title">あなたの人生、<br>本当に最適化されていますか？</h1>
+        <p class="diag-subtitle">収入・キャリア・プライベートの3軸でAIがあなたの人生満足度を分析。<br>たった60秒で、年間の改善余地と具体的なアクションプランを無料でお届けします。</p>
+      </div>
+      <div class="diag-card" style="text-align:center;">
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-bottom:28px;">
+          <div style="padding:20px 12px; background:rgba(139,92,246,0.06); border-radius:var(--border-radius-md);">
+            <div style="font-size:28px; margin-bottom:6px;">💰</div>
+            <div style="font-size:13px; font-weight:600; color:var(--text-primary);">収入最適化</div>
+          </div>
+          <div style="padding:20px 12px; background:rgba(59,130,246,0.06); border-radius:var(--border-radius-md);">
+            <div style="font-size:28px; margin-bottom:6px;">🚀</div>
+            <div style="font-size:13px; font-weight:600; color:var(--text-primary);">キャリア設計</div>
+          </div>
+          <div style="padding:20px 12px; background:rgba(16,185,129,0.06); border-radius:var(--border-radius-md);">
+            <div style="font-size:28px; margin-bottom:6px;">❤️</div>
+            <div style="font-size:13px; font-weight:600; color:var(--text-primary);">ライフバランス</div>
+          </div>
+        </div>
+        <button class="btn-primary" onclick="state='question'; qIndex=0; render();">無料で診断をはじめる（60秒）</button>
+        <p style="font-size:12px; color:var(--text-muted); margin-top:12px;">✅ 登録不要 ｜ 完全無料 ｜ 3問で完了</p>
+      </div>
+    `;
+  }
+
+  function renderQuestion() {
+    const q = questions[qIndex];
+    const progressHtml = questions.map((_,i) =>
+      '<div class="progress-dot '+(i<qIndex?'done':'')+(i===qIndex?' active':'')+'"></div>'
+    ).join('');
+    app.innerHTML = `
+      <div class="diag-card">
+        <div class="q-num">質問 ${qIndex+1} / ${questions.length}</div>
+        <div class="q-title">${q.title}</div>
+        <div class="option-list">
+          ${q.options.map((o,i) => `
+            <div class="option-item" onclick="pickAnswer('${q.id}','${o.value}',${o.score})">
+              <div class="option-num">${String.fromCharCode(65+i)}</div>
+              <div class="option-text">${o.label}</div>
+            </div>
+          `).join('')}
+        </div>
+        <div class="progress-row">${progressHtml}</div>
+      </div>
+    `;
+  }
+
+  window.pickAnswer = function(id, value, score) {
+    answers[id] = {value, score};
+    if(qIndex < questions.length - 1) { qIndex++; render(); }
+    else { state = 'loading'; render(); }
+  };
+
+  function renderLoading() {
+    app.innerHTML = `
+      <div class="diag-card" style="text-align:center;">
+        <div style="font-size:40px; margin-bottom:16px;">🔬</div>
+        <h2 style="font-size:20px; font-weight:700; margin-bottom:8px;">AIがあなたの人生満足度を解析中...</h2>
+        <p style="font-size:14px; color:var(--text-secondary);">回答内容を3軸で分析し、最適化ポイントを算出しています。</p>
+        <div class="loading-bar-wrap"><div class="loading-bar-fill" id="lb"></div></div>
+        <p id="lt" style="color:#8b5cf6; font-weight:700; font-size:18px;">0%</p>
+      </div>
+    `;
+    let p = 0;
+    const iv = setInterval(() => {
+      p += Math.random() * 15;
+      if(p >= 100) { p = 100; clearInterval(iv); setTimeout(() => { state='lead'; render(); }, 500); }
+      document.getElementById('lb').style.width = p+'%';
+      document.getElementById('lt').innerText = Math.floor(p)+'%';
+    }, 200);
+  }
+
+  function renderLead() {
+    const score = getScore();
+    const pot = getPotential();
+    app.innerHTML = `
+      <div class="diag-card" style="text-align:center;">
+        <div class="diag-badge" style="margin-bottom:20px;"><span class="dot" style="background:var(--accent-green);"></span> 解析完了</div>
+        <h2 style="font-size:22px; font-weight:800; margin-bottom:20px;">あなたの人生満足度スコア</h2>
+        <div class="score-circle">
+          <div class="score-value">${score}</div>
+          <div class="score-unit">/ 100点</div>
+        </div>
+        <p style="font-size:16px; margin-bottom:8px;">あなたには年間 <span class="highlight-amber" style="font-size:24px;">${pot}万円分</span> の最適化余地があります。</p>
+        <p style="font-size:14px; color:var(--text-secondary); margin-bottom:24px; line-height:1.7;">改善の具体的な方法を、LINE限定で<strong>完全無料</strong>でお届けします。<br>さらに今なら<strong>「人生最適化チェックリスト（PDF）」</strong>を無料プレゼント。</p>
+        <button class="btn-primary btn-line" onclick="window.open('https://line.me/R/ti/p/@xxx','_blank'); state='result'; render();">LINEで改善レポートを無料で受け取る</button>
+        <p style="font-size:11px; color:var(--text-muted); margin-top:12px;">※ このページを閉じると結果は消えます</p>
+      </div>
+    `;
+  }
+
+  function renderResult() {
+    const score = getScore();
+    const pot = getPotential();
+    app.innerHTML = `
+      <div class="diag-card">
+        <div class="diag-badge"><span class="dot" style="background:var(--accent-green);"></span> あなた専用レポート</div>
+        <h1 style="font-size:24px; font-weight:800; line-height:1.4; margin-bottom:16px;">人生満足度 ${score}点のあなたへ。<br>年間<span class="highlight-amber">${pot}万円</span>の改善余地があります。</h1>
+
+        <div class="result-section">
+          <h3>● あなたの現状分析</h3>
+          <h2>手取り額は「人生の満足度」を決めない</h2>
+          <p>多くの人が「もっと稼げば幸せになれる」と考えます。しかし年収が上がっても満足度が上がらない人は驚くほど多い。<br>原因は<span class="highlight-amber">お金の使い方・キャリアの方向性・人間関係のバランス</span>が最適化されていないからです。</p>
+        </div>
+
+        <div class="result-section">
+          <h3>● 改善の3つの軸</h3>
+          <h2>収入 × キャリア × ライフスタイルの同時最適化</h2>
+          <ul class="check-list">
+            <li><strong>収入最適化</strong>：控除・節税制度をフル活用し、同じ年収でも手取りを最大化</li>
+            <li><strong>キャリア設計</strong>：5年後の自分から逆算した、具体的なスキル投資計画</li>
+            <li><strong>ライフバランス</strong>：時間とお金の配分を見直し、満足度を最大化するポートフォリオ</li>
+          </ul>
+        </div>
+
+        <div class="testimonial-box">
+          「年収500万で満足度48点だった自分が、転職せずにスコア82点まで改善できました。変えたのは"お金の使い方"と"時間配分"だけ。レポートのアクションプランが具体的すぎて驚きました。」<br>
+          <span style="font-size:12px; color:var(--text-muted); font-style:normal;">— 32歳・IT企業勤務</span>
+        </div>
+
+        <div class="result-section">
+          <h3>● 完全版レポートのご案内</h3>
+          <h2>あなた専用「人生最適化 完全レポート」（30ページ超）</h2>
+          <p>ここまでの無料診断はあくまで概要です。完全版レポートでは、AIがあなたの状況を徹底分析し、<strong>具体的なアクションプラン</strong>を30ページ超のPDFで即時お届けします。</p>
+          <ul class="check-list">
+            <li>あなたの控除漏れチェックと年間節約額シミュレーション</li>
+            <li>5年間のキャリア・収入シミュレーション（3パターン）</li>
+            <li>時間×お金の最適配分マトリクス</li>
+            <li>今月から始められるアクションリスト（優先順位付き）</li>
+          </ul>
+        </div>
+
+        <div class="urgency-box">
+          <div class="timer-box">⏰ 初回限定価格 終了まで <span id="cd">14:59</span></div>
+          <h2 style="font-size:20px; font-weight:800; color:#dc2626; margin-bottom:8px;">この${pot}万円の改善余地、放置しますか？</h2>
+          <p style="font-size:14px; color:var(--text-secondary); margin-bottom:20px;">通常3,000円 → <strong style="font-size:24px; color:var(--text-primary);">初回限定 ¥1,000</strong></p>
+          <button class="btn-primary btn-danger" onclick="window.location.href='https://buy.stripe.com/test_placeholder'">完全版レポートを受け取る（初回限定 ¥1,000）</button>
+          <p style="font-size:11px; color:var(--text-muted); margin-top:12px;">安全なStripe決済ページへ移動します ｜ 即時PDF納品</p>
+        </div>
+
+        <div style="margin-top:32px; background:rgba(59,130,246,0.06); border:1px solid rgba(59,130,246,0.15); border-radius:var(--border-radius-lg); padding:28px; text-align:center;">
+          <h3 style="font-size:18px; font-weight:700; margin-bottom:8px;">📱 月額プラン：毎月届くAIライフコーチ</h3>
+          <p style="font-size:14px; color:var(--text-secondary); margin-bottom:16px;">月額980円で、毎週パーソナライズされたアドバイスがLINEに届きます。</p>
+          <button class="btn-primary btn-outline" onclick="window.location.href='https://buy.stripe.com/test_placeholder_sub'">月額プランを見る（¥980/月）</button>
+        </div>
+
+        <div style="margin-top:40px; text-align:center;">
+          <a href="index.html" style="color:var(--text-muted); font-size:13px; text-decoration:none;">← 手取り計算に戻る</a>
+        </div>
+      </div>
+    `;
+    startTimer(15*60, document.getElementById('cd'));
+  }
+
+  function startTimer(dur, el) {
+    let t = dur;
+    const iv = setInterval(() => {
+      const m = String(Math.floor(t/60)).padStart(2,'0');
+      const s = String(t%60).padStart(2,'0');
+      if(el) el.textContent = m+':'+s;
+      if(--t < 0) { t = 0; clearInterval(iv); }
+    }, 1000);
+  }
+
+  render();
+  </script>
+</body>
+</html>
