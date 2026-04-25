@@ -140,6 +140,14 @@ function calculateTedori(annualIncome, options = {}) {
   const monthlyTedori = Math.floor(tedori / 12);
   const tedoriRate = annualIncome > 0 ? (tedori / annualIncome * 100) : 0;
 
+  // 9. 会社負担分（B2Bモード用）
+  const companyHealthInsurance = healthInsurance; // 労使折半
+  const companyNursingInsurance = nursingInsurance; // 労使折半
+  const companyPension = pension; // 労使折半
+  const companyEmploymentInsurance = Math.floor(annualIncome * 0.0095); // 事業主負担（一般事業: 9.5/1000）
+  const childContribution = Math.floor(pensionBase * 0.0036 * 12); // 子ども・子育て拠出金
+  const companySocialInsurance = companyHealthInsurance + companyNursingInsurance + companyPension + companyEmploymentInsurance + childContribution;
+
   return {
     annualIncome,
     tedori,
@@ -147,6 +155,7 @@ function calculateTedori(annualIncome, options = {}) {
     incomeTax,
     residentTax,
     socialInsurance,
+    companySocialInsurance,
     healthInsurance,
     nursingInsurance,
     pension,
@@ -163,6 +172,7 @@ function calculateTedori(annualIncome, options = {}) {
 
 const DOM = {};
 let isMonthlyMode = false;
+let isB2bMode = false;
 
 // 偏差値テーブルの簡易定義（年代別の平均や上位層目安）
 const DEVIATION_TABLE = {
@@ -190,7 +200,20 @@ function calculateDeviation(income, ageBracket) {
   else if (score < 40) rankStr = "下位 15%";
   else if (score < 45) rankStr = "下位 30%";
 
-  return { score, rankStr };
+  // 生涯賃金のショート額を適当に算出（煽り用）
+  const deficitBase = Math.max(0, table.avg - income);
+  // 年齢に応じて残り年数を仮定 (under40: 30年, 40to64: 15年)
+  const yearsLeft = ageBracket === 'under40' ? 30 : 15;
+  const lifetimeDeficit = deficitBase * yearsLeft;
+  
+  // 老後破産確率（偏差値が低いほど高くする）
+  let bankruptcyProb = 0;
+  if (score < 45) bankruptcyProb = 87 - (score - 30) * 2;
+  else if (score < 55) bankruptcyProb = 60 - (score - 45) * 1.5;
+  else bankruptcyProb = 12;
+  bankruptcyProb = Math.max(0, Math.min(99, Math.round(bankruptcyProb)));
+
+  return { score, rankStr, lifetimeDeficit, bankruptcyProb };
 }
 
 function startTaxMeter(totalAnnualTax) {
@@ -254,6 +277,11 @@ function initDOM() {
   DOM.resultLabelText = document.getElementById('result-label-text');
   DOM.dynamicRecommendation = document.getElementById('dynamic-recommendation');
   DOM.shareTwitterBtn = document.getElementById('share-twitter-btn');
+
+  DOM.modeB2cBtn = document.getElementById('mode-b2c-btn');
+  DOM.modeB2bBtn = document.getElementById('mode-b2b-btn');
+  DOM.ctaSection = document.getElementById('cta-section');
+  DOM.b2bCtaSection = document.getElementById('b2b-cta-section');
 }
 
 function formatCurrency(value) {
@@ -398,11 +426,19 @@ function update() {
 
   // Results
   const divisor = isMonthlyMode ? 12 : 1;
-  DOM.resultLabelText.textContent = isMonthlyMode ? '1ヶ月分の手取り概算' : '年間の手取り額';
   
-  DOM.resultTedori.textContent = '¥' + formatCurrency(result.tedori / divisor);
-  DOM.resultMonthly.textContent = formatCurrency(result.monthlyTedori);
-  DOM.resultRate.textContent = result.tedoriRate.toFixed(1);
+  if (!isB2bMode) {
+    DOM.resultLabelText.textContent = isMonthlyMode ? '1ヶ月分の手取り概算' : '年間の手取り額';
+    DOM.resultTedori.textContent = '¥' + formatCurrency(result.tedori / divisor);
+    DOM.resultMonthly.textContent = formatCurrency(result.monthlyTedori);
+    DOM.resultRate.textContent = result.tedoriRate.toFixed(1);
+    document.querySelector('.result-sub').innerHTML = `手取り率 <strong><span id="resultRate">${result.tedoriRate.toFixed(1)}</span>%</strong> ｜月額 <strong>¥<span id="resultMonthly">${formatCurrency(result.monthlyTedori)}</span></strong>`;
+  } else {
+    DOM.resultLabelText.textContent = isMonthlyMode ? '1ヶ月分の総人件費 (会社負担)' : '年間の総人件費 (会社負担)';
+    const totalCost = result.annualIncome + result.companySocialInsurance;
+    DOM.resultTedori.textContent = '¥' + formatCurrency(totalCost / divisor);
+    document.querySelector('.result-sub').innerHTML = `見えない法定福利費 <strong>¥${formatCurrency(result.companySocialInsurance / divisor)}</strong>`;
+  }
   DOM.monthlyValue.textContent = '¥' + formatCurrency(result.monthlyTedori);
 
   // Breakdown
@@ -430,14 +466,26 @@ function update() {
     DOM.percentEmployment.textContent = (result.employmentInsurance / annualIncome * 100).toFixed(1) + '%';
   }
 
-  const chartData = [
-    { label: '手取り', value: Math.floor(result.tedori / divisor), color: '#10b981' },
-    { label: '所得税', value: Math.floor(result.incomeTax / divisor), color: '#f43f5e' },
-    { label: '住民税', value: Math.floor(result.residentTax / divisor), color: '#ec4899' },
-    { label: '社会保険料', value: Math.floor(result.socialInsurance / divisor), color: '#f59e0b' }
-  ];
+  let chartData;
+  let centerAmountLabel;
+  if (!isB2bMode) {
+    chartData = [
+      { label: '手取り', value: Math.floor(result.tedori / divisor), color: '#10b981' },
+      { label: '所得税', value: Math.floor(result.incomeTax / divisor), color: '#f43f5e' },
+      { label: '住民税', value: Math.floor(result.residentTax / divisor), color: '#ec4899' },
+      { label: '社会保険料', value: Math.floor(result.socialInsurance / divisor), color: '#f59e0b' }
+    ];
+    centerAmountLabel = '¥' + formatCurrency(Math.floor(result.tedori / divisor));
+  } else {
+    chartData = [
+      { label: '社員の手取り', value: Math.floor(result.tedori / divisor), color: '#10b981' },
+      { label: '社員負担分(税+社保)', value: Math.floor((result.incomeTax + result.residentTax + result.socialInsurance) / divisor), color: '#f43f5e' },
+      { label: '会社負担の法定福利費', value: Math.floor(result.companySocialInsurance / divisor), color: '#3b82f6' }
+    ];
+    const totalCost = result.annualIncome + result.companySocialInsurance;
+    centerAmountLabel = '¥' + formatCurrency(Math.floor(totalCost / divisor));
+  }
 
-  const centerAmountLabel = '¥' + formatCurrency(Math.floor(result.tedori / divisor));
   drawDonutChart(DOM.canvas, chartData, centerAmountLabel);
 
   // 動的CTAの呼び出し
@@ -448,34 +496,49 @@ function update() {
   // ==== 診断メッセージとシェア機能 ====
   if (DOM.dynamicRecommendation && DOM.shareTwitterBtn) {
     const totalTax = result.incomeTax + result.residentTax + result.socialInsurance;
-    const iphoneCount = Math.floor(totalTax / 150000); 
     const isZeroTax = totalTax <= 0;
 
-    // 偏差値ロジックの呼び出し
+    // 偏差値と生涯欠損額のロジック
     const deviation = calculateDeviation(annualIncome, options.age);
 
     // リアルタイム税金メーターの起動
     startTaxMeter(totalTax);
 
-    let diagnosticHtml = `<div style="background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2); padding: 16px; border-radius: 8px; margin-top: 16px;">`;
-    diagnosticHtml += `<p style="margin:0; color: #ef4444; font-weight: bold; font-size: 15px;">🚨 絶望・搾取され度診断</p>`;
+    let diagnosticHtml = `<div style="background: #111827; border: 2px solid #ef4444; padding: 24px; border-radius: 12px; margin-top: 16px; box-shadow: 0 10px 25px -5px rgba(239, 68, 68, 0.3); color: white; text-align: center; position: relative; overflow: hidden;">`;
+    diagnosticHtml += `<div style="position: absolute; top: 0; left: 0; right: 0; background: #ef4444; color: white; font-weight: 900; font-size: 14px; padding: 4px 0; letter-spacing: 2px;">⚠️ 絶望メーター ⚠️</div>`;
     
-    if (isZeroTax) {
-      diagnosticHtml += `<p style="margin: 8px 0 0; color: var(--text-secondary); font-size: 14px;">税金や社会保険料はほぼかかりません。全額が手取りとなります✌️</p>`;
+    if (deviation.score < 50 && deviation.lifetimeDeficit > 0) {
+      // 絶望ルート
+      diagnosticHtml += `<div style="margin-top: 24px; margin-bottom: 8px; font-size: 14px; color: #9ca3af;">同年代と比較したあなたの給与偏差値</div>`;
+      diagnosticHtml += `<div style="font-size: 48px; font-weight: 900; color: #ef4444; line-height: 1; margin-bottom: 4px;">${deviation.score}</div>`;
+      diagnosticHtml += `<div style="font-size: 16px; font-weight: bold; margin-bottom: 24px;">（同年代の ${deviation.rankStr}）</div>`;
+      
+      diagnosticHtml += `<div style="background: rgba(239,68,68,0.1); border-radius: 8px; padding: 16px; margin-bottom: 24px; text-align: left; border: 1px solid rgba(239,68,68,0.3);">`;
+      diagnosticHtml += `<p style="margin: 0 0 8px; font-size: 14px; color: #f87171; font-weight: bold;">🚨 【警告】生涯手取りの欠損額</p>`;
+      diagnosticHtml += `<div style="font-size: 28px; font-weight: 900; color: white;">約 -${formatMan(deviation.lifetimeDeficit)}万円</div>`;
+      diagnosticHtml += `<p style="margin: 8px 0 0; font-size: 13px; color: #d1d5db;">このまま放置した場合、同年代の平均的な生活レベルからこれだけのお金が不足します。<strong style="color: #f87171;">老後破産確率は推定 ${deviation.bankruptcyProb}%</strong> です。</p>`;
+      diagnosticHtml += `</div>`;
+      
+      // 解決策としてのキャリア相談CTA
+      diagnosticHtml += `<p style="font-size: 13px; color: #9ca3af; margin-bottom: 12px;">※絶望的な状況を「無料」で回避する唯一の手段↓</p>`;
+      diagnosticHtml += `<a href="https://px.a8.net/svt/ejp?a8mat=4B1OTT+6P4KS2+47GS+5YRHE" style="display: block; width: 100%; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; text-decoration: none; padding: 18px; border-radius: 12px; font-weight: 900; font-size: 17px; margin-bottom: 12px; transition: transform 0.2s; box-shadow: 0 8px 15px rgba(16,185,129,0.3);" target="_blank" rel="noopener sponsored" onmouseover="this.style.transform='scale(1.02)';" onmouseout="this.style.transform='none';">👨‍💻 プロに無料でキャリア相談し、年収を上げる</a>`;
+      diagnosticHtml += `<p style="font-size: 11px; color: #6b7280; text-align: right; margin-top: 4px;">PR</p>`;
     } else {
-      diagnosticHtml += `<p style="margin: 8px 0 0; color: var(--text-secondary); font-size: 14px;">あなたの年収偏差値は<strong>【${deviation.score}】（同年代の${deviation.rankStr}）</strong>です。<br>一方で、国に納めている金額（年間 約${formatCurrency(totalTax)}円）は、`;
-      if (iphoneCount >= 1) {
-        diagnosticHtml += `<strong>最新iPhoneがなんと約${iphoneCount}台買える金額</strong>に相当します💸<br>まさに搾取され度MAXの【社畜レベル神】です😱</p>`;
-      } else {
-        diagnosticHtml += `<strong>毎月のスマホ代や光熱費がずっと払える金額</strong>です💸</p>`;
-      }
+      // 平均以上ルート
+      diagnosticHtml += `<div style="margin-top: 24px; margin-bottom: 8px; font-size: 14px; color: #9ca3af;">同年代と比較したあなたの給与偏差値</div>`;
+      diagnosticHtml += `<div style="font-size: 48px; font-weight: 900; color: #10b981; line-height: 1; margin-bottom: 4px;">${deviation.score}</div>`;
+      diagnosticHtml += `<div style="font-size: 16px; font-weight: bold; margin-bottom: 24px;">（同年代の ${deviation.rankStr}）</div>`;
+      diagnosticHtml += `<p style="margin: 8px 0 24px; color: #d1d5db; font-size: 14px;">あなたは平均以上です。さらに資産を爆発的に増やすために、非課税のNISAを活用しましょう。</p>`;
+      diagnosticHtml += `<a href="https://px.a8.net/svt/ejp?a8mat=4B1PLP+ACPDGY+3XCC+6AZAQ" style="display: block; width: 100%; background: #f59e0b; color: white; text-decoration: none; padding: 18px; border-radius: 12px; font-weight: 900; font-size: 17px; margin-bottom: 12px; transition: transform 0.2s;" target="_blank" rel="noopener sponsored" onmouseover="this.style.transform='scale(1.02)';" onmouseout="this.style.transform='none';">📈 手数料最安の松井証券でNISAを始める</a>`;
     }
+    
     diagnosticHtml += `</div>`;
     DOM.dynamicRecommendation.innerHTML = diagnosticHtml;
     DOM.dynamicRecommendation.style.display = 'block';
 
     const shareRank = isZeroTax ? "無税の神" : `偏差値${deviation.score}(${deviation.rankStr})`;
-    const shareText = `【絶望診断・私の社畜レベル】\n判定：${shareRank}\n\n私の手取り率（年収${formatMan(annualIncome)}万円）は【 ${(result.tedoriRate).toFixed(1)}% 】でした💸\n国に年間 ${formatMan(totalTax)}万円 も搾取されています…\n\n#手取り計算 #税金高すぎ\n`;
+    const deficitText = deviation.lifetimeDeficit > 0 ? `\n生涯手取りは同年代より -${formatMan(deviation.lifetimeDeficit)}万円不足😇` : '';
+    const shareText = `【🚨絶望の給与明細🚨】\n私の社畜偏差値：${shareRank}${deficitText}\n\n手取り率（年収${formatMan(annualIncome)}万円）は【 ${(result.tedoriRate).toFixed(1)}% 】でした。\n\n#手取り計算 #絶望メーター\n`;
     const shareUrl = "https://tedori-keisan.com/";
     DOM.shareTwitterBtn.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
   }
@@ -543,6 +606,35 @@ function bindEvents() {
       DOM.modeYear.style.background = 'transparent';
       DOM.modeYear.style.color = 'var(--text-muted)';
       DOM.modeYear.style.boxShadow = 'none';
+      update();
+    });
+  }
+
+  // B2C / B2B モード切替
+  if (DOM.modeB2cBtn && DOM.modeB2bBtn) {
+    DOM.modeB2cBtn.addEventListener('click', () => {
+      isB2bMode = false;
+      DOM.modeB2cBtn.style.background = 'var(--accent-blue)';
+      DOM.modeB2cBtn.style.color = 'white';
+      DOM.modeB2cBtn.style.boxShadow = '0 2px 4px rgba(59,130,246,0.3)';
+      DOM.modeB2bBtn.style.background = 'transparent';
+      DOM.modeB2bBtn.style.color = 'var(--text-secondary)';
+      DOM.modeB2bBtn.style.boxShadow = 'none';
+      if(DOM.ctaSection) DOM.ctaSection.style.display = 'block';
+      if(DOM.b2bCtaSection) DOM.b2bCtaSection.style.display = 'block'; // Block CTA at bottom, wait, we want to hide it.
+      if(DOM.b2bCtaSection) DOM.b2bCtaSection.style.display = 'none';
+      update();
+    });
+    DOM.modeB2bBtn.addEventListener('click', () => {
+      isB2bMode = true;
+      DOM.modeB2bBtn.style.background = 'var(--accent-blue)';
+      DOM.modeB2bBtn.style.color = 'white';
+      DOM.modeB2bBtn.style.boxShadow = '0 2px 4px rgba(59,130,246,0.3)';
+      DOM.modeB2cBtn.style.background = 'transparent';
+      DOM.modeB2cBtn.style.color = 'var(--text-secondary)';
+      DOM.modeB2cBtn.style.boxShadow = 'none';
+      if(DOM.ctaSection) DOM.ctaSection.style.display = 'none';
+      if(DOM.b2bCtaSection) DOM.b2bCtaSection.style.display = 'block';
       update();
     });
   }

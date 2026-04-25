@@ -102,7 +102,7 @@
 
   <script>
   // ============================================================
-  // AI人生満足度診断ファネル
+  // AI絶望度診断（裏名：人生満足度診断）
   // ============================================================
   const app = document.getElementById('diag-app');
   let state = 'intro';
@@ -110,38 +110,39 @@
   let answers = {};
 
   const questions = [
-    { id:'money', title:'今の収入に満足していますか？',
+    { id:'money', title:'現在の世帯年収は、理想の生活に対してどれくらい足りていますか？',
       options:[
-        {label:'全く満足していない — もっと稼ぎたい', value:'low', score:3},
-        {label:'やや不満がある — 贅沢はできない', value:'mid', score:2},
-        {label:'まあまあ満足している', value:'ok', score:1}
+        {label:'全く足りない — 毎月の貯金ができない', value:'low', score:15},
+        {label:'少し足りない — 贅沢はできず将来が不安', value:'mid', score:30},
+        {label:'足りている — 十分な貯蓄ができている', value:'ok', score:80}
       ]},
-    { id:'career', title:'今のキャリアに将来性を感じますか？',
+    { id:'career', title:'老後の資金（最低2,000万円）を準備できる見通しは立っていますか？',
       options:[
-        {label:'不安しかない — このままでいいのか疑問', value:'low', score:3},
-        {label:'少し不安がある — 漠然とした将来像', value:'mid', score:2},
-        {label:'特に不安はない — 方向性は見えている', value:'ok', score:1}
+        {label:'全く立っていない — どうしていいか分からない', value:'low', score:10},
+        {label:'不安がある — 少し貯金しているが足りるか不明', value:'mid', score:25},
+        {label:'見通しが立っている — NISA等で計画的に準備中', value:'ok', score:80}
       ]},
-    { id:'life', title:'プライベート（人間関係・健康・趣味）は充実していますか？',
+    { id:'life', title:'今のまま働き続けた場合、5年後の自分はどうなっていると思いますか？',
       options:[
-        {label:'充実していない — 仕事に追われている', value:'low', score:3},
-        {label:'まあまあ — 可もなく不可もなく', value:'mid', score:2},
-        {label:'充実している — バランスが取れている', value:'ok', score:1}
+        {label:'今より状況が悪化している気がする', value:'low', score:5},
+        {label:'今と同じレベルで現状維持', value:'mid', score:25},
+        {label:'年収も上がり生活も豊かになっている', value:'ok', score:80}
       ]}
   ];
 
   function getScore() {
     let t = 0;
     questions.forEach(q => { if(answers[q.id]) t += answers[q.id].score; });
-    return Math.round((1 - (t - 3) / 6) * 100);
+    // 辛口のスコアリング（合計値 / 3）
+    return Math.round(t / 3);
   }
 
-  function getPotential() {
+  function getDeficit() {
     const s = getScore();
-    if(s < 40) return 52;
-    if(s < 60) return 36;
-    if(s < 80) return 24;
-    return 15;
+    if(s < 30) return 4200; // 万
+    if(s < 50) return 2800; // 万
+    if(s < 70) return 1500; // 万
+    return 0;
   }
 
   function render() {
@@ -157,26 +158,26 @@
   function renderIntro() {
     app.innerHTML = `
       <div class="diag-hero">
-        <div class="diag-badge"><span class="dot"></span> AI人生満足度診断</div>
-        <h1 class="diag-title">あなたの人生、<br>本当に最適化されていますか？</h1>
-        <p class="diag-subtitle">収入・キャリア・プライベートの3軸でAIがあなたの人生満足度を分析。<br>たった60秒で、年間の改善余地と具体的なアクションプランを無料でお届けします。</p>
+        <div class="diag-badge" style="background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.2); color: #ef4444;"><span class="dot" style="background: #ef4444;"></span> 生涯賃金リスク診断</div>
+        <h1 class="diag-title">このまま働き続けると<br>あなたの「老後」はどうなる？</h1>
+        <p class="diag-subtitle">収入と将来への備えから、あなたの「生涯賃金のショート額」をAIが算定。<br>たった60秒の質問で、残酷な現実と「回避するための解決策」を提示します。</p>
       </div>
       <div class="diag-card" style="text-align:center;">
         <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-bottom:28px;">
-          <div style="padding:20px 12px; background:rgba(139,92,246,0.06); border-radius:var(--border-radius-md);">
-            <div style="font-size:28px; margin-bottom:6px;">💰</div>
-            <div style="font-size:13px; font-weight:600; color:var(--text-primary);">収入最適化</div>
+          <div style="padding:20px 12px; background:rgba(239,68,68,0.06); border-radius:var(--border-radius-md);">
+            <div style="font-size:28px; margin-bottom:6px;">📉</div>
+            <div style="font-size:13px; font-weight:600; color:var(--text-primary);">破産リスク</div>
           </div>
-          <div style="padding:20px 12px; background:rgba(59,130,246,0.06); border-radius:var(--border-radius-md);">
-            <div style="font-size:28px; margin-bottom:6px;">🚀</div>
-            <div style="font-size:13px; font-weight:600; color:var(--text-primary);">キャリア設計</div>
+          <div style="padding:20px 12px; background:rgba(245,158,11,0.06); border-radius:var(--border-radius-md);">
+            <div style="font-size:28px; margin-bottom:6px;">💰</div>
+            <div style="font-size:13px; font-weight:600; color:var(--text-primary);">生涯欠損額</div>
           </div>
           <div style="padding:20px 12px; background:rgba(16,185,129,0.06); border-radius:var(--border-radius-md);">
-            <div style="font-size:28px; margin-bottom:6px;">❤️</div>
-            <div style="font-size:13px; font-weight:600; color:var(--text-primary);">ライフバランス</div>
+            <div style="font-size:28px; margin-bottom:6px;">🛡️</div>
+            <div style="font-size:13px; font-weight:600; color:var(--text-primary);">回避策提示</div>
           </div>
         </div>
-        <button class="btn-primary" onclick="state='question'; qIndex=0; render();">無料で診断をはじめる（60秒）</button>
+        <button class="btn-primary" style="background: linear-gradient(135deg, #ef4444, #dc2626); box-shadow: 0 8px 24px rgba(239,68,68,0.3);" onclick="state='question'; qIndex=0; render();">無料で破産リスクを診断する（60秒）</button>
         <p style="font-size:12px; color:var(--text-muted); margin-top:12px;">✅ 登録不要 ｜ 完全無料 ｜ 3問で完了</p>
       </div>
     `;
@@ -214,10 +215,10 @@
     app.innerHTML = `
       <div class="diag-card" style="text-align:center;">
         <div style="font-size:40px; margin-bottom:16px;">🔬</div>
-        <h2 style="font-size:20px; font-weight:700; margin-bottom:8px;">AIがあなたの人生満足度を解析中...</h2>
-        <p style="font-size:14px; color:var(--text-secondary);">回答内容を3軸で分析し、最適化ポイントを算出しています。</p>
-        <div class="loading-bar-wrap"><div class="loading-bar-fill" id="lb"></div></div>
-        <p id="lt" style="color:#8b5cf6; font-weight:700; font-size:18px;">0%</p>
+        <h2 style="font-size:20px; font-weight:700; margin-bottom:8px;">AIがあなたの生涯賃金リスクを解析中...</h2>
+        <p style="font-size:14px; color:var(--text-secondary);">回答内容をベースに、同年代との格差と将来の破産確率を算出しています。</p>
+        <div class="loading-bar-wrap"><div class="loading-bar-fill" id="lb" style="background: linear-gradient(90deg, #ef4444, #f59e0b);"></div></div>
+        <p id="lt" style="color:#ef4444; font-weight:700; font-size:18px;">0%</p>
       </div>
     `;
     let p = 0;
@@ -229,123 +230,112 @@
     }, 200);
   }
 
-  // A8.net 提携済みアフィリエイトリンク
+  // A8.net FP相談ダミーリンク (※後で本物に差し替える)
   const AFF = {
-    career: 'https://px.a8.net/svt/ejp?a8mat=4B1OTT+6P4KS2+47GS+5YRHE',
-    rakutenFurusato: 'https://rpx.a8.net/svt/ejp?a8mat=4B1OTR+ACPDGY+2HOM+6C1VM&rakuten=y&a8ejpredirect=http%3A%2F%2Fhb.afl.rakuten.co.jp%2Fhgc%2F0ea62065.34400275.0ea62066.204f04c0%2Fa26041903646_4B1OTR_ACPDGY_2HOM_6C1VM%3Fpc%3Dhttp%253A%252F%252Fevent.rakuten.co.jp%252Ffurusato%252F%26m%3Dhttp%253A%252F%252Fm.rakuten.co.jp%252F',
-    matsuiNisa: 'https://px.a8.net/svt/ejp?a8mat=4B1PLP+ACPDGY+3XCC+6AZAQ',
-    matsuiIdeco: 'https://px.a8.net/svt/ejp?a8mat=4B1OTT+6MQUCY+3XCC+BXIYQ',
+    fpConsult: 'https://px.a8.net/svt/ejp?a8mat=FP_CONSULTATION_DUMMY',
+    career: 'https://px.a8.net/svt/ejp?a8mat=4B1OTT+6P4KS2+47GS+5YRHE'
   };
 
   function renderLead() {
     const score = getScore();
-    const pot = getPotential();
-    app.innerHTML = `
-      <div class="diag-card" style="text-align:center;">
-        <div class="diag-badge" style="margin-bottom:20px;"><span class="dot" style="background:var(--accent-green);"></span> 解析完了</div>
-        <h2 style="font-size:22px; font-weight:800; margin-bottom:20px;">あなたの人生満足度スコア</h2>
-        <div class="score-circle">
-          <div class="score-value">${score}</div>
-          <div class="score-unit">/ 100点</div>
+    const deficit = getDeficit();
+    
+    if (deficit > 0) {
+      app.innerHTML = `
+        <div class="diag-card" style="text-align:center; border-color: rgba(239,68,68,0.3);">
+          <div class="diag-badge" style="margin-bottom:20px; background: rgba(239,68,68,0.1); color: #ef4444;"><span class="dot" style="background:#ef4444;"></span> 解析完了：警告</div>
+          <h2 style="font-size:22px; font-weight:800; margin-bottom:20px; color:#ef4444;">🚨 あなたの将来の家計は【危険水域】です</h2>
+          <div class="score-circle" style="border-color: #ef4444; background: rgba(239,68,68,0.05);">
+            <div class="score-value" style="background: #ef4444; -webkit-text-fill-color: transparent; -webkit-background-clip: text;">${score}</div>
+            <div class="score-unit" style="color: #ef4444;">/ 100点 (安全性)</div>
+          </div>
+          <div style="background: rgba(239,68,68,0.1); padding: 24px; border-radius: 12px; margin-bottom: 24px;">
+            <p style="font-size:14px; color:#ef4444; font-weight:bold; margin-bottom: 8px;">推定される生涯資金のショート額</p>
+            <div style="font-size: 32px; font-weight: 900; color: #ef4444;">約 -${deficit}万円</div>
+          </div>
+          <p style="font-size:14px; color:var(--text-secondary); margin-bottom:24px; line-height:1.7;">このまま何も対策を打たなかった場合、老後に資金が完全に枯渇する可能性が極めて高いです。<br>手遅れになる前に、<strong>「自分の市場価値と年収を強制的に引き上げる方法」</strong>を確認してください。</p>
+          <button class="btn-primary" style="background: linear-gradient(135deg, #ef4444, #dc2626); box-shadow: 0 8px 24px rgba(239,68,68,0.3);" onclick="state='result'; render();">絶望を回避する唯一の解決策を見る</button>
         </div>
-        <p style="font-size:16px; margin-bottom:8px;">あなたには年間 <span class="highlight-amber" style="font-size:24px;">${pot}万円分</span> の最適化余地があります。</p>
-        <p style="font-size:14px; color:var(--text-secondary); margin-bottom:24px; line-height:1.7;">あなたの回答を分析した結果、<strong>今すぐ改善できる具体的なアクション</strong>が見つかりました。<br>すべて無料で始められます。</p>
-        <button class="btn-primary" onclick="state='result'; render();">あなた専用の改善プランを見る（無料）</button>
-      </div>
-    `;
+      `;
+    } else {
+      app.innerHTML = `
+        <div class="diag-card" style="text-align:center;">
+          <div class="diag-badge" style="margin-bottom:20px;"><span class="dot" style="background:var(--accent-green);"></span> 解析完了：安全</div>
+          <h2 style="font-size:22px; font-weight:800; margin-bottom:20px;">あなたの将来の家計は【安全圏】です</h2>
+          <div class="score-circle">
+            <div class="score-value" style="background: #10b981; -webkit-text-fill-color: transparent; -webkit-background-clip: text;">${score}</div>
+            <div class="score-unit">/ 100点 (安全性)</div>
+          </div>
+          <p style="font-size:16px; margin-bottom:8px;">生涯資金のショートリスクは <span style="color:#10b981; font-weight:bold;">0万円（なし）</span> です。</p>
+          <p style="font-size:14px; color:var(--text-secondary); margin-bottom:24px; line-height:1.7;">今のペースで資産形成を続ければ老後も安泰です。<br>さらに資産を拡大するための次のステップを確認してください。</p>
+          <button class="btn-primary" onclick="state='result'; render();">資産をさらに増やすプランを見る</button>
+        </div>
+      `;
+    }
   }
 
   function renderResult() {
     const score = getScore();
-    const pot = getPotential();
-    const m = answers.money?.value || 'mid';
-    const c = answers.career?.value || 'mid';
+    const deficit = getDeficit();
 
-    app.innerHTML = `
-      <div class="diag-card">
-        <div class="diag-badge"><span class="dot" style="background:var(--accent-green);"></span> あなた専用の改善プラン</div>
-        <h1 style="font-size:24px; font-weight:800; line-height:1.4; margin-bottom:16px;">満足度 ${score}点のあなたが<br>年間<span class="highlight-amber">${pot}万円</span>得するための3ステップ</h1>
+    if (deficit > 0) {
+      app.innerHTML = `
+        <div class="diag-card">
+          <div class="diag-badge" style="background: rgba(239,68,68,0.1); color: #ef4444;"><span class="dot" style="background:#ef4444;"></span> 最優先の解決策</div>
+          <h1 style="font-size:24px; font-weight:800; line-height:1.4; margin-bottom:16px;">不足額 ${deficit}万円を埋めるための<br>「無料」のアクションプラン</h1>
 
-        <!-- STEP 1: 転職・年収アップ（収入不満の場合に強調） -->
-        <div class="result-section">
-          <h3>STEP 1${m !== 'ok' ? '（最優先）' : ''}</h3>
-          <h2>🚀 まずは自分の「適正年収」を知る</h2>
-          <p>${m === 'low' ? '収入に全く満足していないあなたは、今の年収が市場価値より低い可能性が高いです。' : m === 'mid' ? 'やや不満を感じているなら、同じスキルでもっと高い年収の会社がある可能性があります。' : '収入に満足していても、適正年収を知っておくことはキャリア戦略の基本です。'}転職しなくても<strong>自分の市場価値を知るだけ</strong>で、年収交渉や副業選びの判断軸が変わります。</p>
-          <ul class="check-list">
-            <li>完全無料で5分で診断完了</li>
-            <li>転職しなくてもOK — 市場価値を知るだけ</li>
-            <li>年収100〜300万円アップの事例多数</li>
-          </ul>
-          <a href="${AFF.career}" target="_blank" rel="noopener sponsored" class="btn-primary" style="background:linear-gradient(135deg, var(--accent-green), var(--accent-blue));">【無料】年収・市場価値診断を受ける →</a>
-        </div>
-
-        <!-- STEP 2: ふるさと納税 -->
-        <div class="result-section">
-          <h3>STEP 2</h3>
-          <h2>🏡 ふるさと納税で「確実に」手取りを増やす</h2>
-          <p>ふるさと納税をまだやっていないなら、<strong>毎年数万円を国に捨てている</strong>のと同じです。自己負担たった2,000円で、お肉・お米・海鮮などの返礼品がもらえます。やらない理由がありません。</p>
-          <ul class="check-list">
-            <li>自己負担2,000円で返礼品がもらえる</li>
-            <li>年収500万なら約6万円分の返礼品</li>
-            <li>楽天ポイントも貯まってさらにお得</li>
-          </ul>
-          <a href="${AFF.rakutenFurusato}" target="_blank" rel="noopener sponsored" class="btn-primary" style="background:linear-gradient(135deg, #ea580c, #dc2626);">楽天ふるさと納税で返礼品を探す →</a>
-          <a href="/furusato.html" style="display:block; text-align:center; margin-top:12px; font-size:13px; color:var(--accent-blue); text-decoration:none;">→ まずは自分の上限額を計算する</a>
-        </div>
-
-        <!-- STEP 3: 証券口座・NISA -->
-        <div class="result-section">
-          <h3>STEP 3</h3>
-          <h2>📈 NISAで「お金に働いてもらう」仕組みを作る</h2>
-          <p>手取りを増やしたら、次は<strong>増えたお金を非課税で運用</strong>する番です。新NISAなら運用益が完全非課税。月3万円の積立で、20年後には約1,200万円になります。</p>
-          <ul class="check-list">
-            <li>運用益が完全非課税（通常は約20%課税）</li>
-            <li>月100円からスタート可能</li>
-            <li>ネット証券なら手数料無料</li>
-          </ul>
-          <div style="display:flex; gap:12px; flex-wrap:wrap;">
-            <a href="${AFF.matsuiNisa}" target="_blank" rel="noopener sponsored" class="btn-primary" style="flex:1; min-width:200px; background:linear-gradient(135deg, #4f46e5, #7c3aed);">松井証券でNISA口座を開設 →</a>
-            <a href="${AFF.matsuiIdeco}" target="_blank" rel="noopener sponsored" class="btn-primary btn-outline" style="flex:1; min-width:200px;">iDeCoで節税も始める →</a>
+          <!-- STEP 1: キャリア相談（最強のコンバージョン導線） -->
+          <div class="result-section" style="background: rgba(16,185,129,0.05); padding: 24px; border-radius: 12px; border: 2px solid #10b981; margin-bottom: 24px;">
+            <h3 style="color: #10b981;">STEP 1（絶対やるべき）</h3>
+            <h2>👨‍💻 プロのキャリアアドバイザーに「無料」で相談し、適正年収に引き上げる</h2>
+            <p>今のまま自力でどうにかしようとしても限界があります。あなたの市場価値はもっと高いはずです。<strong>プロのアドバイザーに無料で相談</strong>して、自分の適正年収と強みを引き出してもらってください。</p>
+            <ul class="check-list" style="margin-bottom: 24px;">
+              <li>相談は何度でも「完全無料」</li>
+              <li>あなたの本当の市場価値と適正年収がわかる</li>
+              <li>強引な転職の勧誘は一切ありません</li>
+            </ul>
+            <a href="https://px.a8.net/svt/ejp?a8mat=4B1OTT+6P4KS2+47GS+5YRHE" target="_blank" rel="noopener sponsored" class="btn-primary" style="background:linear-gradient(135deg, #10b981, #059669); font-size: 18px; padding: 20px;">【完全無料】プロにキャリア相談を申し込む →</a>
+            <p style="text-align:center; font-size:12px; color:var(--text-muted); margin-top:12px;">※相談だけでも今の年収の低さに気づけます</p>
           </div>
-          <a href="/compound.html" style="display:block; text-align:center; margin-top:12px; font-size:13px; color:var(--accent-blue); text-decoration:none;">→ 積立シミュレーションで将来の資産を計算する</a>
-        </div>
 
-        <!-- まとめ -->
-        <div style="margin-top:32px; background:rgba(16,185,129,0.06); border:1px solid rgba(16,185,129,0.15); border-radius:var(--border-radius-lg); padding:28px;">
-          <h3 style="font-size:18px; font-weight:700; margin-bottom:12px; text-align:center;">📋 あなたの改善プランまとめ</h3>
-          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; text-align:center;">
-            <div style="padding:16px; background:var(--bg-card); border-radius:var(--border-radius-md); border:1px solid var(--glass-border);">
-              <div style="font-size:24px; margin-bottom:4px;">🚀</div>
-              <div style="font-size:13px; font-weight:700;">年収診断</div>
-              <div style="font-size:11px; color:var(--text-muted);">5分・無料</div>
-            </div>
-            <div style="padding:16px; background:var(--bg-card); border-radius:var(--border-radius-md); border:1px solid var(--glass-border);">
-              <div style="font-size:24px; margin-bottom:4px;">🏡</div>
-              <div style="font-size:13px; font-weight:700;">ふるさと納税</div>
-              <div style="font-size:11px; color:var(--text-muted);">実質2,000円</div>
-            </div>
-            <div style="padding:16px; background:var(--bg-card); border-radius:var(--border-radius-md); border:1px solid var(--glass-border);">
-              <div style="font-size:24px; margin-bottom:4px;">📈</div>
-              <div style="font-size:13px; font-weight:700;">NISA口座開設</div>
-              <div style="font-size:11px; color:var(--text-muted);">手数料無料</div>
-            </div>
+          <!-- STEP 2: 転職（サブ導線） -->
+          <div class="result-section">
+            <h3>STEP 2</h3>
+            <h2>🚀 収入の根本（年収）を上げる</h2>
+            <p>節約には限界がありますが、年収アップには限界がありません。まずは自分のスキルが他社ならいくらで売れるのか、「適正年収」を診断してみてください。</p>
+            <a href="${AFF.career}" target="_blank" rel="noopener sponsored" class="btn-primary" style="background:linear-gradient(135deg, var(--accent-blue), #2563eb);">【無料】自分の市場価値（適正年収）を診断する →</a>
+          </div>
+
+          <div style="margin-top:40px; text-align:center;">
+            <a href="index.html" style="color:var(--text-muted); font-size:13px; text-decoration:none;">← 手取り計算に戻る</a>
           </div>
         </div>
+      `;
+    } else {
+      app.innerHTML = `
+        <div class="diag-card">
+          <div class="diag-badge"><span class="dot" style="background:var(--accent-green);"></span> 資産拡大プラン</div>
+          <h1 style="font-size:24px; font-weight:800; line-height:1.4; margin-bottom:16px;">安全圏にいるあなたが<br>さらに資産を拡大するステップ</h1>
 
-        <div style="margin-top:40px; text-align:center;">
-          <a href="index.html" style="color:var(--text-muted); font-size:13px; text-decoration:none;">← 手取り計算に戻る</a>
+          <div class="result-section">
+            <h2>📈 NISAで「お金に働いてもらう」仕組みを作る</h2>
+            <p>今の良いペースをさらに加速させるため、新NISAを活用しましょう。運用益が完全非課税になるため、将来の資産が爆発的に増えます。</p>
+            <a href="${AFF.matsuiNisa}" target="_blank" rel="noopener sponsored" class="btn-primary" style="background:linear-gradient(135deg, #4f46e5, #7c3aed);">松井証券でNISA口座を開設 →</a>
+          </div>
+
+          <div style="margin-top:40px; text-align:center;">
+            <a href="index.html" style="color:var(--text-muted); font-size:13px; text-decoration:none;">← 手取り計算に戻る</a>
+          </div>
         </div>
-      </div>
-    `;
+      `;
+    }
 
     // GA4トラッキング
     if(typeof gtag === 'function') {
       gtag('event', 'diagnosis_complete', {
         'event_category': 'diagnosis',
         'score': score,
-        'money_answer': m,
-        'career_answer': c,
-        'potential': pot
+        'deficit': deficit
       });
     }
   }

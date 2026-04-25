@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.tedori.programmaticbot</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/imamichifumitaka/money-tools/tedori_dotcom/scripts/run_programmatic_bot.sh</string>
+    </array>
+
+    <!-- PC起動（ログイン）時に1回実行 -->
+    <key>RunAtLoad</key>
+    <true/>
+
+    <!-- 以降、PCが開いている間は4時間（14400秒）ごとに自動実行 -->
+    <key>StartInterval</key>
+    <integer>14400</integer>
+
+    <key>StandardOutPath</key>
+    <string>/Users/imamichifumitaka/money-tools/tedori_dotcom/scripts/launchd_programmatic_out.log</string>
+    
+    <key>StandardErrorPath</key>
+    <string>/Users/imamichifumitaka/money-tools/tedori_dotcom/scripts/launchd_programmatic_err.log</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/imamichifumitaka/Library/Python/3.9/bin</string>
+    </dict>
+</dict>
+</plist>

@@ -58,5 +58,65 @@
     "template_id": "gemini_LLM::[日経平均終値]",
     "timestamp": 1776862447.473187,
     "income": 640
+  },
+  {
+    "tweet_id": "2047110086301245908",
+    "template_id": "gemini_LLM::[日経平均]",
+    "timestamp": 1776904052.851052,
+    "income": 650
+  },
+  {
+    "tweet_id": "2047118295296594198",
+    "template_id": "gemini_LLM::[日経平均]",
+    "timestamp": 1776906009.889208,
+    "income": 660
+  },
+  {
+    "tweet_id": "2047133397085307136",
+    "template_id": "gemini_LLM::[日経平均]",
+    "timestamp": 1776909610.610364,
+    "income": 670
+  },
+  {
+    "tweet_id": "2047148522718494798",
+    "template_id": "gemini_LLM::[運送会社に猫姉妹]",
+    "timestamp": 1776913216.85567,
+    "income": 680
+  },
+  {
+    "tweet_id": "2047163600121512346",
+    "template_id": "gemini_LLM::[パナ高機能シャワー]",
+    "timestamp": 1776916811.5957959,
+    "income": 690
+  },
+  {
+    "tweet_id": "2047180060344692759",
+    "template_id": "gemini_LLM::[パナ高機能シャワー]",
+    "timestamp": 1776920735.9875572,
+    "income": 700
+  },
+  {
+    "tweet_id": "2047209597992312952",
+    "template_id": "gemini_LLM::[サンケイビル売却]",
+    "timestamp": 1776927779.1834939,
+    "income": 710
+  },
+  {
+    "tweet_id": "2047224007515340860",
+    "template_id": "gemini_LLM::[リゾート施設が無断伐採]",
+    "timestamp": 1776931213.809123,
+    "income": 720
+  },
+  {
+    "tweet_id": "2047239110478426272",
+    "template_id": "gemini_LLM::[ホンダ]",
+    "timestamp": 1776934814.6508422,
+    "income": 730
+  },
+  {
+    "tweet_id": "2047291310890270769",
+    "template_id": "gemini_LLM::[徳島大]",
+    "timestamp": 1776947260.488138,
+    "income": 740
   }
 ]

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.tedori.contentbot</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/imamichifumitaka/money-tools/tedori_dotcom/scripts/run_autonomous_bot.sh</string>
+    </array>
+
+    <!-- 毎日午前10時に実行 -->
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>10</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+
+    <key>RunAtLoad</key>
+    <false/>
+
+    <key>StandardOutPath</key>
+    <string>/Users/imamichifumitaka/money-tools/tedori_dotcom/scripts/launchd_out.log</string>
+    
+    <key>StandardErrorPath</key>
+    <string>/Users/imamichifumitaka/money-tools/tedori_dotcom/scripts/launchd_err.log</string>
+
+    <!-- 環境変数 GEMINI_API_KEY を引き継ぐ設定 -->
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/imamichifumitaka/Library/Python/3.9/bin</string>
+    </dict>
+</dict>
+</plist>

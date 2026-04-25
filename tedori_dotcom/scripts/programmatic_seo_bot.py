@@ -20,7 +20,7 @@ os.makedirs(PAGES_DIR, exist_ok=True)
 AFF_C = 'https://px.a8.net/svt/ejp?a8mat=4B1OTT+6P4KS2+47GS+5YRHE'
 AFF_F = 'https://rpx.a8.net/svt/ejp?a8mat=4B1OTR+ACPDGY+2HOM+6C1VM&rakuten=y&a8ejpredirect=http%3A%2F%2Fhb.afl.rakuten.co.jp%2Fhgc%2F0ea62065.34400275.0ea62066.204f04c0%2Fa26041903646_4B1OTR_ACPDGY_2HOM_6C1VM%3Fpc%3Dhttp%253A%252F%252Fevent.rakuten.co.jp%252Ffurusato%252F%26m%3Dhttp%253A%252F%252Fm.rakuten.co.jp%252F'
 AFF_N = 'https://px.a8.net/svt/ejp?a8mat=4B1PLP+ACPDGY+3XCC+6AZAQ'
-AFF_FP = 'https://px.a8.net/svt/ejp?a8mat=FP_CONSULTATION_DUMMY'
+AFF_CAREER = 'https://px.a8.net/svt/ejp?a8mat=4B1OTT+6P4KS2+47GS+5YRHE' # キャリア相談アフィリエイト
 
 # ---------------------------------------------------------
 # 計算ロジック
@@ -121,9 +121,9 @@ def page_html(title, desc, canonical, h1, answer_label, r, annual, body_extra=""
 <p style="color:#d1d5db;font-size:14px;line-height:1.6;margin-bottom:20px;">毎年これだけのお金があなたの給料から強制的に奪われています。<br>このまま放置すると、老後破産の確率は極めて高くなります。</p>
 <div style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:16px;margin-bottom:20px;text-align:left;">
 <p style="margin:0 0 8px;font-size:13px;color:#f87171;font-weight:bold;">🚨 【警告】絶望的な状況を「無料」で回避する唯一の手段</p>
-<p style="margin:0;font-size:13px;color:#d1d5db;">プロのFPに無料で家計相談し、保険や固定費のムダを排除してもらってください。</p>
+<p style="margin:0;font-size:13px;color:#d1d5db;">プロのキャリアアドバイザーに無料で相談し、あなたの市場価値と年収を強制的に引き上げてください。</p>
 </div>
-<a href="{AFF_FP}" style="display:block;width:100%;background:linear-gradient(135deg,#10b981 0%,#059669 100%);color:white;text-decoration:none;padding:16px;border-radius:12px;font-weight:900;font-size:16px;box-sizing:border-box;">👨‍🏫 プロのFPに無料で家計改善を依頼する</a>
+<a href="{AFF_CAREER}" target="_blank" rel="noopener sponsored" style="display:block;width:100%;background:linear-gradient(135deg,#10b981 0%,#059669 100%);color:white;text-decoration:none;padding:16px;border-radius:12px;font-weight:900;font-size:16px;box-sizing:border-box;">👨‍💻 プロに無料でキャリア相談し、年収を上げる</a>
 <a href="../diagnosis.html" style="display:block;margin-top:16px;color:#9ca3af;font-size:13px;text-decoration:underline;">自分の「生涯賃金のショート額」を診断する（無料）</a>
 </div>
 </main>
