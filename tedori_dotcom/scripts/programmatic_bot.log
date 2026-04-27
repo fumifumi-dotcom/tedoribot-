@@ -50,3 +50,202 @@ Generated 5 pages: nikkyu-15000, jikyu-2300, gesshu-55-nobonus, nikkyu-12000, ji
 Updating sitemap.xml...
 Deploying to GitHub / Cloudflare Pages...
 ✅ Successfully deployed!
+[main 16dcf06] auto-content: add 5 programmatic pages
+ Committer: 今道文隆 <imamichifumitaka@imamichifumitakanoMacBook.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 6 files changed, 345 insertions(+)
+ create mode 100644 tedori_dotcom/pages/gesshu-20-nobonus.html
+ create mode 100644 tedori_dotcom/pages/gesshu-25-nobonus.html
+ create mode 100644 tedori_dotcom/pages/gesshu-45-nobonus.html
+ create mode 100644 tedori_dotcom/pages/jikyu-1000.html
+ create mode 100644 tedori_dotcom/pages/jikyu-1700.html
+[main 9698721] auto-content: add 5 programmatic pages
+ Committer: 今道文隆 <imamichifumitaka@imamichifumitakanoMacBook.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 6 files changed, 345 insertions(+)
+ create mode 100644 tedori_dotcom/pages/gesshu-30-nobonus.html
+ create mode 100644 tedori_dotcom/pages/jikyu-1200.html
+ create mode 100644 tedori_dotcom/pages/jikyu-2600.html
+ create mode 100644 tedori_dotcom/pages/nikkyu-10000.html
+ create mode 100644 tedori_dotcom/pages/nikkyu-19000.html
+To https://github.com/fumifumi-dotcom/tedoribot-.git
+   8ddf2dc..9698721  main -> main
+Generated 5 pages: jikyu-1200, nikkyu-10000, jikyu-2600, nikkyu-19000, gesshu-30-nobonus
+Updating sitemap.xml...
+Deploying to GitHub / Cloudflare Pages...
+✅ Successfully deployed!
+[main eb4b9db] auto-content: add 5 programmatic pages
+ Committer: 今道文隆 <imamichifumitaka@imamichifumitakanoMacBook.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 6 files changed, 345 insertions(+)
+ create mode 100644 tedori_dotcom/pages/gesshu-35-bonus2m.html
+ create mode 100644 tedori_dotcom/pages/gesshu-45-bonus2m.html
+ create mode 100644 tedori_dotcom/pages/gesshu-60-nobonus.html
+ create mode 100644 tedori_dotcom/pages/jikyu-2100.html
+ create mode 100644 tedori_dotcom/pages/nikkyu-16000.html
+To https://github.com/fumifumi-dotcom/tedoribot-.git
+   3c98960..eb4b9db  main -> main
+Generated 5 pages: gesshu-45-bonus2m, jikyu-2100, nikkyu-16000, gesshu-60-nobonus, gesshu-35-bonus2m
+Updating sitemap.xml...
+Deploying to GitHub / Cloudflare Pages...
+✅ Successfully deployed!
+[main 841d5bd] auto-content: add 5 programmatic pages
+ Committer: 今道文隆 <imamichifumitaka@imamichifumitakanoMacBook.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 6 files changed, 345 insertions(+)
+ create mode 100644 tedori_dotcom/pages/gesshu-30-bonus2m.html
+ create mode 100644 tedori_dotcom/pages/gesshu-40-nobonus.html
+ create mode 100644 tedori_dotcom/pages/jikyu-2500.html
+ create mode 100644 tedori_dotcom/pages/jikyu-3000.html
+ create mode 100644 tedori_dotcom/pages/nikkyu-22000.html
+To https://github.com/fumifumi-dotcom/tedoribot-.git
+   eb4b9db..841d5bd  main -> main
+Generated 5 pages: jikyu-2500, nikkyu-22000, gesshu-30-bonus2m, jikyu-3000, gesshu-40-nobonus
+Updating sitemap.xml...
+Deploying to GitHub / Cloudflare Pages...
+✅ Successfully deployed!
+[main 5f5266e] auto-content: add 5 programmatic pages
+ Committer: 今道文隆 <imamichifumitaka@imamichifumitakanoMacBook.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 6 files changed, 345 insertions(+)
+ create mode 100644 tedori_dotcom/pages/gesshu-60-bonus2m.html
+ create mode 100644 tedori_dotcom/pages/jikyu-1300.html
+ create mode 100644 tedori_dotcom/pages/jikyu-1600.html
+ create mode 100644 tedori_dotcom/pages/jikyu-900.html
+ create mode 100644 tedori_dotcom/pages/nikkyu-8000.html
+To https://github.com/fumifumi-dotcom/tedoribot-.git
+   841d5bd..5f5266e  main -> main
+Generated 5 pages: jikyu-1300, jikyu-1600, gesshu-60-bonus2m, nikkyu-8000, jikyu-900
+Updating sitemap.xml...
+Deploying to GitHub / Cloudflare Pages...
+✅ Successfully deployed!
+[main 4ff3eb8] auto-content: add 5 programmatic pages
+ Committer: 今道文隆 <imamichifumitaka@imamichifumitakanoMacBook.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 6 files changed, 345 insertions(+)
+ create mode 100644 tedori_dotcom/pages/gesshu-40-bonus2m.html
+ create mode 100644 tedori_dotcom/pages/jikyu-1900.html
+ create mode 100644 tedori_dotcom/pages/jikyu-2700.html
+ create mode 100644 tedori_dotcom/pages/nikkyu-18000.html
+ create mode 100644 tedori_dotcom/pages/nikkyu-23000.html
+To https://github.com/fumifumi-dotcom/tedoribot-.git
+   5f5266e..4ff3eb8  main -> main
+Generated 5 pages: jikyu-2700, jikyu-1900, nikkyu-18000, gesshu-40-bonus2m, nikkyu-23000
+Updating sitemap.xml...
+Deploying to GitHub / Cloudflare Pages...
+✅ Successfully deployed!
+[main 0623d05] auto-content: add 5 programmatic pages
+ Committer: 今道文隆 <imamichifumitaka@imamichifumitakanoMacBook.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 6 files changed, 345 insertions(+)
+ create mode 100644 tedori_dotcom/pages/jikyu-1400.html
+ create mode 100644 tedori_dotcom/pages/jikyu-1800.html
+ create mode 100644 tedori_dotcom/pages/jikyu-2400.html
+ create mode 100644 tedori_dotcom/pages/jikyu-2800.html
+ create mode 100644 tedori_dotcom/pages/nikkyu-14000.html
+fatal: unable to access 'https://github.com/fumifumi-dotcom/tedoribot-.git/': Could not resolve host: github.com
+Generated 5 pages: jikyu-2800, jikyu-2400, nikkyu-14000, jikyu-1800, jikyu-1400
+Updating sitemap.xml...
+Deploying to GitHub / Cloudflare Pages...
+Git execution failed: Command '['git', '-C', '/Users/imamichifumitaka/money-tools/tedori_dotcom', 'push', 'origin', 'main']' returned non-zero exit status 128.
+[main de4ee30] auto-content: add 3 programmatic pages
+ Committer: 今道文隆 <imamichifumitaka@imamichifumitakanoMacBook.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 4 files changed, 207 insertions(+)
+ create mode 100644 tedori_dotcom/pages/jikyu-1100.html
+ create mode 100644 tedori_dotcom/pages/nikkyu-13000.html
+ create mode 100644 tedori_dotcom/pages/nikkyu-24000.html
+fatal: unable to access 'https://github.com/fumifumi-dotcom/tedoribot-.git/': Could not resolve host: github.com
+Generated 3 pages: nikkyu-13000, nikkyu-24000, jikyu-1100
+Updating sitemap.xml...
+Deploying to GitHub / Cloudflare Pages...
+Git execution failed: Command '['git', '-C', '/Users/imamichifumitaka/money-tools/tedori_dotcom', 'push', 'origin', 'main']' returned non-zero exit status 128.
+No new patterns to generate.
