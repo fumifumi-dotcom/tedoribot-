@@ -46,17 +46,21 @@
   <url><loc>https://tedori-keisan.com/pages/jikyu-1000.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/jikyu-1200.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/jikyu-1300.html</loc><priority>0.7</priority></url>
+  <url><loc>https://tedori-keisan.com/pages/jikyu-1400.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/jikyu-1500.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/jikyu-1600.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/jikyu-1700.html</loc><priority>0.7</priority></url>
+  <url><loc>https://tedori-keisan.com/pages/jikyu-1800.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/jikyu-1900.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/jikyu-2000.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/jikyu-2100.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/jikyu-2200.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/jikyu-2300.html</loc><priority>0.7</priority></url>
+  <url><loc>https://tedori-keisan.com/pages/jikyu-2400.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/jikyu-2500.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/jikyu-2600.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/jikyu-2700.html</loc><priority>0.7</priority></url>
+  <url><loc>https://tedori-keisan.com/pages/jikyu-2800.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/jikyu-2900.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/jikyu-3000.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/jikyu-900.html</loc><priority>0.7</priority></url>
@@ -617,6 +621,7 @@
   <url><loc>https://tedori-keisan.com/pages/nikkyu-10000.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/nikkyu-11000.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/nikkyu-12000.html</loc><priority>0.7</priority></url>
+  <url><loc>https://tedori-keisan.com/pages/nikkyu-14000.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/nikkyu-15000.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/nikkyu-16000.html</loc><priority>0.7</priority></url>
   <url><loc>https://tedori-keisan.com/pages/nikkyu-17000.html</loc><priority>0.7</priority></url>
