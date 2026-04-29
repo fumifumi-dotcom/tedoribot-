@@ -113,6 +113,33 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       ]
     }}
     </script>
+    
+    <!-- パンくずリスト 構造化データ -->
+    <script type="application/ld+json">
+    {{
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "手取り計算トップ",
+          "item": "https://tedori-keisan.com/"
+        }},
+        {{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "職業別手取り一覧",
+          "item": "https://tedori-keisan.com/articles/occupations/index.html"
+        }},
+        {{
+          "@type": "ListItem",
+          "position": 3,
+          "name": "{name}の手取り"
+        }}
+      ]
+    }}
+    </script>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
     <!-- Navbar -->
@@ -129,6 +156,17 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         </div>
       </div>
     </nav>
+
+    <!-- パンくずリスト -->
+    <div class="bg-white border-b border-slate-200">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-sm text-slate-500">
+          <a href="../../" class="hover:text-emerald-500 transition">ホーム</a>
+          <span class="mx-2">&gt;</span>
+          <a href="index.html" class="hover:text-emerald-500 transition">職業別手取り一覧</a>
+          <span class="mx-2">&gt;</span>
+          <span class="text-slate-800 font-medium">{name}の手取り</span>
+      </div>
+    </div>
 
     <!-- Hero Section -->
     <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white py-16">
@@ -234,6 +272,27 @@ HUB_TEMPLATE = """<!DOCTYPE html>
     <link rel="stylesheet" href="../../css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    
+    <!-- パンくずリスト 構造化データ -->
+    <script type="application/ld+json">
+    {{
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {{
+          "@type": "ListItem",
+          "position": 1,
+          "name": "手取り計算トップ",
+          "item": "https://tedori-keisan.com/"
+        }},
+        {{
+          "@type": "ListItem",
+          "position": 2,
+          "name": "職業別手取り一覧"
+        }}
+      ]
+    }}
+    </script>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
     <nav class="glass-header text-white sticky top-0 z-50 bg-slate-900">
@@ -245,6 +304,15 @@ HUB_TEMPLATE = """<!DOCTYPE html>
         </div>
       </div>
     </nav>
+
+    <!-- パンくずリスト -->
+    <div class="bg-white border-b border-slate-200">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-3 text-sm text-slate-500">
+          <a href="../../" class="hover:text-emerald-500 transition">ホーム</a>
+          <span class="mx-2">&gt;</span>
+          <span class="text-slate-800 font-medium">職業別手取り一覧</span>
+      </div>
+    </div>
 
     <div class="max-w-4xl mx-auto px-4 py-16">
         <h1 class="text-3xl font-extrabold mb-8 text-center border-b pb-4">職業別・平均手取り一覧</h1>

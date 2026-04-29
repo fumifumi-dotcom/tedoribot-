@@ -1,7 +1,7 @@
 import os
 import xml.etree.ElementTree as ET
 
-BASE_DIR = "/Users/imamichifumitaka/Downloads/ミカタ_経理/今道_生活を豊かに/money-tools"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 SITEMAP_XML = os.path.join(BASE_DIR, "sitemap.xml")
 HTML_SITEMAP = os.path.join(BASE_DIR, "html_sitemap.html")
 
