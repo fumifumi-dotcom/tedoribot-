@@ -152,6 +152,49 @@ def generate_programmatic_html(amount_type, amount_man, age, spouse, children):
     gtag('js', new Date());
     gtag('config', 'G-3STMJXD6N3');
   </script>
+  
+  <script type="application/ld+json">
+  {{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "手取り計算トップ",
+        "item": "https://tedori-keisan.com/"
+      }},
+      {{
+        "@type": "ListItem",
+        "position": 2,
+        "name": "シミュレーション事例一覧",
+        "item": "https://tedori-keisan.com/cases/index.html"
+      }},
+      {{
+        "@type": "ListItem",
+        "position": 3,
+        "name": "{title}"
+      }}
+    ]
+  }}
+  </script>
+  
+  <script type="application/ld+json">
+  {{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {{
+        "@type": "Question",
+        "name": "{amount_type}{fmt(amount_man)}万円（{status_str}）の手取りはいくらですか？",
+        "acceptedAnswer": {{
+          "@type": "Answer",
+          "text": "年間手取り額は約{fmt(r['tedori'])}円、月額換算で約{fmt(r['monthly_tedori'])}円となります。所得税・住民税・社会保険料等として約{fmt(r['income_tax'] + r['resident_tax'] + r['social_insurance'])}円が引かれます。"
+        }}
+      }}
+    ]
+  }}
+  </script>
   <link rel="stylesheet" href="../../css/style.css">
   <style>
     .page-content {{ max-width: 800px; margin: 0 auto; padding: 40px 20px 80px; }}
@@ -178,8 +221,18 @@ def generate_programmatic_html(amount_type, amount_man, age, spouse, children):
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3012346545678100" crossorigin="anonymous"></script>
   </header>
 
+  <!-- パンくずリスト -->
+  <div style="background:white; border-bottom:1px solid #e2e8f0;">
+    <div class="page-content" style="padding: 12px 20px; font-size:13px; color:#64748b; margin:0 auto; padding-top:12px; padding-bottom:12px;">
+        <a href="../../" style="color:#64748b; text-decoration:none;">ホーム</a>
+        <span style="margin:0 8px;">&gt;</span>
+        <a href="index.html" style="color:#64748b; text-decoration:none;">事例一覧</a>
+        <span style="margin:0 8px;">&gt;</span>
+        <span style="color:#0f172a; font-weight:500;">{amount_type}{fmt(amount_man)}万</span>
+    </div>
+  </div>
+
   <main class="page-content">
-    <a href="index.html" class="back-link">← パターン別一覧に戻る</a>
     
     <div class="status-badge">{status_str}のケース</div>
     <h1>{amount_type}{fmt(amount_man)}万円の手取りはいくら？</h1>
